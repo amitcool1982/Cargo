@@ -18,7 +18,6 @@ using System.Diagnostics;
 using System.Collections;
 using System.IO;
 using System.Web.Script;
-using System.Data.SqlClient;
 
 namespace Cargo
 {

@@ -166,6 +166,7 @@
     <Content Include="img\welcome\welcome_payroll.png" />
     <Content Include="img\welcome\welcome_shifts.png" />
     <Content Include="img\welcome\welcome_timesheets.png" />
+    <Content Include="Login.aspx" />
     <Content Include="Scripts\additional-methods.js" />
     <Content Include="Scripts\additional-methods.min.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
@@ -205,6 +206,7 @@
     <Content Include="Scripts\jquery.mask.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\Login\Login.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\plugins.js" />
     <Content Include="Scripts\select2.js" />
@@ -236,6 +238,13 @@
     </Compile>
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
