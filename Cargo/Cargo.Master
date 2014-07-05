@@ -78,7 +78,7 @@
               <ul class="dropdown-menu">
                 <li><a href="Vendors.aspx"><i class="fa fa-user"></i> Vendors</a></li>
                 <li><a href="#"><i class="fa fa-gift"></i> Items</a></li>
-                <li><a href="#"><i class="fa fa-thumbs-up"></i> Recommendation Items</a></li>
+                <li><a href="Recommend.aspx"><i class="fa fa-thumbs-up"></i> Recommendation Items</a></li>
                 <li><a href="#"><i class="fa fa-usd"></i> Promotions</a></li>
                 <li><a href="Category.aspx"><i class="fa fa-filter"></i> Category</a></li>
                 <li><a href="#"><i class="fa fa-tags"></i> Tags</a></li>
