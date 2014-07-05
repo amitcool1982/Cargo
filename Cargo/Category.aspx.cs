@@ -108,8 +108,8 @@ namespace Cargo
                 {
                     if (totalRecords.Length == 0)
                     {
-                        totalRecords = dtCategory.Rows.Count.ToString();
-                        totalDisplayRecords = dtCategory.Rows.Count.ToString();
+                        totalRecords = dtCategory.Rows[i]["TotalCount"].ToString();
+                        totalDisplayRecords = dtCategory.Rows[i]["TotalCount"].ToString();
                     }
                     sb.Append("{");
                     sb.AppendFormat(@"""id"": ""{0}""", count++);

@@ -15,7 +15,7 @@ CREATE PROCEDURE [dbo].[USP_GetItemCategory]
 AS   
 BEGIN 	
 	DECLARE @vFirstId INT, @vLastId INT
-	
+	declare @TotalCount int
 	if(@piSearchFilter=null) 
 	BEGIN
 		Select @piSearchFilter=''
@@ -43,8 +43,8 @@ BEGIN
 					CASE WHEN @piSortedBy = 'nama_kategori' AND @piSortDirection = 0 THEN nama_kategori END DESC
 					
 
-					
-	SELECT * FROM #temp where RowNum between @vFirstId and @vLastId
+	Select @TotalCount=COUNT(*) from #temp				
+	SELECT @TotalCount as TotalCount,* FROM #temp where RowNum between @vFirstId and @vLastId
 	
 	drop table #temp
 				 
