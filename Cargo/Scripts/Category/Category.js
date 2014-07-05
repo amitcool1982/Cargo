@@ -81,3 +81,16 @@ var BindcategoryTable = function () {
     });
 
 }
+
+function FillAlias() {
+    $('#txtalias').val($('#txtname').val().trim());
+}
+
+function SaveCategory() {
+    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
+        var res = ExecuteSynchronously('Category.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+        if (res.d == 1) {
+            table.fnDraw();
+        }
+    }
+}

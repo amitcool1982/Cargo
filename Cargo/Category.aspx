@@ -28,7 +28,7 @@
         
         <div class="row">
             <div class="col-lg-8">
-                <div class="form-group" style="margin-left:450px">
+                <div class="form-group" style="margin-left:400px">
                     <label>Search:</label>
                     <input id="txtSearch" type="text"/>
                 </div>
@@ -50,13 +50,13 @@
                 <h2>Form Category</h2>
                 <div class="form-group">
                     <label>Name</label><br />
-                    <input type="text" class="form-control formcustom" style="width:250px;line-height:normal" placeholder="Type category name here.."/>
+                    <input type="text" class="form-control formcustom" id="txtname" required="" onkeyup="javascript:FillAlias()" style="width:250px;line-height:normal" placeholder="Type category name here.."/>
                 </div>
                 <div class="form-group">
                     <label>Alias</label><br />
-                    <input type="text" class="form-control formcustom" style="width:250px;line-height:normal" placeholder="URL alias will auto complete.."/>
+                    <input type="text" class="form-control formcustom" id="txtalias" required="" style="width:250px;line-height:normal" placeholder="URL alias will auto complete.."/>
                 </div>
-                <button class="btn btn-info">Save</button>
+                <button class="btn btn-info" onclick="javascript:SaveCategory()">Save</button>
 
             </div>
         </div>     		

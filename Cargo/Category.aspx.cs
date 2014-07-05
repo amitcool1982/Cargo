@@ -162,5 +162,24 @@ namespace Cargo
             }
             return outputJson;
         }
+
+        public static int AddItemCategory(string Name, string Alias)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[2];
+            oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
+            oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddItemCategory", oParam);
+            return 1;
+        }
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int AddCategory(string Name, string Alias)
+        {
+            return AddItemCategory(Name, Alias);
+        }
+    
+    
     }
 }
