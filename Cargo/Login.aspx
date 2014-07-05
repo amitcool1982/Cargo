@@ -17,7 +17,7 @@
 
     <!-- Custom styles for this template -->    
     <link href="Content/signin.css" rel="stylesheet" />
-
+    <script src="Scripts/Common.js"></script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../Scripts/jquery-1.9.1.min.js"></script>
 
@@ -48,8 +48,8 @@
                     Keep me login
                 </label>
                 <button class="btn btn-lg btn-danger" style="width: 100%;" type="submit" onclick="javascript:ValidateLogin();">Log in</button>
-                <div class="alert alert-warning" style="margin-top: 10px;">
-                    <strong>Your session time has been expired, please re-login.</strong>
+                <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px;display:none">
+                    <strong id="errormsg">Your session time has been expired, please re-login.</strong>
                 </div>
 
             </form>

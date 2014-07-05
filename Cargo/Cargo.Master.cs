@@ -13,5 +13,15 @@ namespace Cargo
         {
 
         }
+
+
+        public string LoginName()
+        {
+            if (Session["LoginName"] != null)
+            {
+                return Session["LoginName"].ToString();
+            }
+            return "";
+        }
     }
 }

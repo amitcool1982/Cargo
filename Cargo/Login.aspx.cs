@@ -14,82 +14,87 @@ using System.Web.Services;
 using System.Web.Security;
 using System.Configuration;
 using System.Text.RegularExpressions;
+using Cargo.BLL;
 
 
 
 namespace Cargo
 {
     public partial class Login : System.Web.UI.Page
-    {       
+    {
+        object GetSQLSafeValue(object obj)
+        {
+            if (obj == null)
+                return DBNull.Value;
+            else if (obj.ToString().Length == 0)
+                return DBNull.Value;
+            else
+                return obj;
+        }
+
+
 
         public DataTable VerifyLogin(string LoginId, string Password)
         {
-            //SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString);
-            //conn.Open();
-            //string query = "SELECT * FROM [ledb_kategorimenu]";
-
-            //SqlCommand cmd = new SqlCommand(query, conn);
-
-            //DataTable t1 = new DataTable();
-            //using (SqlDataAdapter a = new SqlDataAdapter(cmd))
-            //{
-            //    a.Fill(t1);
-            //}
-            //return t1;
-
-            //DataTable otable = new DataTable();
-            //SqlParameter[] oParam = new SqlParameter[2];
-            //oParam[1] = DBHelper.GetParam("@Login", SqlDbType.VarChar, 50, ParameterDirection.Input, LoginId);
-            //oParam[2] = DBHelper.GetParam("@Password", SqlDbType.VarChar, 50, ParameterDirection.Input, Password);
-
-            //otable = SqlHelper.ExecuteDataset(ConnString, CommandType.StoredProcedure, "usp_validatelogin", oParam).Tables[0];
-            //objUser.ValidationMessage = Utl.SafeString(otable.Rows[0]["ID"].ToString(), "");
-
-            //return otable;
-            return null;
+            string strConnectionStrings=System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[2];
+            oParam[0] = DBHelper.GetParam("@UserName", SqlDbType.VarChar, 50, ParameterDirection.Input, GetSQLSafeValue(LoginId));
+            oParam[1] = DBHelper.GetParam("@Password", SqlDbType.VarChar, 50, ParameterDirection.Input, GetSQLSafeValue(Password));
+            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_ValidateLogin", oParam).Tables[0];                 
+            
+            return otable;
         }
 
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static bool ValidateLogin(string LoginId, string Password)
+        public static int ValidateLogin(string LoginId, string Password)
         {
-            //try
-            //{
-            //    DataTable dtbLogin = new DataTable();
-            //    dtbLogin = objUser.ValidateLogin();
-            //    DataRow oRow = dtbLogin.Rows[0];
-            //    if (objUser.ValidationMessage.Length > 0 && objUser.ValidationMessage.ToUpper() != "CMN_THISLOGINISNOTASSIGNEDTOANYACTIVESITES")
-            //    {
-            //        objUser.ValidationMessage = objResources.GetString(objUser.ValidationMessage).Replace("[*CorpID*]", objUser.Company);
-            //        objUser.Status = 1;
-            //        objUser.Company = strdomainname;
-            //        return objUser;
-            //    }
-                
-            //    objLogin.Session["LoginId"] = "";
+            Login objLogin = new Login();
+            DataTable dt = objLogin.VerifyLogin(LoginId, Password);
+            if (dt.Rows.Count > 0)
+            {
+                objLogin.SetupUserSession(dt.Rows[0]);
+                HttpContext.Current.Session["LoginName"] = dt.Rows[0]["Name"].ToString();
+                HttpContext.Current.Session["IsSuper"] = dt.Rows[0]["IsSuper"].ToString();
+                return 1;
 
-            //}
-            //catch (ConfigurationException configEx)
-            //{
-            //    objUser.Status = 1;
-            //    objUser.ExceptionMessage = configEx.Message;
-            //    objLogin.WriteToErrorLog(configEx);
-            //    if (configEx.Message.IndexOf("RemoteAdmin") > 0 || configEx.Message.IndexOf("error log") > 0)
-            //    {
-            //        objUser.ValidationMessage = configEx.Message;
-            //    }
-            //    else
-            //    {
-            //        objUser.ValidationMessage = objResources.GetString("CMN_LoginFailedCorporationisnotsetupforthiswebsite");
-            //    }
-            //}
-            //finally
-            //{
-            //    objLogin.Dispose();
-            //}
+            }
+            return 0;
+        }
 
-            return true;
+        private void SetupUserSession(DataRow userData)
+        {
+            FormsAuthentication.Initialize();
+
+            double timeout = double.Parse(ConfigurationManager.AppSettings["SessionTimeout"].ToString());
+            string username = userData["id"].ToString() + ":" + userData["username"].ToString();
+
+            
+            FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(1, username, DateTime.Now, DateTime.Now.AddMinutes(timeout), false, "", FormsAuthentication.FormsCookiePath);
+
+            string hash = FormsAuthentication.Encrypt(ticket);
+
+            HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
+            HttpContext.Current.Response.Cookies.Add(cookie);
+
+        }
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int Logout()
+        {
+            Login objLogin = new Login();
+            try
+            {
+                objLogin.Session.Abandon();
+                FormsAuthentication.SignOut();
+                return 1;
+            }
+            catch
+            {
+            }
+            return 0;
         }
 
     }

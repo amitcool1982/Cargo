@@ -21,12 +21,23 @@
     <%--<link href="Content/site.css" rel="stylesheet" />--%>
     <link href="Content/DT_bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="Content/font-awesome.css">
-    
+    <script src="Scripts/Common.js"></script>
      <script type="text/javascript" src="/Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/Scripts/DT_bootstrap.js"></script>
     <!-- <link rel="stylesheet" href="http://admin.cargo.totalit.co.id/salesbox/css/morris-0.4.3.min.css"> -->
     <script src="/Scripts/jquery-1.9.1.min.js"></script>
     <script src="Scripts/plugins.js"></script>
+    <script type="text/javascript">
+        function logout() {
+            var res = ExecuteSynchronously('/Login.aspx', 'Logout', {});
+            if (res.d == 1) {
+                setCookie("LoginID", "", -1);
+                setCookie("Password", "", -1);
+                location.reload();
+            }
+        }
+
+    </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
   </head>
@@ -87,10 +98,10 @@
                     <ul class="nav navbar-nav navbar-right navbar-user" >
             
             <li class="dropdown user-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Extraordinary Admin <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%=LoginName() %> <b class="caret"></b></a>
               <ul class="dropdown-menu">
 				<li><a href="#"><i class="fa fa-lock"></i> Change Password</a></li>
-                <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+                <li><a href="javascript:logout()"><i class="fa fa-power-off"></i> Log Out</a></li>
 
             
           </ul>        </li></ul></div><!-- /.navbar-collapse -->
