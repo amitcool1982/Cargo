@@ -1,11 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cargo.Master" AutoEventWireup="true" CodeBehind="Category.aspx.cs" Inherits="Cargo.Category" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="Content/site.css" rel="stylesheet" />
-    <link href="../Content/select2.css" rel="stylesheet" />
     
+    <link href="Content/site.css" rel="stylesheet" />
+    <script src="Scripts/site.js"></script>
     <script type="text/javascript"  src="../Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript"  src="../Scripts/DT_bootstrap.js"></script>
-    <script src="../Scripts/select2.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
