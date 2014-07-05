@@ -29,7 +29,7 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <table id="myTableCustomer" style="border-style: dotted; border-width: .5px;">
                         <thead>
                             <tr>

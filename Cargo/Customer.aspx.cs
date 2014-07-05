@@ -84,25 +84,25 @@ namespace Cargo
                     sb.Append(",");
                     sb.AppendFormat(@"""DT_RowClass"": ""{0}""", rowClass);
                     sb.Append(",");
-                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCustomer.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCustomer.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCustomer.Rows[i]["email"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCustomer.Rows[i]["email"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["email"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCustomer.Rows[i]["nama_lengkap"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCustomer.Rows[i]["nama_lengkap"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["nama_lengkap"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCustomer.Rows[i]["telepon"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCustomer.Rows[i]["telepon"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""3"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["telepon"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""4"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCustomer.Rows[i]["kota"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCustomer.Rows[i]["kota"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""4"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["kota"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCustomer.Rows[i]["join_datetime"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCustomer.Rows[i]["join_datetime"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["join_datetime"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""6"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCustomer.Rows[i]["last_login"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCustomer.Rows[i]["last_login"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""6"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["last_login"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(","); 
 
                     sb.AppendFormat(@"""7"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
