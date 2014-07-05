@@ -20,7 +20,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>Point of Sales <small> List</small></h1>
+                    <h1>Point of Sales <small>List</small></h1>
                     <ol class="breadcrumb">
                         <li><a href="Dashboard.aspx"><i class="icon-dashboard"></i>Dashboard</a></li>
                         <li class="active">Point of Sales</li>
@@ -30,7 +30,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <table id="myTablePOS" style="border-style: dotted; border-width: .5px;">
+                    <table id="myTablePOS" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
                             <tr>
                                 <th>ID</th>

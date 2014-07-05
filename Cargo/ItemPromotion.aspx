@@ -37,14 +37,14 @@
                         <label>Search:</label>
                         <input id="txtSearch" type="text" />
                     </div>
-                    <table id="myTableItemPromotion" class="dataTables_wrapper form-inline" role="grid">
+                    <table id="myTableItemPromotion" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Item</th>
-                                <th>Promo</th>                                
+                                <th>Promo</th>
                                 <th>Dsc(%)</th>
-                                <th>Start Promos</th>                                
+                                <th>Start Promos</th>
                                 <th>End Promo</th>
                                 <th><i class="fa fa-user"></i></th>
                             </tr>

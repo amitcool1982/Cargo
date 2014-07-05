@@ -3,9 +3,9 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link href="Content/bootstrap.css" rel="stylesheet">
-    <link href="Content/site.css" rel="stylesheet" />    
+    <link href="Content/site.css" rel="stylesheet" />
     <link href="Content/sb-admin.css" rel="stylesheet">
-    <link href="Content/font-awesome.css" rel="stylesheet" >
+    <link href="Content/font-awesome.css" rel="stylesheet">
 
     <script src="Scripts/site.js"></script>
     <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
@@ -37,7 +37,7 @@
                         <label>Search:</label>
                         <input id="txtSearch" type="text" />
                     </div>
-                    <table id="myTableItems" class="dataTables_wrapper form-inline" role="grid">
+                    <table id="myTableItems" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -61,13 +61,13 @@
                         <div class="form-group">
                             <label for="vendors">Vendors :</label>
                             <select id="vendors" name="vendors" class="form-control" required="">
-                                <option selected="selected" value="">- Select Vendors -</option>                                
+                                <option selected="selected" value="">- Select Vendors -</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="category">Category Item :</label>
                             <select id="category" name="category" class="form-control" required="">
-                                <option selected="selected" value="">- Category -</option>                               
+                                <option selected="selected" value="">- Category -</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -85,7 +85,7 @@
                         <div class="form-group">
                             <label for="price">Price :</label>
                             <input id="price" required="" name="price" placeholder="Price (Rp)" class="form-control" type="text">
-                        </div>                        
+                        </div>
                         <div class="form-group form-inline" id="tag_list">
                             <label for="tags">Tags :</label>
                             <input id="tags" name="tags[]" value="fast-food" type="checkbox">Fast Food                                               
