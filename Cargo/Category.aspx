@@ -22,7 +22,7 @@
             <h1>Item Category <small>Config</small></h1>
             <ol class="breadcrumb">
               <li><a href="Dashboard.aspx"><i class="icon-dashboard"></i> Dashboard</a></li>
-              <li class="active"><i class="icon-file-alt"></i> Category</li>
+              <li class="active"> Category</li>
             </ol>
           </div>
             </div>
