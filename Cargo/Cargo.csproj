@@ -169,6 +169,7 @@
     <Content Include="img\welcome\welcome_timesheets.png" />
     <Content Include="ItemPromotion.aspx" />
     <Content Include="Items.aspx" />
+    <Content Include="ItemTags.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="News.aspx" />
     <Content Include="POS.aspx" />
@@ -207,6 +208,7 @@
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\ItemPromotion\ItemPromotion.js" />
     <Content Include="Scripts\Items\Items.js" />
+    <Content Include="Scripts\ItemTags\ItemTags.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-JEditable.js" />
@@ -273,6 +275,13 @@
     </Compile>
     <Compile Include="Items.aspx.designer.cs">
       <DependentUpon>Items.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemTags.aspx.cs">
+      <DependentUpon>ItemTags.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemTags.aspx.designer.cs">
+      <DependentUpon>ItemTags.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

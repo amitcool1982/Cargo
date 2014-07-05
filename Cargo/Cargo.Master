@@ -81,7 +81,7 @@
                 <li><a href="Recommend.aspx"><i class="fa fa-thumbs-up"></i> Recommendation Items</a></li>
                 <li><a href="ItemPromotion.aspx"><i class="fa fa-usd"></i> Promotions</a></li>
                 <li><a href="Category.aspx"><i class="fa fa-filter"></i> Category</a></li>
-                <li><a href="#"><i class="fa fa-tags"></i> Tags</a></li>
+                <li><a href="ItemTags.aspx"><i class="fa fa-tags"></i> Tags</a></li>
               </ul>
             </li>
             <li><a href="News.aspx"><i class="fa fa-list"></i> News</a></li>

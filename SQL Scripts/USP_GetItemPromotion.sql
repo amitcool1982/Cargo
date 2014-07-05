@@ -39,7 +39,7 @@ BEGIN
 		select ItemPromo.id, Item.nama_menu, tipe_promo, diskon, mulai_promo, akhir_promo
 		from 
 		ledb_menu		Item		With(nolock)	Inner Join
-		ledb_promo_menu	ItemPromo	With(nolock)	On Item.id = ItemPromo.id_menu
+		ledb_promo_menu	ItemPromo	With(nolock)	On Item.id = ItemPromo.id
 		where	ItemPromo.id	like ('%' + @piSearchFilter + '%') OR 				
 				nama_menu		like ('%' + @piSearchFilter + '%') OR
 				tipe_promo		like ('%' + @piSearchFilter + '%') OR 				
