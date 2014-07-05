@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="http://admin.cargo.totalit.co.id/openbox/images/favicon.ico" type="image/x-icon">
+
+    <title>Login LionExpress Administration System</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+    
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+  <div id="wrap">
+      <div class="container">
+
+        <form method="POST" action="http://admin.cargo.totalit.co.id/auth/access/login" class="form-signin">
+          <h3 class="form-signin-heading text-center"><img src="images/logo_2.png"></h3>
+          <input value="super_admin" name="username" class="form-control" placeholder="Username" required="" autofocus="" type="text">
+          <input name="password" class="form-control" placeholder="Password" required="" type="password">
+          <label class="checkbox">
+            <input name="keep_login" type="checkbox"> Keep me login
+          </label>
+          <button class="btn btn-lg btn-danger" style="width:100%;" type="submit">Log in</button>
+                    <div class="alert alert-warning" style="margin-top:10px;">
+            <strong>Your session time has been expired, please re-login.</strong>
+          </div>
+                </form>
+        
+      </div> <!-- /container -->
+    </div>
+    <div id="footer">
+      <div class="container">
+        <p class="text-muted credit">cargo-express.com Administrator System V.1.0 developed by <a href="http://totalit.co.id/">Total Solusi Teknologi</a>.</p>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!--<script src="http://admin.cargo.totalit.co.id/openbox/js/jquery.min.js"></script>
+
+    <!-- Placed at the end of the document so the pages load faster -->
+  
+
+</body></html>
