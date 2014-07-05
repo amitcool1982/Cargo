@@ -23,7 +23,7 @@
                     <h1>Point of Sales <small> List</small></h1>
                     <ol class="breadcrumb">
                         <li><a href="Dashboard.aspx"><i class="icon-dashboard"></i>Dashboard</a></li>
-                        <li class="active"><i class="icon-file-alt"></i>Point of Sales</li>
+                        <li class="active">Point of Sales</li>
                     </ol>
                 </div>
             </div>

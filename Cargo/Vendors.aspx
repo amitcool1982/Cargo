@@ -27,7 +27,7 @@
                     <h1>Vendors <small>Information List</small></h1>
                     <ol class="breadcrumb">
                         <li><a href="Dashboard.aspx"><i class="icon-dashboard"></i>Dashboard</a></li>
-                        <li class="active"><i class="icon-file-alt"></i>Vendors</li>
+                        <li class="active">Vendors</li>
                     </ol>
                 </div>
             </div>

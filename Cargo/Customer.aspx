@@ -23,7 +23,7 @@
                     <h1>Customer <small>Information List</small></h1>
                     <ol class="breadcrumb">
                         <li><a href="Dashboard.aspx"><i class="icon-dashboard"></i>Dashboard</a></li>
-                        <li class="active"><i class="icon-file-alt"></i>Customer</li>
+                        <li class="active">Customer</li>
                     </ol>
                 </div>
             </div>
