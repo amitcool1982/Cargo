@@ -167,6 +167,7 @@
     <Content Include="img\welcome\welcome_payroll.png" />
     <Content Include="img\welcome\welcome_shifts.png" />
     <Content Include="img\welcome\welcome_timesheets.png" />
+    <Content Include="ItemPromotion.aspx" />
     <Content Include="Items.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="News.aspx" />
@@ -204,6 +205,7 @@
     <Content Include="fonts\icomoon\blueforce.ttf" />
     <Content Include="fonts\icomoon\blueforce.woff" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\ItemPromotion\ItemPromotion.js" />
     <Content Include="Scripts\Items\Items.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
@@ -257,6 +259,13 @@
     </Compile>
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ItemPromotion.aspx.cs">
+      <DependentUpon>ItemPromotion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ItemPromotion.aspx.designer.cs">
+      <DependentUpon>ItemPromotion.aspx</DependentUpon>
     </Compile>
     <Compile Include="Items.aspx.cs">
       <DependentUpon>Items.aspx</DependentUpon>
