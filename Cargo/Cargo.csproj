@@ -72,6 +72,7 @@
     <Content Include="Content\select2.css" />
     <Content Include="Content\signin.css" />
     <Content Include="Content\site.css" />
+    <Content Include="Customer.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="images\logo_2.png" />
     <Content Include="img\Ball Green.gif" />
@@ -177,6 +178,7 @@
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\Customer\Customer.js" />
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\DT_Bootstrap.js" />
     <Content Include="Scripts\DT_Bootstrap.min.css" />
@@ -231,6 +233,13 @@
     </Compile>
     <Compile Include="Category.aspx.designer.cs">
       <DependentUpon>Category.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Customer.aspx.cs">
+      <DependentUpon>Customer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Customer.aspx.designer.cs">
+      <DependentUpon>Customer.aspx</DependentUpon>
     </Compile>
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
