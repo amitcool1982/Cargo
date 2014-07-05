@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.IO;
 using System.Web.Script;
+using Cargo.BLL;
 
 namespace Cargo
 {
@@ -29,6 +30,32 @@ namespace Cargo
 
         }
 
+        object GetSQLSafeValue(object obj)
+        {
+            if (obj == null)
+                return DBNull.Value;
+            else if (obj.ToString().Length == 0)
+                return DBNull.Value;
+            else
+                return obj;
+        }
+
+
+
+        public DataTable GetCategory(int PageIndex,int PageSize,string SearchFilter,string SortBy,int SortDirection)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[5];
+            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(PageSize));
+            oParam[1] = DBHelper.GetParam("@piPageNumber", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(PageIndex));
+            oParam[2] = DBHelper.GetParam("@piSortedBy", SqlDbType.VarChar, 20, ParameterDirection.Input, GetSQLSafeValue(SortBy));
+            oParam[3] = DBHelper.GetParam("@piSearchFilter", SqlDbType.VarChar, -1, ParameterDirection.Input, SearchFilter);
+            oParam[4] = DBHelper.GetParam("@piSortDirection", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(SortDirection));
+            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetItemCategory", oParam).Tables[0];
+
+            return otable;
+        }
+
         public int PageSize
         {
             get
@@ -38,25 +65,9 @@ namespace Cargo
             set { Session["PageSize"] = Convert.ToString(value); }
         }
 
-        public DataTable GetCategory()
-        {
-            SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString);
-            conn.Open();
-            string query = "SELECT * FROM [ledb_kategorimenu]";
-
-            SqlCommand cmd = new SqlCommand(query, conn);
-
-            DataTable t1 = new DataTable();
-            using (SqlDataAdapter a = new SqlDataAdapter(cmd))
-            {
-                a.Fill(t1);
-            }
-            return t1;
-        }
-
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static string GetCategories(int PageIndex, int PageSize)
+        public static string GetCategories(int PageIndex, int PageSize, string SortCol, string SortDir,string SearchFilter)
         {
             Category objCategory = new Category();
             Hashtable objHT = new Hashtable();
@@ -67,8 +78,30 @@ namespace Cargo
             var sb = new StringBuilder();
             string outputJson = string.Empty;
             DataTable dtCategory = new DataTable();
-            int TotalRows = 0;
-            dtCategory = objCategory.GetCategory();
+            string SortBy = "id";
+            int SortDirection = 1;
+            if (SortCol == "0")
+            {
+                SortBy = "id";
+            }
+            else if (SortCol == "1")
+            {
+                SortBy = "alias";
+            }
+            else if (SortCol == "2")
+            {
+                SortBy = "nama_kategori";
+            }
+
+            if (SortDir == "asc")
+            {
+                SortDirection = 1;
+            }
+            else
+            {
+                SortDirection = 0;
+            }
+            dtCategory = objCategory.GetCategory(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
             if (dtCategory.Rows.Count > 0)
             {
                 for (int i = 0; i < dtCategory.Rows.Count; i++)
@@ -83,13 +116,13 @@ namespace Cargo
                     sb.Append(",");
                     sb.AppendFormat(@"""DT_RowClass"": ""{0}""", rowClass);
                     sb.Append(",");
-                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCategory.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCategory.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCategory.Rows[i]["Id"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCategory.Rows[i]["Id"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCategory.Rows[i]["alias"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCategory.Rows[i]["alias"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCategory.Rows[i]["Alias"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCategory.Rows[i]["Alias"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCategory.Rows[i]["nama_kategori"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCategory.Rows[i]["nama_kategori"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
+                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr><a style='color:black' title='" + dtCategory.Rows[i]["Category"].ToString().Replace("\"", "\\" + "\"") + "'>" + dtCategory.Rows[i]["Category"].ToString().Replace("\"", "\\" + "\"") + "</a></nobr></div>");
                     sb.Append(",");
 
                     sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");

@@ -28,6 +28,10 @@
         
         <div class="row">
             <div class="col-lg-8">
+                <div class="form-group" style="margin-left:450px">
+                    <label>Search:</label>
+                    <input id="txtSearch" type="text"/>
+                </div>
                 <table  id="myTableCategory" style="border-style:dotted;border-width:.5px;">
             <thead >
                 <tr>								
