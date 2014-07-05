@@ -167,6 +167,7 @@
     <Content Include="img\welcome\welcome_payroll.png" />
     <Content Include="img\welcome\welcome_shifts.png" />
     <Content Include="img\welcome\welcome_timesheets.png" />
+    <Content Include="Items.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="News.aspx" />
     <Content Include="POS.aspx" />
@@ -203,6 +204,7 @@
     <Content Include="fonts\icomoon\blueforce.ttf" />
     <Content Include="fonts\icomoon\blueforce.woff" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\Items\Items.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-JEditable.js" />
@@ -256,6 +258,13 @@
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Items.aspx.cs">
+      <DependentUpon>Items.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Items.aspx.designer.cs">
+      <DependentUpon>Items.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -285,6 +294,7 @@
     <Compile Include="Recommend.aspx.designer.cs">
       <DependentUpon>Recommend.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SQL\BLL.cs" />
     <Compile Include="SQL\DBHelper.cs" />
     <Compile Include="SQL\SQLHelper.cs" />
     <Compile Include="Vendors.aspx.cs">
