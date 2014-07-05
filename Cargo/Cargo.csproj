@@ -216,7 +216,9 @@
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\Synchronous.js" />
     <Content Include="Scripts\timepicker.js" />
+    <Content Include="Scripts\Vendors\Vendors.js" />
     <Content Include="Scripts\XMLHttpSyncExecutor.js" />
+    <Content Include="Vendors.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +260,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SQL\DBHelper.cs" />
     <Compile Include="SQL\SQLHelper.cs" />
+    <Compile Include="Vendors.aspx.cs">
+      <DependentUpon>Vendors.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Vendors.aspx.designer.cs">
+      <DependentUpon>Vendors.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.9.1.min.map" />
