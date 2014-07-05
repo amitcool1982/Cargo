@@ -166,10 +166,31 @@ namespace Cargo
         public static int AddItemCategory(string Name, string Alias)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[2];
+            SqlParameter[] oParam = new SqlParameter[3];
             oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
             oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddItemCategory", oParam);
+            oParam[2] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, 0);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateItemCategory", oParam);
+            return 1;
+        }
+
+        public static int UpdateItemCategory(string Name, string Alias, int id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[3];
+            oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
+            oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
+            oParam[2] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateItemCategory", oParam);
+            return 1;
+        }
+
+        public static int DeleteItemCategory(int id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteItemCategory", oParam);
             return 1;
         }
 
@@ -179,7 +200,19 @@ namespace Cargo
         {
             return AddItemCategory(Name, Alias);
         }
-    
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int UpdateCategory(string Name, string Alias,string Id)
+        {
+            return UpdateItemCategory(Name, Alias,int.Parse(Id));
+        }
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int DeleteCategory(string id)
+        {
+            return DeleteItemCategory(int.Parse(id));
+        }
     
     }
 }

@@ -1,9 +1,24 @@
 ﻿var table=null;
-
+var id = 0;
 $(document).ready(function () {
     table = BindcategoryTable();
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
+    });
+
+    $('#myTableCategory').on("click", "a.edit", function (e) {
+        e.preventDefault();       
+
+        /* Get the row as a parent of the link that was clicked on */
+        var nRow = $(this).parents('tr')[0];
+        editRow(table, nRow);
+    });
+
+    $('#myTableCategory').on("click", "a.delete", function (e) {
+        e.preventDefault();
+        var nRow = $(this).parents('tr')[0];
+
+        DeleteCategory(table, nRow);
     });
 });
 
@@ -82,15 +97,57 @@ var BindcategoryTable = function () {
 
 }
 
+function editRow(table, nRow) {
+    var aData = table.fnGetData(nRow);
+    var jqTds = $('>td', nRow);
+    id = $(aData[0]).text();
+    $('#txtname').val($(aData[2]).text());
+    $('#txtalias').val($(aData[1]).text());
+    $('#save').hide();
+    $('#cancelsave').show();
+}
+
 function FillAlias() {
     $('#txtalias').val($('#txtname').val().trim());
 }
 
-function SaveCategory() {
+function SaveCategory(obj) {
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
-        var res = ExecuteSynchronously('Category.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+        var res = null;
+        if (obj == 0) {
+            res = ExecuteSynchronously('Category.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+        }
+        else {
+            res = ExecuteSynchronously('Category.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+        }
         if (res.d == 1) {
             table.fnDraw();
+            $('#txtalias').val('');
+            $('#txtname').val('');
+            id = 0;
         }
     }
+}
+
+
+function DeleteCategory(table, nRow) {
+    
+    var aData = table.fnGetData(nRow);
+    id = $(aData[0]).text();
+    $('#ConfirmDeleteCategory').modal('show');
+
+}
+
+function DeleteItemCategory() {
+    try{
+        var res = ExecuteSynchronously('Category.aspx', 'DeleteCategory', { Id: id });
+        if (res.d == 1) {
+            id = 0;
+            $('#ConfirmDeleteCategory').modal('hide');
+            table.fnDraw();
+        }}
+    catch (e) {
+        alert(e.message);
+    }
+
 }
