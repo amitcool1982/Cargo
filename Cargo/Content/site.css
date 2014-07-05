@@ -6634,32 +6634,6 @@ fieldset[disabled] .btn-action.active {
   background-color: #D0D0D0;
 }
 
-/* Breadcrumbs
--------------------------------------------------- */
-.breadcrumb {
-  padding: 10px 0;
-  margin-bottom: 20px;
-  list-style: none;
-  background-color: transparent;
-  border-radius: 0;
-  font-size: 16px;
-  line-height: 18px;
-}
-
-.breadcrumb > li {
-  display: inline-block;
-}
-
-.breadcrumb > li + li:before {
-  padding: 0 5px;
-  color: #1379A5;
-  content: '\b7\a0';
-}
-
-.breadcrumb > .active {
-  color: #1379A5;
-  font-weight: bold;
-}
 
 /* Alerts
 -------------------------------------------------- */

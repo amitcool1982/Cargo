@@ -13,9 +13,15 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="wrapper">
     <div id="page-wrapper">
-        <div class="page-header">
-       	    <h1>Item Category</h1><h2 style="display:inline"> config</h2>
-        </div>  
+        <div class="row">
+        <div class="col-lg-12">
+            <h1>Item Category <small>Config</small></h1>
+            <ol class="breadcrumb">
+              <li><a href="Dashboard.aspx"><i class="icon-dashboard"></i> Dashboard</a></li>
+              <li class="active"><i class="icon-file-alt"></i> Category</li>
+            </ol>
+          </div>
+            </div>
         
         <div class="row">
             <div class="col-lg-8">
