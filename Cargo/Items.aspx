@@ -32,10 +32,19 @@
 
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="form-group">
+
+                    <div class="row-fluid">
+                        <div class="span6"></div><div class="span6">
+                            <div id="table_filter" class="dataTables_filter">
+                                <label>Search: <input id="txtSearch" type="text" /></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <%--<div class="form-group">
                         <label>Search:</label>
                         <input id="txtSearch" type="text" />
-                    </div>
+                    </div>--%>
                     <table id="myTableItems" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
                             <tr>

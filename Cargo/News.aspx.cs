@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.IO;
 using System.Web.Script;
+using Cargo.BLL;
 
 namespace Cargo
 {
@@ -38,25 +39,34 @@ namespace Cargo
             set { Session["PageSize"] = Convert.ToString(value); }
         }
 
-        public DataTable GetNews()
+         object GetSQLSafeValue(object obj)
         {
-            SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString);
-            conn.Open();
-            string query = "SELECT * FROM ledb_berita";
-
-            SqlCommand cmd = new SqlCommand(query, conn);
-
-            DataTable t1 = new DataTable();
-            using (SqlDataAdapter a = new SqlDataAdapter(cmd))
-            {
-                a.Fill(t1);
-            }
-            return t1;
+            if (obj == null)
+                return DBNull.Value;
+            else if (obj.ToString().Length == 0)
+                return DBNull.Value;
+            else
+                return obj;
         }
+
+        public DataTable GetNews(int PageIndex, int PageSize, string SearchFilter, string SortBy, int SortDirection)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[5];
+            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(1000));
+            oParam[1] = DBHelper.GetParam("@piPageNumber", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(PageIndex));
+            oParam[2] = DBHelper.GetParam("@piSortedBy", SqlDbType.VarChar, 20, ParameterDirection.Input, GetSQLSafeValue(SortBy));
+            oParam[3] = DBHelper.GetParam("@piSearchFilter", SqlDbType.VarChar, -1, ParameterDirection.Input, SearchFilter);
+            oParam[4] = DBHelper.GetParam("@piSortDirection", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(SortDirection));
+            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetNews", oParam).Tables[0];
+
+            return otable;
+        }
+        
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static string GetNews(int PageIndex, int PageSize)
+        public static string GetNews(int PageIndex, int PageSize, string SortCol, string SortDir, string SearchFilter)
         {
             News objNews = new News();
             Hashtable objHT = new Hashtable();
@@ -67,8 +77,33 @@ namespace Cargo
             var sb = new StringBuilder();
             string outputJson = string.Empty;
             DataTable dtNews = new DataTable();
-            
-            dtNews = objNews.GetNews();
+
+            string SortBy = "id";
+            int SortDirection = 1;
+            if (SortCol == "0")
+            {
+                SortBy = "id";
+            }
+            else if (SortCol == "1")
+            {
+                SortBy = "en_judul";
+            }
+            else if (SortCol == "2")
+            {
+                SortBy = "count";
+            }
+
+            if (SortDir == "asc")
+            {
+                SortDirection = 1;
+            }
+            else
+            {
+                SortDirection = 0;
+            }
+
+
+            dtNews = objNews.GetNews(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
             if (dtNews.Rows.Count > 0)
             {
                 for (int i = 0; i < dtNews.Rows.Count; i++)

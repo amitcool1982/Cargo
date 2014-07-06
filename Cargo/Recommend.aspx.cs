@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.IO;
 using System.Web.Script;
+using Cargo.BLL;
 
 namespace Cargo
 {
@@ -38,25 +39,33 @@ namespace Cargo
             set { Session["PageSize"] = Convert.ToString(value); }
         }
 
-        public DataTable GetRecommend()
+        object GetSQLSafeValue(object obj)
         {
-            SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString);
-            conn.Open();
-            string query = "USP_GetRecommend";
-
-            SqlCommand cmd = new SqlCommand(query, conn);
-
-            DataTable t1 = new DataTable();
-            using (SqlDataAdapter a = new SqlDataAdapter(cmd))
-            {
-                a.Fill(t1);
-            }
-            return t1;
+            if (obj == null)
+                return DBNull.Value;
+            else if (obj.ToString().Length == 0)
+                return DBNull.Value;
+            else
+                return obj;
         }
+
+        public DataTable GetRecommend(int PageIndex,int PageSize,string SearchFilter,string SortBy,int SortDirection)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[5];
+            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(1000));
+            oParam[1] = DBHelper.GetParam("@piPageNumber", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(PageIndex));
+            oParam[2] = DBHelper.GetParam("@piSortedBy", SqlDbType.VarChar, 20, ParameterDirection.Input, GetSQLSafeValue(SortBy));
+            oParam[3] = DBHelper.GetParam("@piSearchFilter", SqlDbType.VarChar, -1, ParameterDirection.Input, SearchFilter);
+            oParam[4] = DBHelper.GetParam("@piSortDirection", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(SortDirection));
+            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetItemRecommend", oParam).Tables[0];
+
+            return otable;
+        }       
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static string GetRecommend(int PageIndex, int PageSize)
+        public static string GetRecommend(int PageIndex, int PageSize, string SortCol, string SortDir, string SearchFilter)
         {
             Recommend objRecommend = new Recommend();
             Hashtable objHT = new Hashtable();
@@ -64,11 +73,35 @@ namespace Cargo
             string totalDisplayRecords = "";
             int count = 0;
             string rowClass = "";
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             string outputJson = string.Empty;
             DataTable dtRecommend = new DataTable();
-            
-            dtRecommend = objRecommend.GetRecommend();
+
+            string SortBy = "id";
+            int SortDirection = 1;
+            if (SortCol == "0")
+            {
+                SortBy = "id";
+            }
+            else if (SortCol == "1")
+            {
+                SortBy = "Alias_Menu";
+            }
+            else if (SortCol == "2")
+            {
+                SortBy = "Nama_Menu";
+            }
+
+            if (SortDir == "asc")
+            {
+                SortDirection = 1;
+            }
+            else
+            {
+                SortDirection = 0;
+            }
+
+            dtRecommend = objRecommend.GetRecommend(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
             if (dtRecommend.Rows.Count > 0)
             {
                 for (int i = 0; i < dtRecommend.Rows.Count; i++)
@@ -92,7 +125,7 @@ namespace Cargo
                     sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 150px;overflow: hidden;'><nobr>" + dtRecommend.Rows[i]["Nama_Menu"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-search-plus fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 

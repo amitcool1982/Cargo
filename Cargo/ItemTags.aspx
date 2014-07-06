@@ -2,14 +2,17 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <link href="Content/site.css" rel="stylesheet" />
+    <link href="Content/bootstrap.css" rel="stylesheet">
+    <link href="Content/sb-admin.css" rel="stylesheet">
+    <link href="Content/font-awesome.css" rel="stylesheet">
+
     <script src="Scripts/site.js"></script>
-    <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
-    <script type="text/javascript" src="../Scripts/ItemTags/ItemTags.js"></script>
+    <script type="text/javascript" src="Scripts/ItemTags/ItemTags.js"></script>
 
 
 
@@ -29,10 +32,15 @@
 
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="form-group" style="margin-left: 400px">
-                        <label>Search:</label>
-                        <input id="txtSearch" type="text" />
+                    <div class="span6"></div>
+                    <div class="span6">
+                        <div id="table_filter" class="dataTables_filter">
+                            <label>
+                                Search: 
+                            <input id="txtSearch" type="text" /></label>
+                        </div>
                     </div>
+
                     <table id="myTableItemTags" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
 
                         <thead>
@@ -51,7 +59,7 @@
                     <h2>Form Tags</h2>
                     <div class="form-group">
                         <label>Name</label><br />
-                        <input type="text" class="form-control formcustom" id="txtname" required="" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal" placeholder="Type category name here.." />
+                        <input type="text" class="form-control formcustom" id="txtname" required="" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal" placeholder="Type tags name here.." />
                     </div>
                     <div class="form-group">
                         <label>URL Alias</label><br />

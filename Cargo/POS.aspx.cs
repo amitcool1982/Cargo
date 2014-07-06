@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Collections;
 using System.IO;
 using System.Web.Script;
+using Cargo.BLL;
 
 namespace Cargo
 {
@@ -28,6 +29,17 @@ namespace Cargo
         {
 
         }
+        
+        object GetSQLSafeValue(object obj)
+        {
+            if (obj == null)
+                return DBNull.Value;
+            else if (obj.ToString().Length == 0)
+                return DBNull.Value;
+            else
+                return obj;
+        }
+
 
         public int PageSize
         {
@@ -38,25 +50,23 @@ namespace Cargo
             set { Session["PageSize"] = Convert.ToString(value); }
         }
 
-        public DataTable GetPOS()
+        public DataTable GetPOS(int PageIndex,int PageSize,string SearchFilter,string SortBy,int SortDirection)
         {
-            SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString);
-            conn.Open();
-            string query = "SELECT * FROM [ledb_agen]";
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[5];
+            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(1000));
+            oParam[1] = DBHelper.GetParam("@piPageNumber", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(PageIndex));
+            oParam[2] = DBHelper.GetParam("@piSortedBy", SqlDbType.VarChar, 20, ParameterDirection.Input, GetSQLSafeValue(SortBy));
+            oParam[3] = DBHelper.GetParam("@piSearchFilter", SqlDbType.VarChar, -1, ParameterDirection.Input, SearchFilter);
+            oParam[4] = DBHelper.GetParam("@piSortDirection", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(SortDirection));
+            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetPOS", oParam).Tables[0];
 
-            SqlCommand cmd = new SqlCommand(query, conn);
-
-            DataTable t1 = new DataTable();
-            using (SqlDataAdapter a = new SqlDataAdapter(cmd))
-            {
-                a.Fill(t1);
-            }
-            return t1;
-        }
+            return otable;
+        }    
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static string GetPOS(int PageIndex, int PageSize)
+        public static string GetPOS(int PageIndex, int PageSize, string SortCol, string SortDir, string SearchFilter)
         {
             
             POS objPOS = new POS();
@@ -68,8 +78,49 @@ namespace Cargo
             var sb = new StringBuilder();
             string outputJson = string.Empty;
             DataTable dtPOS = new DataTable();
+
+            string SortBy = "id_agen_generator";
+            int SortDirection = 1;
+            if (SortCol == "0")
+            {
+                SortBy = "id_agen_generator";
+            }
+            else if (SortCol == "1")
+            {
+                SortBy = "daerah";
+            }
+            else if (SortCol == "2")
+            {
+                SortBy = "kota";
+            }
+            else if (SortCol == "3")
+            {
+                SortBy = "name";
+            }
+            else if (SortCol == "4")
+            {
+                SortBy = "tipe_lokasi";
+            }
+            else if (SortCol == "5")
+            {
+                SortBy = "alamat_lokasi";
+            }
+            else if (SortCol == "6")
+            {
+                SortBy = "pos_status";
+            }
             
-            dtPOS = objPOS.GetPOS();
+
+            if (SortDir == "asc")
+            {
+                SortDirection = 1;
+            }
+            else
+            {
+                SortDirection = 0;
+            }
+
+            dtPOS = objPOS.GetPOS(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
             if (dtPOS.Rows.Count > 0)
             {
                 for (int i = 0; i < dtPOS.Rows.Count; i++)
@@ -84,7 +135,7 @@ namespace Cargo
                     sb.Append(",");
                     sb.AppendFormat(@"""DT_RowClass"": ""{0}""", rowClass);
                     sb.Append(",");
-                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["id_agen_generator"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 120px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["id_agen_generator"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
                     sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["daerah"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");

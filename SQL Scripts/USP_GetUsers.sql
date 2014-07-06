@@ -6,11 +6,11 @@ GO
  
 CREATE PROCEDURE [dbo].USP_GetUsers   
  (
-	@piPageSize INT = 20,
-	@piPageNumber INT = 1,
-	@piSortedBy varchar(50)='id',
-	@piSearchFilter varchar(100)='',
-	@piSortDirection int=1
+	@piPageSize			INT = 20,
+	@piPageNumber		INT = 1,
+	@piSortedBy			varchar(50)='id',
+	@piSearchFilter		varchar(100)='',
+	@piSortDirection	int=1
  )     
 AS   
 BEGIN 	

@@ -16,11 +16,11 @@ var BindItemsTable = function () {
 
         },
         "aoColumns": [
-                     { "sWidth": "5em", "bSortable": true },
+                     { "sWidth": "4em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "2em", "bSortable": false }
+                     { "sWidth": "4em", "bSortable": false }
         ],
         "bProcessing": true,
         "bServerSide": true,

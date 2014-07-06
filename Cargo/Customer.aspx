@@ -30,9 +30,27 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <label style="margin-left: 420px">Search:</label>
-                    <input id="txtSearch" type="text" />
-                    <table id="myTableCustomer" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">                    
+
+                    <div class="row">
+                        <div class="col-lg-6 col-xs-6 pad-15">
+                            <div class="dataTables_length" id="table_length">
+                                <label>
+                                    <select aria-controls="table" size="1" name="table_length">
+                                        <option selected="selected" value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select></label></div>
+                        </div>
+                        <div class="col-lg-6 col-xs-6">
+                            <div id="table_filter" class="dataTables_filter">
+                                <label>Search:
+                                    <input id="txtSearch" type="text" /></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table id="myTableCustomer" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
                             <tr>
                                 <th>ID</th>

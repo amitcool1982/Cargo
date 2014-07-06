@@ -2,18 +2,17 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <link href="Content/bootstrap.css" rel="stylesheet">
-    <link href="Content/site.css" rel="stylesheet" />
+    <link href="Content/bootstrap.css" rel="stylesheet">    
     <link href="Content/sb-admin.css" rel="stylesheet">
     <link href="Content/font-awesome.css" rel="stylesheet">
 
     <script src="Scripts/site.js"></script>
-    <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
-    <script type="text/javascript" src="../Scripts/ItemPromotion/ItemPromotion.js"></script>
+    <script type="text/javascript" src="Scripts/ItemPromotion/ItemPromotion.js"></script>
 
 
 
@@ -33,9 +32,12 @@
 
             <div class="row">
                 <div class="col-lg-9">
-                    <div class="form-group">
-                        <label>Search:</label>
-                        <input id="txtSearch" type="text" />
+                    <div class="span6"></div>
+                    <div class="span6">
+                        <div id="table_filter" class="dataTables_filter">
+                            <label>Search: 
+                            <input id="txtSearch" type="text" /></label>
+                        </div>
                     </div>
                     <table id="myTableItemPromotion" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>

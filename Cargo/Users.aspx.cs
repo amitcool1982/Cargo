@@ -78,6 +78,7 @@ namespace Cargo
             var sb = new StringBuilder();
             string outputJson = string.Empty;
             DataTable dtUsers = new DataTable();
+            
             string SortBy = "id";
             int SortDirection = 1;
             if (SortCol == "0")
@@ -86,11 +87,11 @@ namespace Cargo
             }
             else if (SortCol == "1")
             {
-                SortBy = "alias";
+                SortBy = "nama_lengkap";
             }
             else if (SortCol == "2")
             {
-                SortBy = "nama_kategori";
+                SortBy = "last_login";
             }
 
             if (SortDir == "asc")
@@ -101,6 +102,7 @@ namespace Cargo
             {
                 SortDirection = 0;
             }
+
             dtUsers = objUsers.GetUsers(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
             if (dtUsers.Rows.Count > 0)
             {

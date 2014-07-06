@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cargo.Master" AutoEventWireup="true" CodeBehind="Recommend.aspx.cs" Inherits="Cargo.Recommend" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    
+
     <link href="../Content/select2.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="Content/bootstrap.css">
@@ -32,9 +32,16 @@
                 </div>
             </div>
 
-
+            
             <div class="row">
                 <div class="col-lg-6">
+                    <div class="span6"></div>
+                    <div class="span6">
+                        <div id="table_filter" class="dataTables_filter">
+                            <label>Search: 
+                            <input id="txtSearch" type="text" /></label>
+                        </div>
+                    </div>
                     <table aria-describedby="table_info" style="margin-left: 0px; width: 100%;" id="myTableRecommend" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
                             <tr style="height: 0px;" role="row">

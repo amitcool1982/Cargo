@@ -36,9 +36,8 @@
                     <div class="span6"></div>
                     <div class="span6">
                         <div id="table_filter" class="dataTables_filter">
-                            <label>
-                                Search:
-                            <input aria-controls="table" type="text"></label>
+                            <label>Search: 
+                            <input id="txtSearch" type="text" /></label>
                         </div>
                     </div>
                     <table aria-describedby="table_info" style="margin-left: 0px; width: 100%;" id="myTableCustomer" class="table table-hover table-striped tablesorter dataTable">

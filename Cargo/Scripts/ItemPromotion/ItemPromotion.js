@@ -17,12 +17,12 @@ var BindItemPromotionTable = function () {
         },
         "aoColumns": [
                      { "sWidth": "5em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },
+                     { "sWidth": "7em", "bSortable": true },
+                     { "sWidth": "7em", "bSortable": true },
+                     { "sWidth": "4em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },                     
-                     { "sWidth": "2em", "bSortable": false }
+                     { "sWidth": "3em", "bSortable": false }
         ],
         "bProcessing": true,
         "bServerSide": true,

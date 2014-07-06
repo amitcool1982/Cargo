@@ -6,17 +6,17 @@
     <link rel="stylesheet" href="Content/sb-admin.css">
     <link rel="stylesheet" href="Content/font-awesome.min.css">
 
-    <link href="../Content/select2.css" rel="stylesheet" />
+    <link href="Content/select2.css" rel="stylesheet" />
 
-    <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
 
 
-    <script src="../Scripts/select2.js"></script>
+    <script src="Scripts/select2.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
-    <script type="text/javascript" src="../Scripts/POS/POS.js"></script>
+    <script type="text/javascript" src="Scripts/POS/POS.js"></script>
 
 
 
@@ -44,7 +44,7 @@
                     <div id="table_filter" class="dataTables_filter">
                         <label>
                             Search:
-                            <input aria-controls="table" type="text"></label>
+                           <input id="txtSearch" type="text" />
                     </div>
                 </div>
             </div>
