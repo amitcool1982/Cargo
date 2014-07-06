@@ -88,7 +88,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-wrench"></i> Config <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#"><i class="fa fa-user"></i> Users</a></li>                 <li><a href="#"><i class="fa fa-flag-o"></i> Province &amp; City</a></li>
+                <li><a href="Users.aspx"><i class="fa fa-user"></i> Users</a></li>                 <li><a href="#"><i class="fa fa-flag-o"></i> Province &amp; City</a></li>
                 <li><a href="#"><i class="fa fa-picture-o"></i> Banner Assets</a></li>
                 <li><a href="#"><i class="fa fa-question"></i> FAQ</a></li>
               </ul>
