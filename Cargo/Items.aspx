@@ -2,8 +2,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <link href="Content/bootstrap.css" rel="stylesheet">
-    <link href="Content/site.css" rel="stylesheet" />
+    <link href="Content/bootstrap.css" rel="stylesheet">    
     <link href="Content/sb-admin.css" rel="stylesheet">
     <link href="Content/font-awesome.css" rel="stylesheet">
 

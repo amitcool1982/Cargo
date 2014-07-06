@@ -2,10 +2,13 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <link href="Content/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="Content/bootstrap.css">
+    <link rel="stylesheet" href="Content/sb-admin.css">
+    <link rel="stylesheet" href="Content/font-awesome.min.css">
+
     <script src="Scripts/site.js"></script>
-    <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
@@ -34,7 +37,7 @@
             </div>
 
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-7">
                     <label style="margin-left: 420px">Search:</label>
                     <input id="txtSearch" type="text" />
                     <table id="myTableCategory" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
@@ -50,11 +53,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-2">
+                <div class="col-lg-5">
                     <h2 style="display: inline">Form&nbsp;Category</h2>
                     <div class="form-group">
                         <label>Name</label><br />
-                        <input type="text" class="form-control formcustom" id="txtname" required="" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal" placeholder="Type category name here.." />
+                        <input type="text" class="form-control formcustom" id="txtname" required="" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal"
+                            placeholder="Type category name here.." />
                     </div>
                     <div class="form-group">
                         <label>Alias</label><br />
@@ -97,6 +101,6 @@
             </div>
         </div>
     </div>
-    </div><!-- /#wrapper -->
+    <!-- /#wrapper -->
 
 </asp:Content>

@@ -31,9 +31,9 @@ var BindcategoryTable = function () {
 
         },
         "aoColumns": [
-                     { "sWidth": "5em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },
+                     { "sWidth": "3em", "bSortable": true },
+                     { "sWidth": "9em", "bSortable": true },
+                     { "sWidth": "4em", "bSortable": true },
                      { "sWidth": "2em", "bSortable": false }
         ],
         "bProcessing": true,

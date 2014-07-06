@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cargo.Master" AutoEventWireup="true" CodeBehind="Recommend.aspx.cs" Inherits="Cargo.Recommend" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="Content/site.css" rel="stylesheet" />
+    
     <link href="../Content/select2.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="Content/bootstrap.css">

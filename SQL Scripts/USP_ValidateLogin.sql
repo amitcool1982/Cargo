@@ -11,7 +11,11 @@ CREATE PROCEDURE [dbo].[USP_ValidateLogin]
 )      
 AS      
 BEGIN 	
-	Update ledb_admin
-	set last_login=GETDATE() where username=@UserName and password=@Password
-	Select nama_lengkap as Name,is_super as IsSuper,* from ledb_admin with(nolock) where username=@UserName and password=@Password    
+
+	Update ledb_admin	Set last_login = GETDATE() Where 
+	Username	=	@UserName	and 
+	Password	=	@Password
+	
+	Select nama_lengkap as Name, is_super as IsSuper,* from ledb_admin with(nolock) Where username	=	@UserName and password	=	@Password    
+	
 END  

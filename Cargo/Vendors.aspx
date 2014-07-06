@@ -1,15 +1,13 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Cargo.Master" AutoEventWireup="true" CodeBehind="Vendors.aspx.cs" Inherits="Cargo.Vendors" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link href="Content/site.css" rel="stylesheet" />
-    <link href="../Content/select2.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="Content/bootstrap.css">
     <link rel="stylesheet" href="Content/sb-admin.css">
     <link rel="stylesheet" href="Content/font-awesome.css">
 
-    <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     <script src="../Scripts/select2.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
@@ -35,6 +33,14 @@
 
             <div class="row">
                 <div class="col-lg-5">
+                    <div class="span6"></div>
+                    <div class="span6">
+                        <div id="table_filter" class="dataTables_filter">
+                            <label>
+                                Search:
+                            <input aria-controls="table" type="text"></label>
+                        </div>
+                    </div>
                     <table aria-describedby="table_info" style="margin-left: 0px; width: 100%;" id="myTableCustomer" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
                             <tr style="height: 0px;" role="row">
@@ -51,7 +57,7 @@
                     <h3>Form Vendors</h3>
                     <div class="row">
                         <div class="col-lg-3">
-                            <div id="queue"></div>
+                            <div id="queueLogo"></div>
                             <div style="height: 30px; width: 120px;" class="uploadify" id="logo_upload">
                                 <object style="position: absolute; z-index: 1;" id="SWFUpload_0" type="application/x-shockwave-flash" data="images/uploadify_002.swf" class="swfupload" height="30" width="120">
                                     <param name="wmode" value="transparent">
@@ -66,7 +72,7 @@
                             <div class="uploadify-queue" id="logo_upload-queue"></div>
                         </div>
                         <div class="col-lg-3">
-                            <div id="queue"></div>
+                            <div id="queueBanner"></div>
                             <div style="height: 30px; width: 120px;" class="uploadify" id="banner_upload">
                                 <object style="position: absolute; z-index: 1;" id="SWFUpload_1" type="application/x-shockwave-flash" data="images/uploadify.swf" class="swfupload" height="30" width="120">
                                     <param name="wmode" value="transparent">
@@ -113,7 +119,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <img id="logo-preview" src="images/no_picture.jpg" style="width: 200px; height: 100;">
+                                <img id="logo-preview" src="images/no_picture.jpg" style="width: 200px; height: 100px;">
                             </div>
                             <div class="col-lg-8">
                                 <div class="form-group">
@@ -146,6 +152,6 @@
             <!-- /#page-wrapper -->
 
         </div>
-        <!-- /#wrapper -->
+    <!-- /#wrapper -->
     </div>
 </asp:Content>

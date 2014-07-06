@@ -40,14 +40,14 @@ BEGIN
 				alias		like ('%' + @piSearchFilter + '%') OR
 				nama_tag	like ('%' + @piSearchFilter + '%') 
 		ORDER BY 
-						CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,
-						CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 0 THEN id END DESC,
-						
-						CASE WHEN @piSortedBy = 'alias' AND @piSortDirection = 1 THEN alias END ASC,
-						CASE WHEN @piSortedBy = 'alias' AND @piSortDirection = 0 THEN alias END DESC,
-						
-						CASE WHEN @piSortedBy = 'nama_tag' AND @piSortDirection = 1 THEN nama_tag END ASC,
-						CASE WHEN @piSortedBy = 'nama_tag' AND @piSortDirection = 0 THEN nama_tag END DESC
+			CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,
+			CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 0 THEN id END DESC,
+			
+			CASE WHEN @piSortedBy = 'alias' AND @piSortDirection = 1 THEN alias END ASC,
+			CASE WHEN @piSortedBy = 'alias' AND @piSortDirection = 0 THEN alias END DESC,
+			
+			CASE WHEN @piSortedBy = 'nama_tag' AND @piSortDirection = 1 THEN nama_tag END ASC,
+			CASE WHEN @piSortedBy = 'nama_tag' AND @piSortDirection = 0 THEN nama_tag END DESC
 						
 
 	Select @TotalCount=COUNT(*) from #temp				

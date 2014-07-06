@@ -57,7 +57,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BannerAssets.aspx" />
     <Content Include="Category.aspx" />
+    <Content Include="ChangePassword.aspx" />
     <Content Include="Content\bootstrap-select.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -176,11 +178,13 @@
     <Content Include="Recommend.aspx" />
     <Content Include="Scripts\additional-methods.js" />
     <Content Include="Scripts\additional-methods.min.js" />
+    <Content Include="Scripts\BannerAssets\BannerAssets.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-select.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Category\Category.js" />
+    <Content Include="Scripts\ChangePassword\ChangePassword.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\Common.js" />
@@ -188,6 +192,7 @@
     <Content Include="Scripts\daterangepicker.js" />
     <Content Include="Scripts\DT_Bootstrap.js" />
     <Content Include="Scripts\DT_Bootstrap.min.css" />
+    <Content Include="Scripts\FAQ\FAQ.js" />
     <Content Include="Scripts\icheck.js" />
     <Content Include="Scripts\icheck.min.js" />
     <Content Include="Cargo.Master" />
@@ -236,6 +241,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BannerAssets.aspx.cs">
+      <DependentUpon>BannerAssets.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BannerAssets.aspx.designer.cs">
+      <DependentUpon>BannerAssets.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Cargo.Master.cs">
       <DependentUpon>Cargo.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -250,6 +262,13 @@
     <Compile Include="Category.aspx.designer.cs">
       <DependentUpon>Category.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Customer.aspx.cs">
       <DependentUpon>Customer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -263,6 +282,13 @@
     </Compile>
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FAQ.aspx.cs">
+      <DependentUpon>FAQ.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FAQ.aspx.designer.cs">
+      <DependentUpon>FAQ.aspx</DependentUpon>
     </Compile>
     <Compile Include="ItemPromotion.aspx.cs">
       <DependentUpon>ItemPromotion.aspx</DependentUpon>

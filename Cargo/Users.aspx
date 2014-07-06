@@ -2,8 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <link href="Content/site.css" rel="stylesheet" />
-    <script src="Scripts/site.js"></script>
+    <link rel="stylesheet" href="Content/bootstrap.css">
+    <link rel="stylesheet" href="Content/sb-admin.css">
+    <link rel="stylesheet" href="Content/font-awesome.min.css">
+
     <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
     <script type="text/javascript">
@@ -35,7 +37,7 @@
 
             <div class="row">
                 <div class="col-lg-8">
-                    <label style="margin-left: 420px">Search:</label>
+                    <label style="margin-left: 660px">Search:</label>
                     <input id="txtSearch" type="text" />
                     <table id="myTableUsers" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
@@ -54,11 +56,11 @@
                     <h2 style="display: inline">Form&nbsp;User</h2>
                     <div class="form-group">
                         <label>Full Name</label><br />
-                        <input type="text" class="form-control formcustom" id="txtname" required="" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal" placeholder="Type category name here.." />
+                        <input type="text" class="form-control formcustom" id="txtname" required="" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal" placeholder="Type fullname here.." />
                     </div>
                     <div class="form-group">
                         <label>UserName</label><br />
-                        <input type="text" class="form-control formcustom" id="txtalias" required="" style="width: 250px; line-height: normal" placeholder="URL alias will auto complete.." />
+                        <input type="text" class="form-control formcustom" id="txtalias" required="" style="width: 250px; line-height: normal" placeholder="Username must be unique" />
                     </div>
 
 

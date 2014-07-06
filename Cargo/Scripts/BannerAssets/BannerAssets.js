@@ -1,12 +1,12 @@
 ﻿var table=null;
 var id = 0;
 $(document).ready(function () {
-    table = BindUsersTable();
+    table = BindcategoryTable();
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
     });
 
-    $('#myTableUsers').on("click", "a.edit", function (e) {
+    $('#myTableCategory').on("click", "a.edit", function (e) {
         e.preventDefault();       
 
         /* Get the row as a parent of the link that was clicked on */
@@ -18,14 +18,14 @@ $(document).ready(function () {
         e.preventDefault();
         var nRow = $(this).parents('tr')[0];
 
-        DeleteUsers(table, nRow);
+        DeleteCategory(table, nRow);
     });
 });
 
-var BindUsersTable = function () {
+var BindcategoryTable = function () {
 
 
-    return $('#myTableUsers').dataTable({
+    return $('#myTableCategory').dataTable({
         "oLanguage": {
             "sZeroRecords": "No records to display"//,
 
@@ -39,7 +39,7 @@ var BindUsersTable = function () {
         "bProcessing": true,
         "bServerSide": true,
         "bStateSave": false,
-        "bPaginate": false,
+        "bPaginate": true,
         "bLengthChange": false,//To Hide the Length menu in the Datatables
         "iDisplayLength": Number(PageSize),
         "bAutoWidth": false,
@@ -48,7 +48,7 @@ var BindUsersTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "Users.aspx/GetUsers",
+        "sAjaxSource": "Category.aspx/GetCategories",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearch").val() });
@@ -86,7 +86,7 @@ var BindUsersTable = function () {
                     if (msg.d != null) {
                         var json = jQuery.parseJSON(msg.d);
                         fnCallback(json);
-                        $("#myTableUsers").show();
+                        $("#myTableCategory").show();
                     }
 
                 }
@@ -115,10 +115,10 @@ function SaveCategory(obj) {
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
         var res = null;
         if (obj == 0) {
-            res = ExecuteSynchronously('Users.aspx', 'AddUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+            res = ExecuteSynchronously('Category.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
         }
         else {
-            res = ExecuteSynchronously('Users.aspx', 'UpdateUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+            res = ExecuteSynchronously('Category.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
         }
         if (res.d == 1) {
             table.fnDraw();
@@ -134,16 +134,16 @@ function DeleteCategory(table, nRow) {
     
     var aData = table.fnGetData(nRow);
     id = $(aData[0]).text();
-    $('#ConfirmDeleteUsers').modal('show');
+    $('#ConfirmDeleteCategory').modal('show');
 
 }
 
 function DeleteItemCategory() {
     try{
-        var res = ExecuteSynchronously('Users.aspx', 'DeleteUsers', { Id: id });
+        var res = ExecuteSynchronously('Category.aspx', 'DeleteCategory', { Id: id });
         if (res.d == 1) {
             id = 0;
-            $('#ConfirmDeleteUsers').modal('hide');
+            $('#ConfirmDeleteCategory').modal('hide');
             table.fnDraw();
         }}
     catch (e) {

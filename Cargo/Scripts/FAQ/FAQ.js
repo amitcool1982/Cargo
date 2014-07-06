@@ -1,13 +1,13 @@
-﻿var table=null;
+﻿var table = null;
 var id = 0;
 $(document).ready(function () {
-    table = BindUsersTable();
+    table = BindcategoryTable();    
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
     });
 
-    $('#myTableUsers').on("click", "a.edit", function (e) {
-        e.preventDefault();       
+    $('#myTableCategory').on("click", "a.edit", function (e) {
+        e.preventDefault();
 
         /* Get the row as a parent of the link that was clicked on */
         var nRow = $(this).parents('tr')[0];
@@ -18,22 +18,22 @@ $(document).ready(function () {
         e.preventDefault();
         var nRow = $(this).parents('tr')[0];
 
-        DeleteUsers(table, nRow);
+        DeleteFAQ(table, nRow);
     });
 });
 
-var BindUsersTable = function () {
+var BindcategoryTable = function () {
+    
 
-
-    return $('#myTableUsers').dataTable({
+    return $('#myTableCategory').dataTable({
         "oLanguage": {
             "sZeroRecords": "No records to display"//,
 
         },
         "aoColumns": [
-                     { "sWidth": "5em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },
+                     { "sWidth": "3em", "bSortable": true },
+                     { "sWidth": "10em", "bSortable": true },
+                     { "sWidth": "2em", "bSortable": true },
                      { "sWidth": "2em", "bSortable": false }
         ],
         "bProcessing": true,
@@ -48,12 +48,12 @@ var BindUsersTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "Users.aspx/GetUsers",
+        "sAjaxSource": "FAQ.aspx/GetFAQs",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearch").val() });
             var data = "{ ";
-
+            
             for (var i = 0; i < aoData.length; i++) {
                 if (aoData[i].name == 'iDisplayLength') {
                     aoData.push({ "name": "PageSize", "value": aoData[i].value });
@@ -74,7 +74,7 @@ var BindUsersTable = function () {
                 if (i != (aoData.length - 1))
                     data += ", ";
             }
-
+            
             data += " }";
             $.ajax({
                 type: "POST",
@@ -86,7 +86,7 @@ var BindUsersTable = function () {
                     if (msg.d != null) {
                         var json = jQuery.parseJSON(msg.d);
                         fnCallback(json);
-                        $("#myTableUsers").show();
+                        $("#myTableCategory").show();
                     }
 
                 }
@@ -111,14 +111,14 @@ function FillAlias() {
     $('#txtalias').val($('#txtname').val().trim());
 }
 
-function SaveCategory(obj) {
+function SaveFAQ(obj) {
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
         var res = null;
         if (obj == 0) {
-            res = ExecuteSynchronously('Users.aspx', 'AddUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+            res = ExecuteSynchronously('Category.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
         }
         else {
-            res = ExecuteSynchronously('Users.aspx', 'UpdateUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+            res = ExecuteSynchronously('Category.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
         }
         if (res.d == 1) {
             table.fnDraw();
@@ -130,22 +130,23 @@ function SaveCategory(obj) {
 }
 
 
-function DeleteCategory(table, nRow) {
-    
+function DeleteFAQ(table, nRow) {
+
     var aData = table.fnGetData(nRow);
     id = $(aData[0]).text();
-    $('#ConfirmDeleteUsers').modal('show');
+    $('#ConfirmDeleteCategory').modal('show');
 
 }
 
-function DeleteItemCategory() {
-    try{
-        var res = ExecuteSynchronously('Users.aspx', 'DeleteUsers', { Id: id });
+function DeleteItemFAQ() {
+    try {
+        var res = ExecuteSynchronously('FAQ.aspx', 'DeleteFAQ', { Id: id });
         if (res.d == 1) {
             id = 0;
-            $('#ConfirmDeleteUsers').modal('hide');
+            $('#ConfirmDeleteFAQ').modal('hide');
             table.fnDraw();
-        }}
+        }
+    }
     catch (e) {
         alert(e.message);
     }

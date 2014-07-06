@@ -67,7 +67,7 @@ namespace Cargo
             var sb = new StringBuilder();
             string outputJson = string.Empty;
             DataTable dtNews = new DataTable();
-            int TotalRows = 0;
+            
             dtNews = objNews.GetNews();
             if (dtNews.Rows.Count > 0)
             {

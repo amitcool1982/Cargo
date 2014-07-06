@@ -11,9 +11,9 @@ var BindCustomerTable = function () {
 
         },
         "aoColumns": [
-                     { "sWidth": "2em", "bSortable": true },
+                     { "sWidth": "3em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },
+                     { "sWidth": "6em", "bSortable": true },
                      { "sWidth": "5em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
@@ -29,13 +29,13 @@ var BindCustomerTable = function () {
         "bAutoWidth": false,
         "bDestroy": true,
         "bDeferRender": true,
-        "bFilter": true,
+        "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
         "sAjaxSource": "Customer.aspx/GetCustomers",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
-
+            aoData.push({ "name": "SearchFilter", "value": $("#txtSearch").val() });
             var data = "{ ";
 
             for (var i = 0; i < aoData.length; i++) {
@@ -44,6 +44,12 @@ var BindCustomerTable = function () {
                 }
                 if (aoData[i].name == 'iDisplayStart') {
                     aoData.push({ "name": "PageIndex", "value": ((aoData[i].value) + 1) });
+                }
+                if (aoData[i].name == 'iSortCol_0') {
+                    aoData.push({ "name": "SortCol", "value": ((aoData[i].value)) });
+                }
+                if (aoData[i].name == 'sSortDir_0') {
+                    aoData.push({ "name": "SortDir", "value": ((aoData[i].value)) });
                 }
 
                 data += aoData[i].name + ": ";

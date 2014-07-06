@@ -22,7 +22,7 @@ using Cargo.BLL;
 
 namespace Cargo
 {
-    public partial class Category : System.Web.UI.Page
+    public partial class ChangePassword : System.Web.UI.Page
     {
         static int sEcho = 1;
         protected void Page_Load(object sender, EventArgs e)
@@ -116,13 +116,13 @@ namespace Cargo
                     sb.Append(",");
                     sb.AppendFormat(@"""DT_RowClass"": ""{0}""", rowClass);
                     sb.Append(",");
-                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Id"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Id"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 270px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Alias"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Alias"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 130px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Category"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Category"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
                     sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");

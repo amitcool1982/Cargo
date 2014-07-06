@@ -68,7 +68,7 @@ namespace Cargo
             var sb = new StringBuilder();
             string outputJson = string.Empty;
             DataTable dtPOS = new DataTable();
-            int TotalRows = 0;
+            
             dtPOS = objPOS.GetPOS();
             if (dtPOS.Rows.Count > 0)
             {
@@ -84,25 +84,25 @@ namespace Cargo
                     sb.Append(",");
                     sb.AppendFormat(@"""DT_RowClass"": ""{0}""", rowClass);
                     sb.Append(",");
-                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 90px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["id_agen_generator"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["id_agen_generator"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 60px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["daerah"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["daerah"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["kota"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["kota"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["name"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""3"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["name"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""4"": ""{0}""", "<div style='text-overflow: ellipsis; width: 70px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["tipe_lokasi"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""4"": ""{0}""", "<div style='text-overflow: ellipsis; width: 50px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["tipe_lokasi"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; width: 140px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["alamat_lokasi"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; width: 210px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["alamat_lokasi"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""6"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["pos_status"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""6"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtPOS.Rows[i]["pos_status"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(","); 
 
                     sb.AppendFormat(@"""7"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");

@@ -1,6 +1,6 @@
 
 
-IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[USP_GetRecommend]]') AND type in (N'P', N'PC'))
+IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[USP_GetRecommend]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].[USP_GetRecommend]
 GO
  

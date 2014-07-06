@@ -29,7 +29,7 @@ var BindCustomerTable = function () {
         "bAutoWidth": false,
         "bDestroy": true,
         "bDeferRender": true,
-        "bFilter": true,
+        "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
         "sAjaxSource": "POS.aspx/GetPOS",

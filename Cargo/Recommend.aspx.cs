@@ -67,7 +67,7 @@ namespace Cargo
             var sb = new StringBuilder();
             string outputJson = string.Empty;
             DataTable dtRecommend = new DataTable();
-            int TotalRows = 0;
+            
             dtRecommend = objRecommend.GetRecommend();
             if (dtRecommend.Rows.Count > 0)
             {

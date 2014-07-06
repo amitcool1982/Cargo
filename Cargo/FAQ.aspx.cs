@@ -18,30 +18,58 @@ using System.Diagnostics;
 using System.Collections;
 using System.IO;
 using System.Web.Script;
-using Cargo.SQL;
+using Cargo.BLL;
 
 namespace Cargo
 {
-    public partial class Customer : System.Web.UI.Page
+    public partial class FAQ : System.Web.UI.Page
     {
         static int sEcho = 1;
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
 
         public int PageSize
         {
             get
-            {
-                return 20;
+            {                
+                return 20;                
             }
             set { Session["PageSize"] = Convert.ToString(value); }
+        }
+
+        object GetSQLSafeValue(object obj)
+        {
+            if (obj == null)
+                return DBNull.Value;
+            else if (obj.ToString().Length == 0)
+                return DBNull.Value;
+            else
+                return obj;
+        }
+
+       
+        public DataTable GetFAQs(int PageIndex, int PageSize, string SearchFilter, string SortBy, int SortDirection)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[5];
+            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(1000));
+            oParam[1] = DBHelper.GetParam("@piPageNumber", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(PageIndex));
+            oParam[2] = DBHelper.GetParam("@piSortedBy", SqlDbType.VarChar, 20, ParameterDirection.Input, GetSQLSafeValue(SortBy));
+            oParam[3] = DBHelper.GetParam("@piSearchFilter", SqlDbType.VarChar, -1, ParameterDirection.Input, SearchFilter);
+            oParam[4] = DBHelper.GetParam("@piSortDirection", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(SortDirection));
+            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetFAQ", oParam).Tables[0];
+
+            return otable;
         }
 
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static string GetCustomers(int PageIndex, int PageSize, string SortCol, string SortDir, string SearchFilter)
+        public static string GetFAQs(int PageIndex, int PageSize, string SortCol, string SortDir, string SearchFilter)
         {
-
-            Customer objCustomer = new Customer();
+            FAQ objFAQ = new FAQ();
             Hashtable objHT = new Hashtable();
             string totalRecords = "";
             string totalDisplayRecords = "";
@@ -49,39 +77,22 @@ namespace Cargo
             string rowClass = "";
             var sb = new StringBuilder();
             string outputJson = string.Empty;
-            DataTable dtCustomer = new DataTable();
+            DataTable dtFAQ = new DataTable();
 
-            string SortBy = "id_generator";
+            string SortBy = "id";
             int SortDirection = 1;
             if (SortCol == "0")
             {
-                SortBy = "id_generator";
+                SortBy = "id";
             }
             else if (SortCol == "1")
             {
-                SortBy = "email";
+                SortBy = "tanya";
             }
             else if (SortCol == "2")
             {
-                SortBy = "nama_lengkap";
+                SortBy = "count";
             }
-            else if (SortCol == "3")
-            {
-                SortBy = "telepon";
-            }
-            else if (SortCol == "4")
-            {
-                SortBy = "kota";
-            }
-            else if (SortCol == "5")
-            {
-                SortBy = "join_datetime";
-            }
-            else if (SortCol == "6")
-            {
-                SortBy = "last_login";
-            }
-
 
             if (SortDir == "asc")
             {
@@ -92,43 +103,32 @@ namespace Cargo
                 SortDirection = 0;
             }
 
-            dtCustomer = SQL.BLL.GetCustomersList(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
-            if (dtCustomer.Rows.Count > 0)
+            
+            dtFAQ = objFAQ.GetFAQs(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
+            if (dtFAQ.Rows.Count > 0)
             {
-                for (int i = 0; i < dtCustomer.Rows.Count; i++)
+                for (int i = 0; i < dtFAQ.Rows.Count; i++)
                 {
                     if (totalRecords.Length == 0)
                     {
-                        totalRecords = dtCustomer.Rows.Count.ToString();
-                        totalDisplayRecords = dtCustomer.Rows.Count.ToString();
+                        totalRecords = dtFAQ.Rows.Count.ToString();
+                        totalDisplayRecords = dtFAQ.Rows.Count.ToString();
                     }
                     sb.Append("{");
                     sb.AppendFormat(@"""id"": ""{0}""", count++);
                     sb.Append(",");
                     sb.AppendFormat(@"""DT_RowClass"": ""{0}""", rowClass);
                     sb.Append(",");
-                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["ID"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 50px;overflow: hidden;'><nobr>" + dtFAQ.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 140px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["email"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 250px;overflow: hidden;'><nobr>" + dtFAQ.Rows[i]["tanya"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["nama_lengkap"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 40px;overflow: hidden;'><nobr>" + dtFAQ.Rows[i]["count"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div style='text-overflow: ellipsis; width: 90px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["telepon"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
-                    sb.Append(",");
-
-                    sb.AppendFormat(@"""4"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["kota"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
-                    sb.Append(",");
-
-                    sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; width: 120px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["join_datetime"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
-                    sb.Append(",");
-
-                    sb.AppendFormat(@"""6"": ""{0}""", "<div style='text-overflow: ellipsis; width: 100px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["last_login"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
-                    sb.Append(",");
-
-                    sb.AppendFormat(@"""7"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 

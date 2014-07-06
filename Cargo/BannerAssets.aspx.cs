@@ -22,7 +22,7 @@ using Cargo.BLL;
 
 namespace Cargo
 {
-    public partial class Category : System.Web.UI.Page
+    public partial class BannerAssets : System.Web.UI.Page
     {
         static int sEcho = 1;
         protected void Page_Load(object sender, EventArgs e)
@@ -42,16 +42,16 @@ namespace Cargo
 
 
 
-        public DataTable GetCategory(int PageIndex,int PageSize,string SearchFilter,string SortBy,int SortDirection)
+        public DataTable GetUsers(int PageIndex, int PageSize, string SearchFilter, string SortBy, int SortDirection)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[5];
-            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(PageSize));
+            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(1000));
             oParam[1] = DBHelper.GetParam("@piPageNumber", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(PageIndex));
             oParam[2] = DBHelper.GetParam("@piSortedBy", SqlDbType.VarChar, 20, ParameterDirection.Input, GetSQLSafeValue(SortBy));
             oParam[3] = DBHelper.GetParam("@piSearchFilter", SqlDbType.VarChar, -1, ParameterDirection.Input, SearchFilter);
             oParam[4] = DBHelper.GetParam("@piSortDirection", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(SortDirection));
-            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetItemCategory", oParam).Tables[0];
+            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetUsers", oParam).Tables[0];
 
             return otable;
         }
@@ -67,9 +67,9 @@ namespace Cargo
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static string GetCategories(int PageIndex, int PageSize, string SortCol, string SortDir,string SearchFilter)
+        public static string GetUsers(int PageIndex, int PageSize, string SortCol, string SortDir, string SearchFilter)
         {
-            Category objCategory = new Category();
+            Users objUsers = new Users();
             Hashtable objHT = new Hashtable();
             string totalRecords = "";
             string totalDisplayRecords = "";
@@ -77,7 +77,7 @@ namespace Cargo
             string rowClass = "";
             var sb = new StringBuilder();
             string outputJson = string.Empty;
-            DataTable dtCategory = new DataTable();
+            DataTable dtUsers = new DataTable();
             string SortBy = "id";
             int SortDirection = 1;
             if (SortCol == "0")
@@ -101,28 +101,28 @@ namespace Cargo
             {
                 SortDirection = 0;
             }
-            dtCategory = objCategory.GetCategory(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
-            if (dtCategory.Rows.Count > 0)
+            dtUsers = objUsers.GetUsers(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
+            if (dtUsers.Rows.Count > 0)
             {
-                for (int i = 0; i < dtCategory.Rows.Count; i++)
+                for (int i = 0; i < dtUsers.Rows.Count; i++)
                 {
                     if (totalRecords.Length == 0)
                     {
-                        totalRecords = dtCategory.Rows[i]["TotalCount"].ToString();
-                        totalDisplayRecords = dtCategory.Rows[i]["TotalCount"].ToString();
+                        totalRecords = dtUsers.Rows[i]["TotalCount"].ToString();
+                        totalDisplayRecords = dtUsers.Rows[i]["TotalCount"].ToString();
                     }
                     sb.Append("{");
                     sb.AppendFormat(@"""id"": ""{0}""", count++);
                     sb.Append(",");
                     sb.AppendFormat(@"""DT_RowClass"": ""{0}""", rowClass);
                     sb.Append(",");
-                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Id"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 60px;overflow: hidden;'><nobr>" + dtUsers.Rows[i]["Id"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 270px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Alias"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 200px;overflow: hidden;'><nobr>" + dtUsers.Rows[i]["nama_lengkap"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 130px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Category"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 140px;overflow: hidden;'><nobr>" + dtUsers.Rows[i]["last_login"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
                     sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
@@ -163,7 +163,7 @@ namespace Cargo
             return outputJson;
         }
 
-        public static int AddItemCategory(string Name, string Alias)
+        public static int AddUsers(string Name, string Alias)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[3];
@@ -174,7 +174,7 @@ namespace Cargo
             return 1;
         }
 
-        public static int UpdateItemCategory(string Name, string Alias, int id)
+        public static int UpdateUsers(string Name, string Alias, int id)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[3];
@@ -185,7 +185,7 @@ namespace Cargo
             return 1;
         }
 
-        public static int DeleteItemCategory(int id)
+        public static int DeleteUsers(int id)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[1];
@@ -198,20 +198,20 @@ namespace Cargo
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
         public static int AddCategory(string Name, string Alias)
         {
-            return AddItemCategory(Name, Alias);
+            return AddUsers(Name, Alias);
         }
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
         public static int UpdateCategory(string Name, string Alias,string Id)
         {
-            return UpdateItemCategory(Name, Alias,int.Parse(Id));
+            return UpdateUsers(Name, Alias, int.Parse(Id));
         }
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
         public static int DeleteCategory(string id)
         {
-            return DeleteItemCategory(int.Parse(id));
+            return DeleteUsers(int.Parse(id));
         }
     
     }
