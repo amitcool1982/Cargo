@@ -1,5 +1,11 @@
-﻿$(document).ready(function () {
-    BindRecommendTable();
+﻿var table = null;
+var id = 0;
+
+$(document).ready(function () {
+    table = BindRecommendTable();
+    $("#txtSearch").keyup(function (event) {
+        table.fnDraw();
+    });
 });
 
 var BindRecommendTable = function () {

@@ -1,5 +1,10 @@
-﻿$(document).ready(function () {
-    BindCustomerTable();
+﻿var table = null;
+var id = 0;
+$(document).ready(function () {
+    table = BindCustomerTable();
+    $("#txtSearch").keyup(function (event) {
+        table.fnDraw();
+    });
 });
 
 var BindCustomerTable = function () {

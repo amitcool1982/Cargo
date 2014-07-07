@@ -1,6 +1,18 @@
-﻿$(document).ready(function () {
-    BindProvinceTable();
-    BindCityTable();
+﻿var tableProv = null;
+var tableCity = null;
+var id = 0;
+
+$(document).ready(function () {
+    tableProv = BindProvinceTable();
+    tableCity = BindCityTable();
+
+    $("#txtSearchProvince").keyup(function (event) {
+        tableProv.fnDraw();
+    });
+
+    $("#txtSearchCity").keyup(function (event) {
+        tableCity.fnDraw();
+    });
 });
 
 var BindProvinceTable = function () {
@@ -13,7 +25,7 @@ var BindProvinceTable = function () {
         },
         "aoColumns": [
                      { "sWidth": "2em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },                    
+                     { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "5em", "bSortable": false }
         ],
         "bProcessing": true,
@@ -88,7 +100,7 @@ var BindCityTable = function () {
         "aoColumns": [
                      { "sWidth": "2em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },                     
+                     { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "5em", "bSortable": false }
         ],
         "bProcessing": true,
