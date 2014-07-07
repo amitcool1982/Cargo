@@ -28,15 +28,17 @@ BEGIN
 	(
 	RowNum				int identity,
 	id					bigint,	
+	id_menu             varchar(100),
 	nama_menu			varchar(100),
 	tipe_promo			varchar(100),
+	deskripsi_promo     varchar(500),
 	diskon				Int,
 	mulai_promo			datetime,
 	akhir_promo			datetime,
 	)
 	
-	insert into		#temp(id, nama_menu, tipe_promo, diskon, mulai_promo, akhir_promo)
-		select ItemPromo.id, Item.nama_menu, tipe_promo, diskon, mulai_promo, akhir_promo
+	insert into		#temp(id,id_menu, nama_menu, tipe_promo,deskripsi_promo, diskon, mulai_promo, akhir_promo)
+		select ItemPromo.id,ItemPromo.id_menu, Item.nama_menu, tipe_promo,deskripsi_promo, diskon, mulai_promo, akhir_promo
 		from 
 		ledb_menu		Item		With(nolock)	Inner Join
 		ledb_promo_menu	ItemPromo	With(nolock)	On Item.id = ItemPromo.id

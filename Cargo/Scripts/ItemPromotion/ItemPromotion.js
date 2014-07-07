@@ -1,11 +1,39 @@
 ﻿var table = null;
 var id = 0;
 $(document).ready(function () {
+    $('.selectpicker').selectpicker({
+        style: 'form-control formcustom',
+        size: 4
+    });
     table = BindItemPromotionTable();
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
     });
+
+    $('#myTableItemPromotion').on("click", "a.edit", function (e) {
+        e.preventDefault();
+        $("#divsessionexpired").hide();
+
+        /* Get the row as a parent of the link that was clicked on */
+        var nRow = $(this).parents('tr')[0];
+        editRow(table, nRow);
+    });
 });
+
+
+function editRow(Table, nRow) {
+    var aData = Table.fnGetData(nRow);
+    var jqTds = $('>td', nRow);
+    id = $(aData[0]).text();
+    $('#id').val(aData[7]);
+    $('#description').val(aData[8]);
+    $('#discount').val($(aData[3]).text());
+    $('#start').val($(aData[4]).text());
+    $('#end').val($(aData[5]).text());
+    $('#type').selectpicker('val', $(aData[2]).text());
+    $('#btnCancel').show();
+
+}
 
 var BindItemPromotionTable = function () {
 
@@ -22,7 +50,9 @@ var BindItemPromotionTable = function () {
                      { "sWidth": "4em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },                     
-                     { "sWidth": "3em", "bSortable": false }
+                     { "sWidth": "5em", "bSortable": false },
+                     { "bVisible": false },
+                     { "bVisible": false }
         ],
         "bProcessing": true,
         "bServerSide": true,
@@ -85,27 +115,22 @@ var BindItemPromotionTable = function () {
 
 }
 
-
-function SaveCategory() {
-    if ($('#id').val().trim() != '' && $('#type').val().trim() != '' && $('#description').val().trim() != '' && $('#discount').val().trim() != '' && $('#start').val().trim() != '' && $('#end').val().trim() != '') {
-        res = ExecuteSynchronously('ItemPromotion.aspx', 'AddItemPromotion', { itemiD: $("#id").val().trim(), promoType: $("#type").val().trim(), description: $("#description").val().trim(), discount: $("#discount").val().trim(), startPromoAt: $("#start").val().trim(), endPromoAt: $("#end").val().trim() });
-        if (res.d == 1) {
-            table.fnDraw();
-        }
-    }
+function CancelSaving() {
+    id = 0;
+    $('#id').val('');
+    $('#description').val('');
+    $('#discount').val('');
+    $('#start').val('');
+    $('#end').val('');
+    $('#type').selectpicker('val', '');
+    $('#btnCancel').hide();
 }
 
 
 function SaveCategory(obj) {
     $("#divsessionexpired").hide();
     if ($('#id').val().trim() != '' && $('#type').val().trim() != '' && $('#description').val().trim() != '' && $('#discount').val().trim() != '' && $('#start').val().trim() != '' && $('#end').val().trim() != '') {
-        var res = null;
-        if (obj == 0) {
-            res = ExecuteSynchronously('ItemPromotion.aspx', 'AddItemPromotion', { itemiD: $("#id").val().trim(), promoType: $("#type").val().trim(), description: $("#description").val().trim(), discount: $("#discount").val().trim(), startPromoAt: $("#start").val().trim(), endPromoAt: $("#end").val().trim() });
-        }
-        else {
-            res = ExecuteSynchronously('ItemPromotion.aspx', 'UpdateItemPromotion', { itemiD: $("#id").val().trim(), promoType: $("#type").val().trim(), description: $("#description").val().trim(), discount: $("#discount").val().trim(), startPromoAt: $("#start").val().trim(), endPromoAt: $("#end").val().trim(), Id: id });
-        }
+        var res = ExecuteSynchronously('ItemPromotion.aspx', 'AddUpdateItemPromotions', { itemiD: $("#id").val().trim(), promoType: $("#type").val().trim(), description: $("#description").val().trim(), discount: $("#discount").val().trim(), startPromoAt: $("#start").val().trim(), endPromoAt: $("#end").val().trim(), Id: id });
         if (res.d == 1) {
             table.fnDraw();
             $('#id').val('');

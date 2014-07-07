@@ -147,7 +147,13 @@ namespace Cargo
                     sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; width: 130px;overflow: hidden;'><nobr>" + dtItemPromotion.Rows[i]["akhir_promo"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='like' href='javascript:void(0)'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.Append(",");
+
+                    sb.AppendFormat(@"""7"": ""{0}""", dtItemPromotion.Rows[i]["id_menu"].ToString().Replace("\"", "\\" + "\""));
+                    sb.Append(",");
+
+                    sb.AppendFormat(@"""8"": ""{0}""", dtItemPromotion.Rows[i]["deskripsi_promo"].ToString().Replace("\"", "\\" + "\""));
                     sb.Append("},");
                 }
 
@@ -184,8 +190,10 @@ namespace Cargo
             }
             return outputJson;
         }
-
-        public static int AddItemPromotion(long itemiD, string promoType, string description, int discount, DateTime startPromoAt, DateTime endPromoAt, int id)
+        
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int AddUpdateItemPromotion(long itemiD, string promoType, string description, int discount, DateTime startPromoAt, DateTime endPromoAt, int id)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[7];
@@ -195,26 +203,19 @@ namespace Cargo
             oParam[3] = DBHelper.GetParam("@discount", SqlDbType.Int, 100, ParameterDirection.Input, discount);
             oParam[4] = DBHelper.GetParam("@startPromoAt", SqlDbType.DateTime, 100, ParameterDirection.Input, startPromoAt);
             oParam[5] = DBHelper.GetParam("@endPromoAt", SqlDbType.DateTime, 100, ParameterDirection.Input, endPromoAt);
-            oParam[6] = DBHelper.GetParam("@iD", SqlDbType.Int, 100, ParameterDirection.Input, itemiD);            
+            oParam[6] = DBHelper.GetParam("@iD", SqlDbType.Int, 100, ParameterDirection.Input, id);
 
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddItemPromotion", oParam);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateItemPromotion", oParam);
             return 1;
         }
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int AddItemPromotions(long itemiD, string promoType, string description, int discount, DateTime startPromoAt, DateTime endPromoAt)
+        public static int AddUpdateItemPromotions(long itemiD, string promoType, string description, int discount, DateTime startPromoAt, DateTime endPromoAt, int Id)
         {
-            return AddItemPromotion(itemiD, promoType, description, discount, startPromoAt, endPromoAt, 0);
+            return AddUpdateItemPromotion(itemiD, promoType, description, discount, startPromoAt, endPromoAt, Id);
         }
 
-
-        [WebMethod(EnableSession = true)]
-        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int UpdateItemPromotions(long itemiD, string promoType, string description, int discount, DateTime startPromoAt, DateTime endPromoAt, int id)
-        {
-            return AddItemPromotion(itemiD, promoType, description, discount, startPromoAt, endPromoAt, id);
-        }
     
     }
 }

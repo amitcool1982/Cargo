@@ -50,6 +50,8 @@
                                 <th>Start Promos</th>
                                 <th>End Promo</th>
                                 <th><i class="fa fa-user"></i></th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             <label for="type">Promo :</label>
-                            <select id="type" name="type_promo" class="form-control" style="width: 100%;">
+                            <select id="type" name="type_promo" class="selectpicker" data-width="250px" style="width: 100%;">
                                 <option selected="selected" value="">- Promo Type -</option>
                                 <option value="od">Discount Promo</option>
                                 <!-- <option value="dso">Discount &amp; Special Offer</option>
@@ -93,8 +95,8 @@
                             <input id="end" name="end_promo" class="form-control" placeholder="End promo datetime" style="width: 100%;" type="datetime-local">
                         </div>
                         <br>
-                        <button type="submit" onclick="javascript:SaveCategory(1)" class="btn-promo btn btn-success">Submit</button>
-                        <button type="button" class="promotion-show-form btn btn-danger" style="display: none;">Cancel</button>
+                        <button type="submit" onclick="javascript:SaveCategory(0)" class="btn-promo btn btn-success">Submit</button>
+                        <button type="button" id="btnCancel" class="promotion-show-form btn btn-danger" onclick="javascript:CancelSaving()" style="display: none;">Cancel</button>
                     </div>
                 </div>
             </div>

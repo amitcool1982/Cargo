@@ -26,6 +26,8 @@
     <link href="Content/DT_bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="Content/font-awesome.css">
     <script src="Scripts/Common.js"></script>
+    <link href="Content/bootstrap-select.css" rel="stylesheet" />
+    <script src="Scripts/bootstrap-select.js"></script>
     <script type="text/javascript" src="/Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/Scripts/DT_bootstrap.js"></script>
     <!-- <link rel="stylesheet" href="http://admin.cargo.totalit.co.id/salesbox/css/morris-0.4.3.min.css"> -->
