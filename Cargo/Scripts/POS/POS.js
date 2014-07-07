@@ -1,5 +1,10 @@
-﻿$(document).ready(function () {
-    BindCustomerTable();
+﻿var table = null;
+var id = 0;
+$(document).ready(function () {
+    table = BindCustomerTable();
+    $("#txtSearch").keyup(function (event) {
+        table.fnDraw();
+    });
 });
 
 var BindCustomerTable = function () {
@@ -17,7 +22,7 @@ var BindCustomerTable = function () {
                      { "sWidth": "5em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },                     
+                     { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "5em", "bSortable": false }
         ],
         "bProcessing": true,

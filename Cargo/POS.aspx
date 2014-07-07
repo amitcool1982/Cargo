@@ -37,14 +37,11 @@
             <div class="row-fluid">
                 <a class="btn btn-success" href="PosCompany.aspx">Create New Company POS</a>
                 <a class="btn btn-success" href="PosPersonal.aspx">Create New Personal POS</a>
-            </div>
-            <div class="row-fluid">
-                <div class="span6"></div>
                 <div class="span6">
                     <div id="table_filter" class="dataTables_filter">
                         <label>
-                            Search:
-                           <input id="txtSearch" type="text" />
+                            Search:</label>
+                        <input id="txtSearch" type="text" />
                     </div>
                 </div>
             </div>
