@@ -18,7 +18,35 @@ $(document).ready(function () {
         var nRow = $(this).parents('tr')[0];
         editRow(table, nRow);
     });
+
+    $('#myTableItemPromotion').on("click", "a.delete", function (e) {
+        e.preventDefault();
+        $("#divsessionexpired").hide();
+        var nRow = $(this).parents('tr')[0];
+
+        DeleteItemPromotion(table, nRow);
+    });
 });
+
+function DeleteItemPromotion(table, nRow) {
+
+    var aData = table.fnGetData(nRow);
+    $('#ConfirmDeleteItemPromotion').modal('show');
+
+    $('#btnDeleteItemPromotion').on("click", function (e) {
+        try {
+            var res = ExecuteSynchronously('ItemPromotion.aspx', 'DeleteItemPromotion', { Id: $(aData[0]).text() });
+            if (res.d == 1) {
+                $('#ConfirmDeleteItemPromotion').modal('hide');
+                table.fnDraw();
+            }
+        }
+        catch (e) {
+            alert(e.message);
+        }
+    });
+
+}
 
 
 function editRow(Table, nRow) {

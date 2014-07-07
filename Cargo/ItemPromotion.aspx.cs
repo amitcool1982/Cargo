@@ -146,8 +146,14 @@ namespace Cargo
 
                     sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; width: 130px;overflow: hidden;'><nobr>" + dtItemPromotion.Rows[i]["akhir_promo"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
-
-                    sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='like' href='javascript:void(0)'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    if (dtItemPromotion.Rows[i]["akhir_promo"].ToString() == "1")
+                    {
+                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' title='Item was recommended'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    }
+                    else
+                    {
+                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' title='Item was not recommended'><i class='fa fa-thumbs-down fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    }
                     sb.Append(",");
 
                     sb.AppendFormat(@"""7"": ""{0}""", dtItemPromotion.Rows[i]["id_menu"].ToString().Replace("\"", "\\" + "\""));
@@ -191,8 +197,7 @@ namespace Cargo
             return outputJson;
         }
         
-        [WebMethod(EnableSession = true)]
-        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        
         public static int AddUpdateItemPromotion(long itemiD, string promoType, string description, int discount, DateTime startPromoAt, DateTime endPromoAt, int id)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
@@ -216,6 +221,20 @@ namespace Cargo
             return AddUpdateItemPromotion(itemiD, promoType, description, discount, startPromoAt, endPromoAt, Id);
         }
 
-    
+        public static int DeletePromotion(int id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteItemCategory", oParam);
+            return 1;
+        }
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int DeleteItemPromotion(int Id)
+        {
+            return DeletePromotion(Id);
+        } 
     }
 }
