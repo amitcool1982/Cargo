@@ -28,11 +28,12 @@ BEGIN
 	(
 	RowNum			int identity,
 	ID				int,
+	Alias           varchar(200),
 	nama_daerah		nvarchar(200)
 	)
 	
-	insert into #temp(ID,nama_daerah)
-	select			id,nama_daerah  from ledb_daerah with(nolock)	
+	insert into #temp(ID,Alias,nama_daerah)
+	select			id,alias,nama_daerah  from ledb_daerah with(nolock)	
 	where id like ('%' + @piSearchFilter + '%') OR nama_daerah like ('%' + @piSearchFilter + '%')
 	ORDER BY 
 					CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,

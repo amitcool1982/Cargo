@@ -76,7 +76,7 @@
     <Content Include="Content\site.css" />
     <Content Include="Customer.aspx" />
     <Content Include="Dashboard.aspx" />
-    <Content Include="FAQ.aspx" />   
+    <Content Include="FAQ.aspx" />
     <Content Include="images\logo_2.png" />
     <Content Include="img\Ball Green.gif" />
     <Content Include="img\Ball Red.gif" />
@@ -277,6 +277,7 @@
     <Compile Include="ChangePassword.aspx.designer.cs">
       <DependentUpon>ChangePassword.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Common.cs" />
     <Compile Include="Customer.aspx.cs">
       <DependentUpon>Customer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -386,6 +387,7 @@
     <Compile Include="Vendors.aspx.designer.cs">
       <DependentUpon>Vendors.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Vendor\VendorDetails.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.9.1.min.map" />

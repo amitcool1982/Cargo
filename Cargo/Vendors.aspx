@@ -5,9 +5,10 @@
     <link rel="stylesheet" href="Content/bootstrap.css">
     <link rel="stylesheet" href="Content/sb-admin.css">
     <link rel="stylesheet" href="Content/font-awesome.css">
-
+    <link href="Content/bootstrap-select.css" rel="stylesheet" />
     <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
+    <script src="Scripts/bootstrap-select.js"></script>
     <script src="../Scripts/select2.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
@@ -86,6 +87,7 @@
                             <div class="uploadify-queue" id="banner_upload-queue"></div>
                         </div>
                     </div>
+                    <br />
                     <div>
                         <input name="id" type="hidden">
                         <input name="logo" type="hidden">
@@ -93,52 +95,52 @@
                         <div class="form-inline form-group">
                             <div class="form-group">
                                 <label for="province">Province :</label>
-                                <select name="province" class="province_change form-control" data-selector="city" required="">
-                                    <option selected="selected" value="">- Province -</option>
+                                <select id="ddlProvince" name="ddlProvince" class="selectpicker" data-width="150px" onchange="javascript:BindataonProvinceChange(this)" >
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="city">City :</label>
-                                <select name="city" class="form-control" required="">
-                                    <option selected="selected" value="">- City -</option>
+                                <select id="ddlCity" name="ddlCity" class="selectpicker" data-width="150px">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="name">Vendors Name :</label>
-                            <input id="name" required="" name="name" placeholder="Type vendor name here.." class="form-control" type="text">
+                            <input id="name" name="name" placeholder="Type vendor name here.." class="form-control" type="text">
                         </div>
                         <div class="form-group">
                             <label for="url">URL Alias :</label>
-                            <input id="url" required="" name="url" placeholder="URL Alias will autocomplete.." class="form-control" type="text">
+                            <input id="url" name="url" placeholder="URL Alias will autocomplete.." class="form-control" type="text">
                         </div>
                         <div class="form-group">
                             <label for="address">Address :</label>
-                            <textarea id="address" required="" name="address" class="form-control" placeholder="Type complete address here.."></textarea>
+                            <textarea id="address" name="address" class="form-control" placeholder="Type complete address here.."></textarea>
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <img id="logo-preview" src="images/no_picture.jpg" style="width: 200px; height: 100px;">
+                                <img id="logopreview" src="images/no_picture.jpg" style="width: 200px; height: 100px;">
                             </div>
                             <div class="col-lg-8">
                                 <div class="form-group">
                                     <label for="phone">Phone :</label>
-                                    <input id="phone" required="" name="phone" placeholder="Phone or Handphone" class="form-control" type="text">
+                                    <input id="phone" name="phone" placeholder="Phone or Handphone" class="form-control" type="text">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email :</label>
-                                    <input id="email" required="" name="email" placeholder="Type valid email here.." class="form-control" type="text">
+                                    <input id="email" name="email" placeholder="Type valid email here.." class="form-control" type="text">
                                 </div>
                             </div>
                         </div>
                         <div class="row-fluid">
-                            <img id="image-preview" src="images/no_picture_wide.png" class="img-thumbnail" style="width: 100%;">
+                            <img id="imagepreview" src="images/no_picture_wide.png" class="img-thumbnail" style="width: 100%;">
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                        <button type="reset" class="btn btn-warning">Reset</button>
-                        <button type="button" class="vendors-show-form btn btn-danger" style="display: none;">Cancel</button>
-
+                        <button type="submit" class="btn btn-primary" onclick="javascript:SaveVendor()">Save</button>
+                        <button type="reset" class="btn btn-warning" onclick="javascript:BindPageData(-1)">Reset</button>
+                        <button type="button" id="cancelsave" class="vendors-show-form btn btn-danger" onclick="javascript:BindPageData(-1)" style="display: none;">Cancel</button>
+                        <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px;display:none;">
+                            <strong id="errormsg"></strong>
+                        </div>
 
                     </div>
 
