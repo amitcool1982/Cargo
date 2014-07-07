@@ -35,7 +35,8 @@
                     <div class="span6"></div>
                     <div class="span6">
                         <div id="table_filter" class="dataTables_filter">
-                            <label>Search: 
+                            <label>
+                                Search: 
                             <input id="txtSearch" type="text" /></label>
                         </div>
                     </div>
@@ -92,14 +93,16 @@
                             <input id="end" name="end_promo" class="form-control" placeholder="End promo datetime" style="width: 100%;" type="datetime-local">
                         </div>
                         <br>
-                        <button type="submit" class="btn-promo btn btn-success">Submit</button>
+                        <button type="submit" onclick="javascript:SaveCategory(1)" class="btn-promo btn btn-success">Submit</button>
                         <button type="button" class="promotion-show-form btn btn-danger" style="display: none;">Cancel</button>
                     </div>
                 </div>
             </div>
 
             <br />
-            <div id="errordiv"></div>
+            <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px; display: none;">
+                <strong id="errormsg"></strong>
+            </div>
         </div>
         <!-- /#page-wrapper -->
 

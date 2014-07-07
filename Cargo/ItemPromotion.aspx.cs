@@ -185,23 +185,36 @@ namespace Cargo
             return outputJson;
         }
 
-        public static int AddItemPromotion(string Name, string Alias)
+        public static int AddItemPromotion(long itemiD, string promoType, string description, int discount, DateTime startPromoAt, DateTime endPromoAt, int id)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[2];
-            oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
-            oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddItemCategory", oParam);
+            SqlParameter[] oParam = new SqlParameter[7];
+            oParam[0] = DBHelper.GetParam("@itemiD", SqlDbType.VarChar, 20, ParameterDirection.Input, itemiD);
+            oParam[1] = DBHelper.GetParam("@promoType", SqlDbType.VarChar, 100, ParameterDirection.Input, promoType);
+            oParam[2] = DBHelper.GetParam("@description", SqlDbType.VarChar, 200, ParameterDirection.Input, description);
+            oParam[3] = DBHelper.GetParam("@discount", SqlDbType.Int, 100, ParameterDirection.Input, discount);
+            oParam[4] = DBHelper.GetParam("@startPromoAt", SqlDbType.DateTime, 100, ParameterDirection.Input, startPromoAt);
+            oParam[5] = DBHelper.GetParam("@endPromoAt", SqlDbType.DateTime, 100, ParameterDirection.Input, endPromoAt);
+            oParam[6] = DBHelper.GetParam("@iD", SqlDbType.Int, 100, ParameterDirection.Input, itemiD);            
+
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddItemPromotion", oParam);
             return 1;
         }
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int AddItemPromotions(string Name, string Alias)
+        public static int AddItemPromotions(long itemiD, string promoType, string description, int discount, DateTime startPromoAt, DateTime endPromoAt)
         {
-            return AddItemPromotion(Name, Alias);
+            return AddItemPromotion(itemiD, promoType, description, discount, startPromoAt, endPromoAt, 0);
         }
-    
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int UpdateItemPromotions(long itemiD, string promoType, string description, int discount, DateTime startPromoAt, DateTime endPromoAt, int id)
+        {
+            return AddItemPromotion(itemiD, promoType, description, discount, startPromoAt, endPromoAt, id);
+        }
     
     }
 }
