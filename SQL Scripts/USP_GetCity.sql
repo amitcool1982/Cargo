@@ -35,7 +35,7 @@ BEGIN
 	insert into #temp(ID,nama_daerah, nama_kota)
 	select			City.id,nama_daerah, nama_kota  from 
 	ledb_kota	City	with(nolock)	Inner Join
-	ledb_daerah	Prov	with(nolock)	On	City.alias_daerah	=	prov.nama_daerah 
+	ledb_daerah	Prov	with(nolock)	On	City.alias_daerah	=	prov.alias 
 	where	City.id				like ('%' + @piSearchFilter + '%') OR 
 			nama_daerah		like ('%' + @piSearchFilter + '%') OR 
 			nama_kota		like ('%' + @piSearchFilter + '%')
