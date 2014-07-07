@@ -3,14 +3,14 @@
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
+<head>   
+    <meta charset="utf-8" />
     <title>Dashboard - Management</title>
+    <meta name="description" content="" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development." />
+    <meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, bootstrap, front-end, frontend, web development" />
     <link rel="shortcut icon" type="image/ico" href="http://admin.cargo.totalit.co.id/favicon.ico">
     <!-- Bootstrap core CSS -->
     <link href="Content/bootstrap.css" rel="stylesheet" />
@@ -20,6 +20,7 @@
         }
     </style>
     <!-- Add custom CSS here -->
+    <script src="/Scripts/jquery-1.9.1.min.js"></script>
     <link href="Content/sb-admin.css" rel="stylesheet">
     <%--<link href="Content/site.css" rel="stylesheet" />--%>
     <link href="Content/DT_bootstrap.css" rel="stylesheet" />
@@ -28,7 +29,7 @@
     <script type="text/javascript" src="/Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/Scripts/DT_bootstrap.js"></script>
     <!-- <link rel="stylesheet" href="http://admin.cargo.totalit.co.id/salesbox/css/morris-0.4.3.min.css"> -->
-    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    
     <script src="Scripts/plugins.js"></script>
     <script type="text/javascript">
         function logout() {

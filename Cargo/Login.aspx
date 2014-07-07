@@ -17,12 +17,13 @@
 
     <!-- Custom styles for this template -->    
     <link href="Content/signin.css" rel="stylesheet" />
-    <script src="Scripts/Common.js"></script>
+    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="../Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/Common.js"></script>
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script type="text/javascript"  src="../Scripts/DT_bootstrap.js"></script>
+    
    
     <script type="text/javascript" src="../Scripts/Login/Login.js"></script>
 </head>

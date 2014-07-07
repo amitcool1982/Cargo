@@ -209,9 +209,9 @@ namespace Cargo
         }
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int DeleteCategory(string id)
+        public static int DeleteCategory(string Id)
         {
-            return DeleteItemCategory(int.Parse(id));
+            return DeleteItemCategory(int.Parse(Id));
         }
     
     }
