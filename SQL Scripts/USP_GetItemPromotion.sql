@@ -39,7 +39,7 @@ BEGIN
 	)
 	
 	insert into		#temp(id,id_menu, nama_menu, tipe_promo,deskripsi_promo, diskon, mulai_promo, akhir_promo,IsRecommended)
-		select ItemPromo.id,ItemPromo.id_menu, Item.nama_menu, tipe_promo,deskripsi_promo, diskon, mulai_promo, akhir_promo,is_recommended
+		select ItemPromo.id,ItemPromo.id_menu, Item.nama_menu, Case When tipe_promo = 'od' then 'Only Discount' End,deskripsi_promo, diskon, mulai_promo, akhir_promo,is_recommended
 		from 
 		ledb_menu		Item		With(nolock)	Inner Join
 		ledb_promo_menu	ItemPromo	With(nolock)	On Item.menu_id_generator = ItemPromo.id_menu

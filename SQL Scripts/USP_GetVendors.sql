@@ -46,7 +46,7 @@ BEGIN
       ,[id_vendors_generator]
       ,[alias_daerah]
       ,[alias_kota]
-      ,[alias_vendors]
+      ,[nama_vendors]
       ,[nama_vendors]
       ,[alamat_vendors]
       ,[tlp_vendors]
@@ -59,8 +59,8 @@ BEGIN
 	ORDER BY 
 					CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,
 					CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 0 THEN id END DESC,
-					CASE WHEN @piSortedBy = 'alias_vendors' AND @piSortDirection = 1 THEN alias_vendors END ASC,
-					CASE WHEN @piSortedBy = 'alias_vendors' AND @piSortDirection = 0 THEN alias_vendors END DESC
+					CASE WHEN @piSortedBy = 'nama_vendors' AND @piSortDirection = 1 THEN alias_vendors END ASC,
+					CASE WHEN @piSortedBy = 'nama_vendors' AND @piSortDirection = 0 THEN alias_vendors END DESC
 					
 
 	Select @TotalCount=COUNT(*) from #temp				

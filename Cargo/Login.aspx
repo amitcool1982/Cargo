@@ -42,7 +42,7 @@
                 </asp:ScriptManager>
                 <h3 class="form-signin-heading text-center">
                     <img src="images/logo_2.png"></h3>
-                <input id="txtLoginID" name="txtLoginID" class="form-control" placeholder="Username" value="super_admin" required="" autofocus="" type="text">
+                <input id="txtLoginID" name="txtLoginID" class="form-control" placeholder="Username" required="" autofocus="" type="text">
                 <input id="txtPassword" name="txtPassword" class="form-control" placeholder="Password" required="" type="password">
                 <label class="checkbox">
                     <input id="chkRemember" name="chkRemember" type="checkbox">

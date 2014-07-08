@@ -22,7 +22,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>Promotion <small>Configuration</small></h1>
+                    <h1>Promotion <small>Config</small></h1>
                     <ol class="breadcrumb">
                         <li><a href="Dashboard.aspx"><i class="icon-dashboard"></i>Dashboard</a></li>
                         <li class="active">Promotion</li>
@@ -47,7 +47,7 @@
                                 <th>Item</th>
                                 <th>Promo</th>
                                 <th>Dsc(%)</th>
-                                <th>Start Promos</th>
+                                <th>Start Promo</th>
                                 <th>End Promo</th>
                                 <th><i class="fa fa-user"></i></th>
                                 <th></th>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             <label for="type">Promo :</label>
-                            <select id="type" name="type_promo" class="selectpicker" data-width="250px" style="width: 100%;">
+                            <select id="type" name="type_promo" class="selectpicker" data-width="300px" style="width: 100%;">
                                 <option selected="selected" value="">- Promo Type -</option>
                                 <option value="od">Discount Promo</option>
                                 <!-- <option value="dso">Discount &amp; Special Offer</option>

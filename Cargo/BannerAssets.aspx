@@ -141,30 +141,30 @@
             <link href="content/uploadify.css" rel="stylesheet">
             <script src="js/jquery_002.js"></script>
             <script>
-                $(function () {
-                    $("#file_upload").uploadify({
-                        'buttonClass': 'btn btn-primary btn-block',
-                        'fileTypeDesc': 'Image Files',
-                        'fileType': 'image/*',
-                        'fileTypeExts': '*.jpg',
-                        'formData': {
-                            'timestamp': '1404542940',
-                            'token': '67e955c873aaee13c6aea83629bdcaf9'
-                        },
-                        'swf': '/adminbox/uploadify/uploadify.swf',
-                        'uploader': 'upload_banner',
-                        'onUploadSuccess': function (file, data, response) {
-                            var json = $.parseJSON(data);
-                            console.log(json);
-                            console.log(json.message.path);
-                            var base = $('#base').text();
-                            $('img#image-preview').attr('src', base + 'timthumb.php?src=' + base + json.message.path + '&w=245&h=190');
+                //$(function () {
+                //    $("#file_upload").uploadify({
+                //        'buttonClass': 'btn btn-primary btn-block',
+                //        'fileTypeDesc': 'Image Files',
+                //        'fileType': 'image/*',
+                //        'fileTypeExts': '*.jpg',
+                //        'formData': {
+                //            'timestamp': '1404542940',
+                //            'token': '67e955c873aaee13c6aea83629bdcaf9'
+                //        },
+                //        'swf': '/adminbox/uploadify/uploadify.swf',
+                //        'uploader': 'upload_banner',
+                //        'onUploadSuccess': function (file, data, response) {
+                //            var json = $.parseJSON(data);
+                //            console.log(json);
+                //            console.log(json.message.path);
+                //            var base = $('#base').text();
+                //            $('img#image-preview').attr('src', base + 'timthumb.php?src=' + base + json.message.path + '&w=245&h=190');
 
-                            $('form#create-banner input[name="path"]').attr('value', json.message.path);
-                        }
-                    });
+                //            $('form#create-banner input[name="path"]').attr('value', json.message.path);
+                //        }
+                //    });
 
-                });
+                //});
 
                 $(document).ready(function () {
                     var base = $('#base').text();

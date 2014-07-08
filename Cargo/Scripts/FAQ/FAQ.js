@@ -32,7 +32,7 @@ var BindcategoryTable = function () {
         },
         "aoColumns": [
                      { "sWidth": "3em", "bSortable": true },
-                     { "sWidth": "10em", "bSortable": true },
+                     { "sWidth": "12em", "bSortable": true },
                      { "sWidth": "2em", "bSortable": true },
                      { "sWidth": "2em", "bSortable": false }
         ],

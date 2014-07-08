@@ -15,7 +15,7 @@
     <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
     <script src="../Scripts/select2.js"></script>
     <script src="js/ckeditor.js"></script>
-    <script>
+    <%--<script>
         CKEDITOR.replace('answer', {
             toolbar: [
                 ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
@@ -50,7 +50,7 @@
                 }
             });
         }
-    </script>
+    </script>--%>
 
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
