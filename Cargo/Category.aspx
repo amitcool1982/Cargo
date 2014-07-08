@@ -38,7 +38,7 @@
 
             <div class="row">
                 <div class="col-lg-7">
-                    <label style="margin-left: 380px">Search:</label>
+                    <label style="margin-left: 420px">Search:</label>
                     <input id="txtSearch" type="text" />
                     <table id="myTableCategory" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
@@ -57,12 +57,12 @@
                     <h2 style="display: inline">Form&nbsp;Category</h2>
                     <div class="form-group">
                         <label>Name</label><br />
-                        <input type="text" class="form-control formcustom" id="txtname" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal"
+                        <input type="text" class="form-control formcustom" id="txtname" onkeyup="javascript:FillAlias()" style="width: 430px; line-height: normal"
                             placeholder="Type category name here.." />
                     </div>
                     <div class="form-group">
                         <label>Alias</label><br />
-                        <input type="text" class="form-control formcustom" id="txtalias" style="width: 250px; line-height: normal" placeholder="URL alias will auto complete.." />
+                        <input type="text" class="form-control formcustom" id="txtalias" style="width: 430px; line-height: normal" placeholder="URL alias will auto complete.." />
                     </div>
                     <div id="save" style="width: 300px">
                         <button type="submit" onclick="javascript:SaveCategory(0)" class="btn btn-info btncustom">Save</button>
