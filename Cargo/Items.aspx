@@ -7,12 +7,12 @@
     <link href="Content/font-awesome.css" rel="stylesheet">
 
     <script src="Scripts/site.js"></script>
-    <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
-    <script type="text/javascript" src="../Scripts/Items/Items.js"></script>
+    <script type="text/javascript" src="Scripts/Items/Items.js"></script>
 
 
 

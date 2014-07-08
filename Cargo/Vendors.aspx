@@ -16,7 +16,7 @@
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
-    <script type="text/javascript" src="../Scripts/Vendors/Vendors.js"></script>
+    <script type="text/javascript" src="Scripts/Vendors/Vendors.js"></script>
 
 
 

@@ -10,7 +10,7 @@
           <div class="col-lg-12">
             <h1>Dashboard <small>Management</small></h1>
             <ol class="breadcrumb">
-              <li><a href="http://admin.cargo.totalit.co.id/index.html"><i class="icon-dashboard"></i> Dashboard</a></li>
+              <li><a href="Dashboard.aspx"><i class="icon-dashboard"></i> Dashboard</a></li>
             </ol>
           </div>
         </div><!-- /.row -->

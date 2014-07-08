@@ -11,7 +11,7 @@
 
     <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
-    <script src="../Scripts/select2.js"></script>
+    <script src="Scripts/select2.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>

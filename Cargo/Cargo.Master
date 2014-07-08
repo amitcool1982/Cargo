@@ -20,7 +20,7 @@
         }
     </style>
     <!-- Add custom CSS here -->
-    <script src="/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
     <link href="Content/sb-admin.css" rel="stylesheet">
     <%--<link href="Content/site.css" rel="stylesheet" />--%>
     <link href="Content/DT_bootstrap.css" rel="stylesheet" />
@@ -28,9 +28,8 @@
     <script src="Scripts/Common.js"></script>
     <link href="Content/bootstrap-select.css" rel="stylesheet" />
     <script src="Scripts/bootstrap-select.js"></script>
-    <script type="text/javascript" src="/Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="/Scripts/DT_bootstrap.js"></script>
-    <!-- <link rel="stylesheet" href="http://admin.cargo.totalit.co.id/salesbox/css/morris-0.4.3.min.css"> -->
+    <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     
     <script src="Scripts/plugins.js"></script>
     <script type="text/javascript">
@@ -118,11 +117,9 @@
             <!-- /.navbar-collapse -->
         </nav>
 
-        <div id="base" style="display: none;">http://admin.cargo.totalit.co.id/</div>
+        <div id="base" style="display: none;"></div>
         <!-- Bootstrap core JavaScript -->
         <script src="Scripts/bootstrap.js"></script>
-        <!--<script src="http://admin.cargo.totalit.co.id/adminbox/js/tablesorter/jquery.tablesorter.js"></script>
-    <script src="http://admin.cargo.totalit.co.id/adminbox/js/tablesorter/tables.js"></script> -->
         <script src="Scripts/bootstrap-datepicker.js"></script>
         <link href="Content/datepicker.css" rel="stylesheet">
         <script> $('#datepicker').datepicker({ format: 'yyyy-mm-dd' });</script>

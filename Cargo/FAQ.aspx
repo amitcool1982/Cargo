@@ -11,9 +11,9 @@
 
     <link href="css/editor_gecko.css" type="text/css" rel="stylesheet">
 
-    <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
-    <script src="../Scripts/select2.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
+    <script src="Scripts/select2.js"></script>
     <script src="js/ckeditor.js"></script>
     <%--<script>
         CKEDITOR.replace('answer', {
@@ -55,7 +55,7 @@
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
-    <script type="text/javascript" src="../Scripts/FAQ/FAQ.js"></script>
+    <script type="text/javascript" src="Scripts/FAQ/FAQ.js"></script>
 
 
 

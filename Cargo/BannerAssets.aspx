@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="Content/font-awesome.min.css">
 
     <script src="Scripts/site.js"></script>
-    <script type="text/javascript" src="../Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="../Scripts/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
@@ -18,7 +18,7 @@
             line-height: 10px;
         }
     </style>
-    <script type="text/javascript" src="../Scripts/BannerAssets/BannerAssets.js"></script>
+    <script type="text/javascript" src="Scripts/BannerAssets/BannerAssets.js"></script>
 
 
 

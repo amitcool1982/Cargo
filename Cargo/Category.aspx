@@ -18,7 +18,7 @@
             line-height: 10px;
         }
     </style>
-    <script type="text/javascript" src="../Scripts/Category/Category.js"></script>
+    <script type="text/javascript" src="Scripts/Category/Category.js"></script>
 
 
 
