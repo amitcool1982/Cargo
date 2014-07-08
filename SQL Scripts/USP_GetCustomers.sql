@@ -38,7 +38,7 @@ BEGIN
 	)
 	
 	Insert into #temp(	ID,				Email, nama_lengkap, telepon, kota, join_datetime, last_login)
-		Select			id_generator,	Email, nama_lengkap, telepon, kota, join_datetime, last_login from ledb_customer With(nolock)	
+		Select			id_generator,	Email, nama_lengkap, telepon, K.nama_kota kota, join_datetime, last_login from ledb_customer C With(nolock) inner join ledb_kota k with(nolock) on k.alias=C.kota 	
 		Where	id_generator	like ('%' + @piSearchFilter + '%') OR 
 				Email			like ('%' + @piSearchFilter + '%') OR 
 				nama_lengkap	like ('%' + @piSearchFilter + '%') OR 
