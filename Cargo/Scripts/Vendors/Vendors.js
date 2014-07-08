@@ -4,8 +4,8 @@ var table = null;
 $(document).ready(function () {
     $('.selectpicker').selectpicker({
         style: 'form-control formcustom',
-    size: 4
-});
+        size: 4
+    });
     table = BindCustomerTable();
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
@@ -53,13 +53,13 @@ var BindCustomerTable = function () {
         },
         "aoColumns": [
                      { "sWidth": "2em", "bSortable": true },
-                     { "sWidth": "8em", "bSortable": true },                                  
+                     { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "5em", "bSortable": false }
         ],
         "bProcessing": true,
         "bServerSide": true,
         "bStateSave": false,
-        "bPaginate": true,
+        "bPaginate": false,
         "bLengthChange": false,//To Hide the Length menu in the Datatables
         "iDisplayLength": Number(PageSize),
         "bAutoWidth": false,

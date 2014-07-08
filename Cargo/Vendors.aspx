@@ -6,10 +6,13 @@
     <link rel="stylesheet" href="Content/sb-admin.css">
     <link rel="stylesheet" href="Content/font-awesome.css">
     <link href="Content/bootstrap-select.css" rel="stylesheet" />
+
+
     <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     <script src="Scripts/bootstrap-select.js"></script>
-    <script src="../Scripts/select2.js"></script>
+    <script src="Scripts/select2.js"></script>
+
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
@@ -37,7 +40,8 @@
                     <div class="span6"></div>
                     <div class="span6">
                         <div id="table_filter" class="dataTables_filter">
-                            <label>Search: 
+                            <label>
+                                Search: 
                             <input id="txtSearch" type="text" /></label>
                         </div>
                     </div>
@@ -95,7 +99,7 @@
                         <div class="form-inline form-group">
                             <div class="form-group">
                                 <label for="province">Province :</label>
-                                <select id="ddlProvince" name="ddlProvince" class="selectpicker" data-width="150px" onchange="javascript:BindataonProvinceChange(this)" >
+                                <select id="ddlProvince" name="ddlProvince" class="selectpicker" data-width="150px" onchange="javascript:BindataonProvinceChange(this)">
                                 </select>
                             </div>
                             <div class="form-group">
@@ -138,7 +142,7 @@
                         <button type="submit" class="btn btn-primary" onclick="javascript:SaveVendor()">Save</button>
                         <button type="reset" class="btn btn-warning" onclick="javascript:BindPageData(-1)">Reset</button>
                         <button type="button" id="cancelsave" class="vendors-show-form btn btn-danger" onclick="javascript:BindPageData(-1)" style="display: none;">Cancel</button>
-                        <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px;display:none;">
+                        <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px; display: none;">
                             <strong id="errormsg"></strong>
                         </div>
 
@@ -153,6 +157,6 @@
             <!-- /#page-wrapper -->
 
         </div>
-    <!-- /#wrapper -->
+        <!-- /#wrapper -->
     </div>
 </asp:Content>
