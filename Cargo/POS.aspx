@@ -37,16 +37,17 @@
             <div class="row-fluid">
                 <a class="btn btn-success" href="PosCompany.aspx">Create New Company POS</a>
                 <a class="btn btn-success" href="PosPersonal.aspx">Create New Personal POS</a>
-                <div class="span6">
+                <%--<div class="span6">
                     <div id="table_filter" class="dataTables_filter">
-                        <label>
-                            Search:</label>
+                        <label style="margin-left:-100px">Search:</label>
                         <input id="txtSearch" type="text" />
                     </div>
-                </div>
+                </div>--%>
             </div>
             <div class="row">
                 <div class="col-lg-12">
+                    <label style="margin-left: 870px">Search:</label>
+                    <input id="txtSearch" type="text" />
                     <table id="myTablePOS" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
                             <tr>
