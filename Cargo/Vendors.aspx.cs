@@ -95,7 +95,7 @@ namespace Cargo
                     sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 180px;overflow: hidden;'><nobr>" + dtVendors.Rows[i]["alias_vendors"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""2"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtVendors.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' class='vendors-show-form update-form' data-toggle='tooltip' title='update data vendors'><i class='fa fa-edit fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""2"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtVendors.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' class='edit' data-toggle='tooltip' title='update data vendors'><i class='fa fa-edit fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 
