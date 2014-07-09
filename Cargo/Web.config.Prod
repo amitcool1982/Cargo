@@ -33,10 +33,8 @@
       </authorization>
     </system.web>
   </location>
-  <connectionStrings>
-    <add name="ConnectionString1" connectionString="server=MONU-PC\SQLEXPRESS;database=cargo-db;Integrated Security=SSPI;" />
-    <!--<add name="ConnectionString1" connectionString="server=epayAmit-hp;database=cargo-db;uid=sa;pwd=passw0rd"/>
-    <add name="ConnectionString1" connectionString="Data Source=tcp:s09.winhost.com;Initial Catalog=DB_76486_totalindo;User ID=DB_76486_totalindo_user;Password=cargo;Integrated Security=False"/>-->
+  <connectionStrings>    
+    <add name="ConnectionString1" connectionString="Data Source=tcp:s09.winhost.com;Initial Catalog=DB_76486_totalindo;User ID=DB_76486_totalindo_user;Password=cargo;Integrated Security=False"/>
   </connectionStrings>
   <appSettings>
     <add key="SessionTimeout" value="30"/>

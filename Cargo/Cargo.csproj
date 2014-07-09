@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,6 +38,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -47,9 +49,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -76,6 +78,115 @@
     <Content Include="Content\site.css" />
     <Content Include="Customer.aspx" />
     <Content Include="Dashboard.aspx" />
+    <Content Include="editor\dist\bootstrap3-wysihtml5.all.min.js" />
+    <Content Include="editor\dist\bootstrap3-wysihtml5.css" />
+    <Content Include="editor\dist\bootstrap3-wysihtml5.js" />
+    <Content Include="editor\dist\bootstrap3-wysihtml5.min.css" />
+    <Content Include="editor\dist\bootstrap3-wysihtml5.min.js" />
+    <Content Include="editor\dist\commands.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.ar-AR.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.bg-BG.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.ca-CT.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.cs-CZ.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.da-DK.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.de-DE.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.el-GR.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.en-US.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.es-AR.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.es-ES.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.fr-FR.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.hr-HR.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.hu-HU.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.il-HE.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.it-IT.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.ja-JP.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.ko-KR.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.lt-LT.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.mo-MD.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.nb-NB.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.nl-NL.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.pl-PL.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.pt-BR.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.ru-RU.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.sk-SK.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.sv-SE.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.tr-TR.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.ua-UA.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.zh-CN.js" />
+    <Content Include="editor\dist\locales\bootstrap-wysihtml5.zh-TW.js" />
+    <Content Include="editor\dist\templates.js" />
+    <Content Include="editor\Gruntfile.js" />
+    <Content Include="editor\index-all.html" />
+    <Content Include="editor\index-dev.html" />
+    <Content Include="editor\index-multi-dev.html" />
+    <Content Include="editor\index.html" />
+    <Content Include="editor\src\bootstrap3-wysihtml5.css" />
+    <Content Include="editor\src\bootstrap3-wysihtml5.js" />
+    <Content Include="editor\src\commands\small.js" />
+    <Content Include="editor\src\generated\commands.js" />
+    <Content Include="editor\src\generated\templates.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.ar-AR.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.bg-BG.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.ca-CT.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.cs-CZ.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.da-DK.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.de-DE.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.el-GR.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.en-US.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.es-AR.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.es-ES.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.fr-FR.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.hr-HR.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.hu-HU.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.il-HE.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.it-IT.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.ja-JP.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.ko-KR.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.lt-LT.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.mo-MD.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.nb-NB.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.nl-NL.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.pl-PL.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.pt-BR.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.ru-RU.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.sk-SK.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.sv-SE.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.tr-TR.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.ua-UA.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.zh-CN.js" />
+    <Content Include="editor\src\locales\bootstrap-wysihtml5.zh-TW.js" />
+    <Content Include="editor\test\assert\html_equal_test.js" />
+    <Content Include="editor\test\bootstrap3_wysihtml5\parserRules_test.js" />
+    <Content Include="editor\test\browser_test.js" />
+    <Content Include="editor\test\dom\auto_link_test.js" />
+    <Content Include="editor\test\dom\contains_test.js" />
+    <Content Include="editor\test\dom\convert_to_list_test.js" />
+    <Content Include="editor\test\dom\copy_attributes_test.js" />
+    <Content Include="editor\test\dom\copy_styles_test.js" />
+    <Content Include="editor\test\dom\delegate_test.js" />
+    <Content Include="editor\test\dom\get_as_dom_test.js" />
+    <Content Include="editor\test\dom\get_parent_element_test.js" />
+    <Content Include="editor\test\dom\get_style_test.js" />
+    <Content Include="editor\test\dom\has_element_with_class_name_test.js" />
+    <Content Include="editor\test\dom\has_element_with_tag_name_test.js" />
+    <Content Include="editor\test\dom\insert_css_test.js" />
+    <Content Include="editor\test\dom\observe_test.js" />
+    <Content Include="editor\test\dom\parse_test.js" />
+    <Content Include="editor\test\dom\rename_element_test.js" />
+    <Content Include="editor\test\dom\resolve_list_test.js" />
+    <Content Include="editor\test\dom\sandbox_test.js" />
+    <Content Include="editor\test\dom\set_attributes_test.js" />
+    <Content Include="editor\test\dom\set_styles_test.js" />
+    <Content Include="editor\test\editor_test.js" />
+    <Content Include="editor\test\incompatible_test.js" />
+    <Content Include="editor\test\index-all.html" />
+    <Content Include="editor\test\index-min.html" />
+    <Content Include="editor\test\index.html" />
+    <Content Include="editor\test\lang\array_test.js" />
+    <Content Include="editor\test\lang\object_test.js" />
+    <Content Include="editor\test\lang\string_test.js" />
+    <Content Include="editor\test\quirks\clean_pasted_html_test.js" />
+    <Content Include="editor\test\undo_manager_test.js" />
     <Content Include="FAQ.aspx" />
     <Content Include="images\logo_2.png" />
     <Content Include="img\Ball Green.gif" />
@@ -215,6 +326,21 @@
     <Content Include="fonts\icomoon\blueforce.svg" />
     <Content Include="fonts\icomoon\blueforce.ttf" />
     <Content Include="fonts\icomoon\blueforce.woff" />
+    <Content Include="editor\.bowerrc" />
+    <Content Include="editor\.gitignore" />
+    <Content Include="editor\bower.json" />
+    <Content Include="editor\LICENCE" />
+    <Content Include="editor\package.json" />
+    <Content Include="editor\README.md" />
+    <Content Include="editor\src\templates\blockquote.hbs" />
+    <Content Include="editor\src\templates\color.hbs" />
+    <Content Include="editor\src\templates\emphasis.hbs" />
+    <Content Include="editor\src\templates\font-styles.hbs" />
+    <Content Include="editor\src\templates\html.hbs" />
+    <Content Include="editor\src\templates\image.hbs" />
+    <Content Include="editor\src\templates\link.hbs" />
+    <Content Include="editor\src\templates\lists.hbs" />
+    <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\ItemPromotion\ItemPromotion.js" />
     <Content Include="Scripts\Items\Items.js" />
@@ -388,9 +514,16 @@
       <DependentUpon>Vendors.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vendor\VendorDetails.cs" />
+    <Compile Include="WebForm1.aspx.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebForm1.aspx.designer.cs">
+      <DependentUpon>WebForm1.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Web.config.Prod" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
