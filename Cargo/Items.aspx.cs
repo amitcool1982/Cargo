@@ -59,8 +59,8 @@ namespace Cargo
         public int PageSize
         {
             get
-            {                
-                return 20;                
+            {
+                return 20;
             }
             set { Session["PageSize"] = Convert.ToString(value); }
         }
@@ -97,7 +97,7 @@ namespace Cargo
                 SortBy = "harga_menu";
             }
 
-            
+
 
             if (SortDir == "asc")
             {
@@ -108,6 +108,7 @@ namespace Cargo
                 SortDirection = 0;
             }
             dtItems = objItems.GetItems(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
+            HttpContext.Current.Session["ItemData"] = dtItems;
             if (dtItems.Rows.Count > 0)
             {
                 for (int i = 0; i < dtItems.Rows.Count; i++)
@@ -132,9 +133,9 @@ namespace Cargo
                     sb.Append(",");
 
                     sb.AppendFormat(@"""3"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtItems.Rows[i]["harga_menu"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
-                    sb.Append(",");                    
+                    sb.Append(",");
 
-                    sb.AppendFormat(@"""4"": ""{0}""", "<div><a class='items-dialy-promo' href='javascript:void(0)'><i class='fa fa-usd fa-border'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""4"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='items-dialy-promo' data-toggle='tooltip' data-title='Dialy Promo " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-usd fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='' data-toggle='tooltip' data-title='Item was recommended' ><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='items-show-form update-form' data-toggle='tooltip' data-title='Update Data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-pencil-square-o fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='delete_item' data-toggle='tooltip' data-title='Delete data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 
@@ -188,7 +189,128 @@ namespace Cargo
         {
             return AddItems(Name, Alias);
         }
-    
-    
+
+
+
+
+        public CommonObjects[] GetVendorsList()
+        {
+            DataTable dtVendors = SQL.BLL.GetVendorsList(1000, PageSize, "", "id", 1);
+
+            DataRow newRowVendor = dtVendors.NewRow();
+            newRowVendor["id"] = "-1";
+            newRowVendor["alias_vendors"] = "-Select Vendor-";
+            dtVendors.Rows.InsertAt(newRowVendor, 0);
+            dtVendors.AcceptChanges();
+            CommonObjects[] objVendor = new CommonObjects[dtVendors.Rows.Count];
+            int intCount = 0;
+            foreach (DataRow drw in dtVendors.Rows)
+            {
+                objVendor[intCount] = new CommonObjects();
+                objVendor[intCount].Value = drw["id"].ToString();
+                objVendor[intCount].Text = drw["alias_vendors"].ToString();
+                objVendor[intCount].DefaultValue = objVendor[0].Value;
+                intCount++;
+            }
+            return objVendor;
+        }
+
+        public CommonObjects[] GetItemCategoryList()
+        {
+            DataTable dtItemCategory = SQL.BLL.GetCategoryList(1, 1000, "", "id", 1);
+
+            DataRow newRowItemCategory = dtItemCategory.NewRow();
+            newRowItemCategory["id"] = "-1";
+            newRowItemCategory["Category"] = "-Category-";
+            dtItemCategory.Rows.InsertAt(newRowItemCategory, 0);
+            dtItemCategory.AcceptChanges();
+            CommonObjects[] objVendor = new CommonObjects[dtItemCategory.Rows.Count];
+            int intCount = 0;
+            foreach (DataRow drw in dtItemCategory.Rows)
+            {
+                objVendor[intCount] = new CommonObjects();
+                objVendor[intCount].Value = drw["id"].ToString();
+                objVendor[intCount].Text = drw["Category"].ToString();
+                objVendor[intCount].DefaultValue = objVendor[0].Value;
+                intCount++;
+            }
+            return objVendor;
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static ItemDetail GetItemData(int ItemId)
+        {
+            ItemDetail objItemDetail = new ItemDetail();
+            Items objItem = new Items();
+            DataTable objmainDT = new DataTable();
+            DataRow[] objMainRow = null;
+            if (ItemId != -1)
+            {
+                objmainDT = (DataTable)HttpContext.Current.Session["ItemData"];
+                objMainRow = objmainDT.Select("id=" + ItemId);
+            }
+
+            DataTable dtVendors = new DataTable();
+            dtVendors = SQL.BLL.GetVendorsList(1, 1000, "", "id", 1);
+            DataRow newRowVendor = dtVendors.NewRow();
+            newRowVendor["id"] = "-1";
+            newRowVendor["alias_vendors"] = "-Select Vendor-";
+            dtVendors.Rows.InsertAt(newRowVendor, 0);
+            dtVendors.AcceptChanges();
+            objItemDetail.Vendor = new CommonObjects[dtVendors.Rows.Count];
+            int intCount = 0;
+            foreach (DataRow drw in dtVendors.Rows)
+            {
+                objItemDetail.Vendor[intCount] = new CommonObjects();
+                objItemDetail.Vendor[intCount].Value = drw["id"].ToString();
+                objItemDetail.Vendor[intCount].Text = drw["alias_vendors"].ToString();
+                objItemDetail.Vendor[intCount].DefaultValue = ItemId != -1 ? objMainRow[0]["alias_vendors"].ToString() : objItemDetail.Vendor[0].Value;
+                intCount++;
+            }
+
+            DataTable dtItemCategory = new DataTable();
+            dtItemCategory = SQL.BLL.GetCategoryList(1, 1000, "", "id", 1);
+            DataRow newItemCategory = dtItemCategory.NewRow();
+            newItemCategory["id"] = "-1";
+            newItemCategory["Category"] = "-Category-";
+            dtItemCategory.Rows.InsertAt(newItemCategory, 0);
+            dtItemCategory.AcceptChanges();
+            objItemDetail.Categoty = new CommonObjects[dtItemCategory.Rows.Count];
+            intCount = 0;
+            foreach (DataRow drw in dtItemCategory.Rows)
+            {
+                objItemDetail.Categoty[intCount] = new CommonObjects();
+                objItemDetail.Categoty[intCount].Value = drw["id"].ToString();
+                objItemDetail.Categoty[intCount].Text = drw["Category"].ToString();
+                objItemDetail.Categoty[intCount].DefaultValue = ItemId != -1 ? objMainRow[0]["Category"].ToString() : objItemDetail.Categoty[0].Value;
+                intCount++;
+            }
+
+            int Price;
+            bool IsRecommendItem;
+
+            objItemDetail.ItemName = ItemId != -1 ? objMainRow[0]["nama_menu"].ToString() : "";
+            objItemDetail.UrlAlias = ItemId != -1 ? "../" + objMainRow[0]["alias_menu"].ToString() : "";
+            objItemDetail.Description = ItemId != -1 ? objMainRow[0]["deskripsi_menu"].ToString() : "";
+            if (ItemId != -1)
+            {
+                int.TryParse(Convert.ToString(objMainRow[0]["harga_menu"]), out Price);
+                objItemDetail.Price = Price;
+            }
+
+            objItemDetail.Tags = ItemId != -1 ? objMainRow[0]["tlp_vendors"].ToString() : "";
+
+            if (ItemId != -1)
+            {
+                bool.TryParse(Convert.ToString(objMainRow[0]["is_recommended"]), out IsRecommendItem);
+                objItemDetail.IsRecommendItem = IsRecommendItem;
+            }
+
+            objItemDetail.ItemImageUrl = ItemId != -1 ? "../" + objMainRow[0]["media_photo"].ToString() : "";
+
+            return objItemDetail;
+        }
     }
 }

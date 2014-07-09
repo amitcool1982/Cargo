@@ -101,7 +101,7 @@ namespace Cargo
             {
                 SortDirection = 0;
             }
-            dtCategory = objCategory.GetCategory(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
+            dtCategory = SQL.BLL.GetCategoryList(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
             if (dtCategory.Rows.Count > 0)
             {
                 for (int i = 0; i < dtCategory.Rows.Count; i++)

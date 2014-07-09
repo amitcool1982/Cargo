@@ -418,6 +418,8 @@
     <Compile Include="Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Entity\ItemDetails.cs" />
+    <Compile Include="Entity\VendorDetails.cs" />
     <Compile Include="FAQ.aspx.cs">
       <DependentUpon>FAQ.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -513,9 +515,9 @@
     <Compile Include="Vendors.aspx.designer.cs">
       <DependentUpon>Vendors.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Vendor\VendorDetails.cs" />
     <Compile Include="WebForm1.aspx.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WebForm1.aspx.designer.cs">
       <DependentUpon>WebForm1.aspx</DependentUpon>

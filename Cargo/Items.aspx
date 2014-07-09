@@ -2,11 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
-    <link href="Content/bootstrap.css" rel="stylesheet">    
+    <link href="Content/bootstrap.css" rel="stylesheet">
     <link href="Content/sb-admin.css" rel="stylesheet">
     <link href="Content/font-awesome.css" rel="stylesheet">
 
-    <script src="Scripts/site.js"></script>
     <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     <script type="text/javascript">
@@ -34,9 +33,11 @@
                 <div class="col-lg-8">
 
                     <div class="row-fluid">
-                        <div class="span6"></div><div class="span6">
+                        <div class="span6"></div>
+                        <div class="span6">
                             <div id="table_filter" class="dataTables_filter">
-                                <label>Search: <input id="txtSearch" type="text" /></label>
+                                <label>Search:
+                                    <input id="txtSearch" type="text" /></label>
                             </div>
                         </div>
                     </div>
@@ -68,13 +69,13 @@
 
                         <div class="form-group">
                             <label for="vendors">Vendors :</label>
-                            <select id="vendors" name="vendors" class="form-control" required="">
+                            <select id="ddlVendor" name="vendors" class="form-control" required="">
                                 <option selected="selected" value="">- Select Vendors -</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="category">Category Item :</label>
-                            <select id="category" name="category" class="form-control" required="">
+                            <select id="ddlItemCategory" name="category" class="form-control" required="">
                                 <option selected="selected" value="">- Category -</option>
                             </select>
                         </div>
@@ -137,7 +138,7 @@
                             <div class="uploadify-queue" id="file_upload-queue"></div>
                         </div>
                         <div class="row-fluid">
-                            <img id="image-preview" src="images/no_picture_wide.png" class="img-thumbnail" style="width: 100%;">
+                            <img id="ItemImageUrl" src="images/no_picture_wide.png" class="img-thumbnail" style="width: 100%;">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">Save</button>

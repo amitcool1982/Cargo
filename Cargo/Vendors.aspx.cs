@@ -39,36 +39,12 @@ namespace Cargo
             }
             set { Session["PageSize"] = Convert.ToString(value); }
         }
-
-        public DataTable GetVendors(int PageIndex, int PageSize, string SearchFilter, string SortBy, int SortDirection)
-        {
-            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[5];
-            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(1000));
-            oParam[1] = DBHelper.GetParam("@piPageNumber", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(PageIndex));
-            oParam[2] = DBHelper.GetParam("@piSortedBy", SqlDbType.VarChar, 20, ParameterDirection.Input, GetSQLSafeValue(SortBy));
-            oParam[3] = DBHelper.GetParam("@piSearchFilter", SqlDbType.VarChar, -1, ParameterDirection.Input, SearchFilter);
-            oParam[4] = DBHelper.GetParam("@piSortDirection", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(SortDirection));
-            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetVendors", oParam).Tables[0];
-
-            return otable;
-        }
-
-        object GetSQLSafeValue(object obj)
-        {
-            if (obj == null)
-                return DBNull.Value;
-            else if (obj.ToString().Length == 0)
-                return DBNull.Value;
-            else
-                return obj;
-        }
+             
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
         public static string GetVendors(int PageIndex, int PageSize, string SortCol, string SortDir, string SearchFilter)
         {
-            Vendors objVendors = new Vendors();
             Hashtable objHT = new Hashtable();
             string totalRecords = "";
             string totalDisplayRecords = "";
@@ -97,7 +73,7 @@ namespace Cargo
                 SortDirection = 0;
             }
 
-            dtVendors = objVendors.GetVendors(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
+            dtVendors = SQL.BLL.GetVendorsList(1000, PageSize, SearchFilter, SortBy, SortDirection);
             HttpContext.Current.Session["VendorData"] = dtVendors;
             if (dtVendors.Rows.Count > 0)
             {
@@ -119,7 +95,7 @@ namespace Cargo
                     sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 180px;overflow: hidden;'><nobr>" + dtVendors.Rows[i]["alias_vendors"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""2"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""2"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtVendors.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' class='vendors-show-form update-form' data-toggle='tooltip' title='update data vendors'><i class='fa fa-edit fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 
@@ -157,6 +133,15 @@ namespace Cargo
             return outputJson;
         }
 
+        public static object GetSQLSafeValue(object obj)
+        {
+            if (obj == null)
+                return DBNull.Value;
+            else if (obj.ToString().Length == 0)
+                return DBNull.Value;
+            else
+                return obj;
+        }
 
         public DataTable GetProvince()
         {

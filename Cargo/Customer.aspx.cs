@@ -19,6 +19,7 @@ using System.Collections;
 using System.IO;
 using System.Web.Script;
 using Cargo.SQL;
+using Cargo.BLL;
 
 namespace Cargo
 {
@@ -128,7 +129,7 @@ namespace Cargo
                     sb.AppendFormat(@"""6"": ""{0}""", "<div style='text-overflow: ellipsis; width: 140px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["last_login"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""7"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""7"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtCustomer.Rows[i]["ID"].ToString().Replace("\"", "\\" + "\"") + "' class='detail-customer' data-toggle='tooltip' title='detail customer'><i class='fa fa-edit fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtCustomer.Rows[i]["ID"].ToString().Replace("\"", "\\" + "\"") + "' class='delete-customer' data-toggle='tooltip' title='delete customer'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 
@@ -165,5 +166,62 @@ namespace Cargo
             }
             return outputJson;
         }
+
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static long DeleteCustomer(string Id)
+        {
+            return DeleteCustomerData(long.Parse(Id));
+        }
+
+        public static int DeleteCustomerData(long id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.BigInt, 20, ParameterDirection.Input, id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteCustomer", oParam);
+            return 1;
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static string GetCustomerDetails(string Id)
+        {
+            return GetCustomerDetailsData(long.Parse(Id));
+        }
+
+        public static string GetCustomerDetailsData(long id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.BigInt, 20, ParameterDirection.Input, id);
+            DataTable dt = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetCustomerDetail", oParam).Tables[0];
+
+            string display = "<table>";
+            if (dt.Rows.Count > 0)
+            {                
+                display += "<tr><td><b>ID</b></td><td>: " + Convert.ToString(dt.Rows[0]["id_generator"]) + "</td></tr>";
+                display += "<tr><td><b>Fullname</b></td><td>: " + Convert.ToString(dt.Rows[0]["nama_lengkap"]) + "</td></tr>";
+                display += "<tr><td><b>Born</b></td><td>: " + Convert.ToString(dt.Rows[0]["tempat_lahir"]) + ", " + Convert.ToString(dt.Rows[0]["tanggal_lahir"]) + "</td></tr>";
+                display += "<tr><td><b>Gender</b></td><td>: " + Convert.ToString(dt.Rows[0]["jenis_kelamin"]) + "</td></tr>";
+                display += "<tr><td><b>Phone</b></td><td>: " + Convert.ToString(dt.Rows[0]["telepon"]) + "</td></tr>";
+                display += "<tr><td><b>Handphone</b></td><td>: " + Convert.ToString(dt.Rows[0]["handphone"]) + "</td></tr>";
+                display += "<tr><td><b>Address</b></td><td>: " + Convert.ToString(dt.Rows[0]["alamat"]) + "</td></tr>";
+                display += "<tr><td><b>Province</b></td><td>: " + Convert.ToString(dt.Rows[0]["provinsi"]).Replace("_", " ") + "</td></tr>";
+                display += "<tr><td><b>City</b></td><td>: " + Convert.ToString(dt.Rows[0]["kota"]).Replace("_", " ") + "</td></tr>";
+                display += "<tr><td><b>Zip Code</b></td><td>: " + Convert.ToString(dt.Rows[0]["kode_pos"]) + "</td></tr>";
+                display += "<tr><td><b>Email</b></td><td>: <a href='mailto:" + Convert.ToString(dt.Rows[0]["email"]) + "'>" + Convert.ToString(dt.Rows[0]["email"]) + "</a></td></tr>";
+                display += "<tr><td><b>join Date</b></td><td>: " + Convert.ToString(dt.Rows[0]["join_datetime"]) + "</td></tr>";
+                display += "<tr><td><b>Last Login</b></td><td>: " + Convert.ToString(dt.Rows[0]["last_login"]) + "</td></tr>";
+                display += "</table>";
+            }
+
+            return  display;
+        }
+
+
     }
 }

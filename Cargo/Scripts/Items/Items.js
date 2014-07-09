@@ -5,6 +5,16 @@ $(document).ready(function () {
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
     });
+
+    $('#myTableItems').on("click", "a.edit", function (e) {
+        e.preventDefault();
+        $("#divsessionexpired").hide();
+
+        /* Get the row as a parent of the link that was clicked on */
+        var nRow = $(this).parents('tr')[0];
+        editRow(table, nRow);
+    });
+    BindPageData(-1);
 });
 
 var BindItemsTable = function () {
@@ -81,6 +91,29 @@ var BindItemsTable = function () {
 
     });
 
+}
+
+function BindPageData(Id) {
+    id = 0;
+    var res = ExecuteSynchronously('Items.aspx', 'GetItemData', { ItemId: Id });
+    PopulateControl('ddlVendor', res.d.Vendor);
+    $('#ddlVendor').selectpicker('refresh');
+
+    PopulateControl('ddlItemCategory', res.d.Categoty);
+    $('#ddlItemCategory').selectpicker('refresh');
+
+    $('#name').val(res.d.ItemName);
+    $('#alias').val(res.d.UrlAlias);
+    $('#description').val(res.d.Description);
+    $('#price').val(res.d.price);
+
+    //$('#Tags').val(res.d.Tags);
+
+    $('#recommended').val(res.d.recommended);
+    if (res.d.ItemImageUrl != '') {
+        $('#ItemImageUrl').attr('src', res.d.ItemImageUrl);
+    }
+    
 }
 
 function FillAlias() {

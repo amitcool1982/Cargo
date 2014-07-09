@@ -40,11 +40,13 @@
                                         <option value="25">25</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
-                                    </select></label></div>
+                                    </select></label>
+                            </div>
                         </div>
                         <div class="col-lg-6 col-xs-6">
                             <div id="table_filter" class="dataTables_filter">
-                                <label>Search:
+                                <label>
+                                    Search:
                                     <input id="txtSearch" type="text" /></label>
                             </div>
                         </div>
@@ -72,8 +74,46 @@
             <br />
             <div id="errordiv"></div>
         </div>
-        <!-- /#page-wrapper -->
+    </div>
 
+    <!-- /#page-wrapper -->
+    <div class="modal fade" id="ConfirmDeleteCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure, you want to delete this customer?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="submit" id="btnDeleteCustomer" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- /#wrapper -->
+
+    <!-- Modal -->
+        <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabelDetail"></h4>
+              </div>
+              <div class="modal-body" id="bodyModal">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+    
 </asp:Content>
