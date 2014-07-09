@@ -34,7 +34,7 @@ var BindItemsTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "Items.aspx/GetItems",
+        "sAjaxSource": "../Items.aspx/GetItems",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearch").val() });
@@ -89,7 +89,7 @@ function FillAlias() {
 
 function SaveCategory() {
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
-        var res = ExecuteSynchronously('Items.aspx', 'AddItems', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+        var res = ExecuteSynchronously('../Items.aspx', 'AddItems', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
         if (res.d == 1) {
             table.fnDraw();
         }
