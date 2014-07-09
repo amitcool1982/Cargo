@@ -65,7 +65,7 @@
                         <label>URL Alias</label><br />
                         <input type="text" class="form-control formcustom" id="txtalias" required="" style="width: 250px; line-height: normal" placeholder="URL alias will auto complete.." />
                     </div>
-                    <button class="btn btn-info" onclick="javascript:SaveCategory()">Save</button>
+                    <button class="btn btn-info" onclick="javascript:SaveItemTag()">Save</button>
 
                 </div>
             </div>

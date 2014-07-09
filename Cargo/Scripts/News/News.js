@@ -1,8 +1,25 @@
 ﻿var table = null;
+var id = 0;
 $(document).ready(function () {
     table = BindCustomerTable();
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
+    });
+
+
+    $('#myTableNews').on("click", "a.edit", function (e) {
+        e.preventDefault();
+
+        /* Get the row as a parent of the link that was clicked on */
+        var nRow = $(this).parents('tr')[0];
+        editRow(table, nRow);
+    });
+
+    $('#myTableNews').on("click", "a.delete", function (e) {
+        e.preventDefault();
+        var nRow = $(this).parents('tr')[0];
+
+        DeleteNews(table, nRow);
     });
 });
 
@@ -77,6 +94,69 @@ var BindCustomerTable = function () {
             });
         }
 
+    });
+
+}
+
+
+function editRow(table, nRow) {
+    var aData = table.fnGetData(nRow);
+    var jqTds = $('>td', nRow);
+    id = $(aData[0]).text();
+    $('#txtname').val($(aData[2]).text());
+    $('#txtalias').val($(aData[1]).text());
+    $('#save').hide();
+    $('#cancelsave').show();
+}
+
+function SaveNews(obj) {
+    $("#divsessionexpired").hide();
+    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
+        var res = null;
+        if (obj == 0) {
+            res = ExecuteSynchronously('News.aspx', 'AddNews', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+        }
+        else {
+            res = ExecuteSynchronously('News.aspx', 'UpdateNews', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+        }
+        if (res.d == 1) {
+            table.fnDraw();
+            $('#txtalias').val('');
+            $('#txtname').val('');
+            id = 0;
+        }
+    }
+    else {
+        if ($('#txtname').val().trim() == '') {
+            $('#errormsg').text("Name is required");
+            $("#divsessionexpired").show();
+        }
+        else if ($('#txtname').val().trim() == '') {
+            $('#errormsg').text("Alias is required");
+            $("#divsessionexpired").show();
+        }
+    }
+}
+
+
+
+
+
+function DeleteNews(table, nRow) {
+    var aData = table.fnGetData(nRow);
+    $('#ConfirmDeleteNews').modal('show');
+
+    $('#btnDeleteNews').on("click", function (e) {
+        try {
+            var res = ExecuteSynchronously('News.aspx', 'DeleteNews', { Id: $(aData[0]).text() });
+            if (res.d == 1) {
+                $('#ConfirmDeleteNews').modal('hide');
+                table.fnDraw();
+            }
+        }
+        catch (e) {
+            alert(e.message);
+        }
     });
 
 }

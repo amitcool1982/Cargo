@@ -36,7 +36,8 @@
                     <div class="span6"></div>
                     <div class="span6">
                         <div id="table_filter" class="dataTables_filter">
-                            <label>Search: 
+                            <label>
+                                Search: 
                             <input id="txtSearch" type="text" /></label>
                         </div>
                     </div>
@@ -126,8 +127,8 @@
                             </div>
                         </div>
                         <div class="row-fluid text-right">
-                            <input name="action" value="Publish" class="btn btn-success" type="submit">
-                            <input name="action" value="Draft" class="btn btn-warning" type="submit">
+                            <input name="action" value="Publish" class="btn btn-success" type="submit" onclick="javascript: SaveNews(1)">
+                            <input name="action" value="Draft" class="btn btn-warning" type="submit" onclick="javascript: SaveNews(0)">
                             <!-- <button type="button" class="schedule-show btn btn-info">Schedule</button> -->
                             <button type="button" class="news-show-form btn btn-danger" style="display: none;">Cancel</button>
                         </div>
@@ -144,5 +145,23 @@
 
         </div>
         <!-- /#wrapper -->
+    </div>
+    <!-- /#page-wrapper -->
+    <div class="modal fade" id="ConfirmDeleteNews" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Delete Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure, you want to delete this news?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="submit" id="btnDeleteNews" class="btn btn-primary">Yes</button>
+                </div>
+            </div>
+        </div>
     </div>
 </asp:Content>

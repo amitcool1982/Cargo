@@ -114,7 +114,7 @@ function FillAlias() {
     $('#txtalias').val($('#txtname').val().trim());
 }
 
-function SaveCategory(obj) {
+function SaveItemTag(obj) {
     $("#divsessionexpired").hide();
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
         var res = null;
@@ -145,7 +145,6 @@ function SaveCategory(obj) {
 
 
 function DeleteItemTags(table, nRow) {
-    debugger;
     var aData = table.fnGetData(nRow);
     $('#ConfirmDeleteItemTags').modal('show');
 

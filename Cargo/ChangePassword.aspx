@@ -9,9 +9,7 @@
     <script src="Scripts/site.js"></script>
     <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
-    <script type="text/javascript">
-        var PageSize = "<%=PageSize%>";
-    </script>
+
     <style type="text/css">
         .btncustom {
             height: 27px;

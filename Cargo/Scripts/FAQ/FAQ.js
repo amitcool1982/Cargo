@@ -6,7 +6,7 @@ $(document).ready(function () {
         table.fnDraw();
     });
 
-    $('#myTableCategory').on("click", "a.edit", function (e) {
+    $('#myTableFAQ').on("click", "a.edit", function (e) {
         e.preventDefault();
 
         /* Get the row as a parent of the link that was clicked on */
@@ -14,7 +14,7 @@ $(document).ready(function () {
         editRow(table, nRow);
     });
 
-    $('#myTableCategory').on("click", "a.delete", function (e) {
+    $('#myTableFAQ').on("click", "a.delete", function (e) {
         e.preventDefault();
         var nRow = $(this).parents('tr')[0];
 
@@ -25,7 +25,7 @@ $(document).ready(function () {
 var BindcategoryTable = function () {
     
 
-    return $('#myTableCategory').dataTable({
+    return $('#myTableFAQ').dataTable({
         "oLanguage": {
             "sZeroRecords": "No records to display"//,
 
@@ -34,7 +34,7 @@ var BindcategoryTable = function () {
                      { "sWidth": "3em", "bSortable": true },
                      { "sWidth": "12em", "bSortable": true },
                      { "sWidth": "2em", "bSortable": true },
-                     { "sWidth": "2em", "bSortable": false }
+                     { "sWidth": "4em", "bSortable": false }
         ],
         "bProcessing": true,
         "bServerSide": true,
@@ -86,7 +86,7 @@ var BindcategoryTable = function () {
                     if (msg.d != null) {
                         var json = jQuery.parseJSON(msg.d);
                         fnCallback(json);
-                        $("#myTableCategory").show();
+                        $("#myTableFAQ").show();
                     }
 
                 }
@@ -112,13 +112,14 @@ function FillAlias() {
 }
 
 function SaveFAQ(obj) {
+    $("#divsessionexpired").hide();
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
         var res = null;
         if (obj == 0) {
-            res = ExecuteSynchronously('Category.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+            res = ExecuteSynchronously('FAQ.aspx', 'AddFAQ', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
         }
         else {
-            res = ExecuteSynchronously('Category.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+            res = ExecuteSynchronously('FAQ.aspx', 'UpdateFAQ', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
         }
         if (res.d == 1) {
             table.fnDraw();
@@ -127,28 +128,35 @@ function SaveFAQ(obj) {
             id = 0;
         }
     }
+    else {
+        if ($('#txtname').val().trim() == '') {
+            $('#errormsg').text("Name is required");
+            $("#divsessionexpired").show();
+        }
+        else if ($('#txtname').val().trim() == '') {
+            $('#errormsg').text("Alias is required");
+            $("#divsessionexpired").show();
+        }
+    }
 }
+
 
 
 function DeleteFAQ(table, nRow) {
-
     var aData = table.fnGetData(nRow);
-    id = $(aData[0]).text();
-    $('#ConfirmDeleteCategory').modal('show');
+    $('#ConfirmDeleteFAQ').modal('show');
 
-}
-
-function DeleteItemFAQ() {
-    try {
-        var res = ExecuteSynchronously('FAQ.aspx', 'DeleteFAQ', { Id: id });
-        if (res.d == 1) {
-            id = 0;
-            $('#ConfirmDeleteFAQ').modal('hide');
-            table.fnDraw();
+    $('#btnDeleteFAQ').on("click", function (e) {
+        try {
+            var res = ExecuteSynchronously('FAQ.aspx', 'DeleteFAQ', { Id: $(aData[0]).text() });
+            if (res.d == 1) {
+                $('#ConfirmDeleteFAQ').modal('hide');
+                table.fnDraw();
+            }
         }
-    }
-    catch (e) {
-        alert(e.message);
-    }
+        catch (e) {
+            alert(e.message);
+        }
+    });
 
 }

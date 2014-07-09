@@ -14,11 +14,11 @@ $(document).ready(function () {
         editRow(table, nRow);
     });
 
-    $('#myTableCategory').on("click", "a.delete", function (e) {
+    $('#myTableUsers').on("click", "a.delete", function (e) {
         e.preventDefault();
         var nRow = $(this).parents('tr')[0];
 
-        DeleteUsers(table, nRow);
+        DeleteUser(table, nRow);
     });
 });
 
@@ -107,11 +107,8 @@ function editRow(table, nRow) {
     $('#cancelsave').show();
 }
 
-function FillAlias() {
-    $('#txtalias').val($('#txtname').val().trim());
-}
-
-function SaveCategory(obj) {
+function SaveUsers(obj) {
+    $("#divsessionexpired").hide();
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
         var res = null;
         if (obj == 0) {
@@ -127,27 +124,38 @@ function SaveCategory(obj) {
             id = 0;
         }
     }
-}
-
-
-function DeleteCategory(table, nRow) {
-    
-    var aData = table.fnGetData(nRow);
-    id = $(aData[0]).text();
-    $('#ConfirmDeleteUsers').modal('show');
-
-}
-
-function DeleteItemCategory() {
-    try{
-        var res = ExecuteSynchronously('Users.aspx', 'DeleteUsers', { Id: id });
-        if (res.d == 1) {
-            id = 0;
-            $('#ConfirmDeleteUsers').modal('hide');
-            table.fnDraw();
-        }}
-    catch (e) {
-        alert(e.message);
+    else {
+        if ($('#txtname').val().trim() == '') {
+            $('#errormsg').text("Name is required");
+            $("#divsessionexpired").show();
+        }
+        else if ($('#txtname').val().trim() == '') {
+            $('#errormsg').text("Alias is required");
+            $("#divsessionexpired").show();
+        }
     }
+}
+
+
+
+
+
+function DeleteUser(table, nRow) {
+    debugger;
+    var aData = table.fnGetData(nRow);
+    $('#ConfirmDeleteUser').modal('show');
+
+    $('#btnDeleteUser').on("click", function (e) {
+        try {
+            var res = ExecuteSynchronously('Users.aspx', 'DeleteUser', { Id: $(aData[0]).text() });
+            if (res.d == 1) {
+                $('#ConfirmDeleteUser').modal('hide');
+                table.fnDraw();
+            }
+        }
+        catch (e) {
+            alert(e.message);
+        }
+    });
 
 }
