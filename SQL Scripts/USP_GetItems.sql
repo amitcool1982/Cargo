@@ -26,18 +26,29 @@ BEGIN
 	
 	create table #temp
 	(
-	RowNum				int identity,
-	menu_id_generator	bigint,
-	nama_vendors		varchar(100),
-	nama_menu			varchar(100),
-	harga_menu			varchar(100)
+	RowNum	int identity,
+	[id] [int] NOT NULL,
+	[menu_id_generator] [nvarchar](100) NULL,
+	[id_vendors] [nvarchar](255) NULL,
+	[alias_menu] [nvarchar](255) NULL,
+	[nama_menu] [nvarchar](255) NULL,
+	[deskripsi_menu] [nvarchar](max) NULL,
+	[media_photo] [nvarchar](255) NULL,
+	[harga_menu] [int] NULL,
+	[kategori_menu] [nvarchar](100) NULL,
+	[tags] [nvarchar](max) NULL,
+	[is_recommended] [int] NULL,
+	[last_update] [datetime] NULL,
+	nama_vendors [nvarchar](255) NULL,
+	Category [nvarchar](100) NULL
 	)
 	
-	insert into #temp(menu_id_generator, nama_vendors, nama_menu, harga_menu)
-		select menu_id_generator, nama_vendors, nama_menu, harga_menu 
+	insert into #temp(	[id],		menu_id_generator,		id_vendors,			alias_menu,			nama_menu,		deskripsi_menu,		media_photo,		harga_menu,		kategori_menu,		tags,		is_recommended,		last_update,	nama_vendors,			Category)
+		select			Item.[id], Item.menu_id_generator,	Item.id_vendors,	Item.alias_menu,	Item.nama_menu, Item.deskripsi_menu, Item.media_photo, Item.harga_menu, Item.kategori_menu, Item.tags, Item.is_recommended, Item.last_update, Vendors.nama_vendors, ItemCat.nama_kategori
 		from 
-		ledb_menu		Item	With(nolock)	Inner Join
-		ledb_vendors	Vendors	With(nolock)	On Item.id_vendors = Vendors.id_vendors_generator
+		ledb_menu			Item	With(nolock)	Inner Join
+		ledb_vendors		Vendors	With(nolock)	On Item.id_vendors = Vendors.id_vendors_generator	Inner Join
+		ledb_kategorimenu	ItemCat With(nolock)	On Item.kategori_menu = ItemCat.alias
 		where	menu_id_generator	like ('%' + @piSearchFilter + '%') OR 
 				nama_vendors		like ('%' + @piSearchFilter + '%') OR
 				nama_menu			like ('%' + @piSearchFilter + '%') OR

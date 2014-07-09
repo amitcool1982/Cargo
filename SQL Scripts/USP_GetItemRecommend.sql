@@ -36,10 +36,14 @@ BEGIN
 	 
 	
 	insert into #temp(ID, Alias_Menu, Nama_Menu)
-		Select [id], [alias_menu], [Nama_Menu] FROM [ledb_menu] with(nolock)
-		where	id			like ('%' + @piSearchFilter + '%') OR 
+		Select [id], [alias_menu], [Nama_Menu] FROM [ledb_menu] with(nolock)		
+		Where	is_recommended = 1
+					And
+				(
+				id			like ('%' + @piSearchFilter + '%') OR 
 				alias_menu	like ('%' + @piSearchFilter + '%') OR 
 				Nama_Menu	like ('%' + @piSearchFilter + '%')
+				)
 		ORDER BY 
 						CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,
 						CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 0 THEN id END DESC,
