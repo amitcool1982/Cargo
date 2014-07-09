@@ -129,7 +129,7 @@ namespace Cargo
                     sb.AppendFormat(@"""6"": ""{0}""", "<div style='text-overflow: ellipsis; width: 140px;overflow: hidden;'><nobr>" + dtCustomer.Rows[i]["last_login"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""7"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtCustomer.Rows[i]["ID"].ToString().Replace("\"", "\\" + "\"") + "' class='detail-customer' data-toggle='tooltip' title='detail customer'><i class='fa fa-edit fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtCustomer.Rows[i]["ID"].ToString().Replace("\"", "\\" + "\"") + "' class='delete-customer' data-toggle='tooltip' title='delete customer'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""7"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtCustomer.Rows[i]["ID"].ToString().Replace("\"", "\\" + "\"") + "' class='detail' data-toggle='tooltip' title='detail customer'><i class='fa fa-edit fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtCustomer.Rows[i]["ID"].ToString().Replace("\"", "\\" + "\"") + "' class='delete' data-toggle='tooltip' title='delete customer'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 

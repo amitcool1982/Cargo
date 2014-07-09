@@ -73,7 +73,7 @@ namespace Cargo
                 SortDirection = 0;
             }
 
-            dtVendors = SQL.BLL.GetVendorsList(1000, PageSize, SearchFilter, SortBy, SortDirection);
+            dtVendors = SQL.BLL.GetVendorsList(1, 1000, SearchFilter, SortBy, SortDirection);
             HttpContext.Current.Session["VendorData"] = dtVendors;
             if (dtVendors.Rows.Count > 0)
             {
