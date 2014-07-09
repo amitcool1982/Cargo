@@ -113,7 +113,7 @@ namespace Cargo
                     sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 130px;overflow: hidden;'><nobr>" + dtCategory.Rows[i]["Category"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' data-toggle='tooltip' title='update data category'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)' data-toggle='tooltip' title='delete data category'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 

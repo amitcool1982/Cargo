@@ -126,8 +126,8 @@ namespace Cargo
 
                     sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 120px;overflow: hidden;'><nobr>" + dtItemTags.Rows[i]["nama_tag"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
-
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                     
+                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtItemTags.Rows[i]["Id"].ToString().Replace("\"", "\\" + "\"") + "' class='edit' data-toggle='tooltip' title='update data tags'><i class='fa fa-edit fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItemTags.Rows[i]["Id"].ToString().Replace("\"", "\\" + "\"") + "' class='delete' data-toggle='tooltip' title='delete data tags'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 
@@ -165,23 +165,60 @@ namespace Cargo
             return outputJson;
         }
 
-        public static int AddItemCategory(string Name, string Alias)
+
+
+
+        public static int AddItemTagData(string Name, string Alias)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[2];
+            SqlParameter[] oParam = new SqlParameter[3];
             oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
             oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddItemCategory", oParam);
+            oParam[2] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, 0);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateItemTagData", oParam);
+            return 1;
+        }
+
+        public static int UpdateItemTagData(string Name, string Alias, int id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[3];
+            oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
+            oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
+            oParam[2] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateItemTagData", oParam);
+            return 1;
+        }
+
+        public static int DeleteItemTagData(int id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteItemTagData", oParam);
             return 1;
         }
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int AddCategory(string Name, string Alias)
+        public static int AddItemTag(string Name, string Alias)
         {
-            return AddItemCategory(Name, Alias);
+            return AddItemTagData(Name, Alias);
         }
-    
-    
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int UpdateItemTag(string Name, string Alias, string Id)
+        {
+            return UpdateItemTagData(Name, Alias, int.Parse(Id));
+        }
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int DeleteItemTag(string Id)
+        {
+            return DeleteItemTagData(int.Parse(Id));
+        }
+
+
     }
 }

@@ -17,6 +17,29 @@ $(document).ready(function () {
     BindPageData(-1);
 });
 
+function BindPageData(Id) {
+    id = 0;
+    var res = ExecuteSynchronously('Items.aspx', 'GetItemData', { ItemId: Id });
+    PopulateControl('ddlVendor', res.d.Vendor);
+    $('#ddlVendor').selectpicker('refresh');
+
+    PopulateControl('ddlItemCategory', res.d.Categoty);
+    $('#ddlItemCategory').selectpicker('refresh');
+
+    $('#name').val(res.d.ItemName);
+    $('#alias').val(res.d.UrlAlias);
+    $('#description').val(res.d.Description);
+    $('#price').val(res.d.price);
+
+    //$('#Tags').val(res.d.Tags);
+
+    $('#recommended').val(res.d.recommended);
+    if (res.d.ItemImageUrl != '') {
+        $('#ItemImageUrl').attr('src', res.d.ItemImageUrl);
+    }
+
+}
+
 var BindItemsTable = function () {
 
 
@@ -93,38 +116,69 @@ var BindItemsTable = function () {
 
 }
 
-function BindPageData(Id) {
-    id = 0;
-    var res = ExecuteSynchronously('Items.aspx', 'GetItemData', { ItemId: Id });
-    PopulateControl('ddlVendor', res.d.Vendor);
-    $('#ddlVendor').selectpicker('refresh');
 
-    PopulateControl('ddlItemCategory', res.d.Categoty);
-    $('#ddlItemCategory').selectpicker('refresh');
-
-    $('#name').val(res.d.ItemName);
-    $('#alias').val(res.d.UrlAlias);
-    $('#description').val(res.d.Description);
-    $('#price').val(res.d.price);
-
-    //$('#Tags').val(res.d.Tags);
-
-    $('#recommended').val(res.d.recommended);
-    if (res.d.ItemImageUrl != '') {
-        $('#ItemImageUrl').attr('src', res.d.ItemImageUrl);
+function SaveItem() {
+    $("#divsessionexpired").hide();
+    var strMsg = DataIsValid();
+    debugger;
+    if (strMsg == '') {
+        var Item = new Object();
+        Item.ItemID = id;
+        Item.Vendor = $('#ddlVendor').val();
+        Item.Categoty = $('#ddlItemCategory').val();
+        Item.ItemName = $('#name').val().trim();
+        Item.UrlAlias = $('#alias').val().trim();
+        Item.Description = $('#description').val().trim();
+        Item.Price = $('#price').val().trim();
+        Item.Tags = $('#tags').val().trim();
+        Item.IsRecommendItem = $('#recommended').val().trim();
+        Item.ItemImageUrl = '';
+        var res = ExecuteSynchronously('Item.aspx', 'AddItemss', { objVendordetail: Item });
+        if (res.d == 1) {
+            table.fnDraw();
+            BindPageData(-1);
+            $('#errormsg').text("Data updated successfully");
+            $("#divsessionexpired").show();
+            $('#cancelsave').hide();
+        }
     }
-    
+    else {
+        $('#errormsg').text(strMsg);
+        $("#divsessionexpired").show();
+    }
 }
+
+function DataIsValid() {
+    if ($('#ddlVendor').val() == '-1') {
+        return "Vendor is required"
+    }
+    if ($('#ddlItemCategory').val() == '') {
+        return "Category is required"
+    }
+    if ($('#name').val().trim() == '') {
+        return "Item's name is required"
+    }
+    if ($('#alias').val().trim() == '') {
+        return "Alias is required"
+    }
+    if ($('#description').val().trim() == '') {
+        return "Description is required"
+    }
+    if ($('#price').val().trim() == '') {
+        return "price is required"
+    }
+    return '';
+}
+
+function editRow(Table, nRow) {
+    var aData = Table.fnGetData(nRow);
+    var jqTds = $('>td', nRow);
+    id = $(aData[0]).text();
+    BindPageData(Number(id));
+    $('#cancelsave').show();
+}
+
 
 function FillAlias() {
     $('#txtalias').val($('#txtname').val().trim());
-}
-
-function SaveCategory() {
-    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
-        var res = ExecuteSynchronously('../Items.aspx', 'AddItems', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
-        if (res.d == 1) {
-            table.fnDraw();
-        }
-    }
 }

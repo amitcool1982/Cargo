@@ -23,8 +23,8 @@ namespace Cargo
             set { _Categoty = value; }
         }
 
-        long _ItemID = -1;
-        public long ItemID
+        string _ItemID = "-1";
+        public string ItemID
         {
             get { return _ItemID; }
             set { _ItemID = value; }

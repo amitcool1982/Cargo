@@ -1,9 +1,26 @@
 ﻿var table=null;
-
+var id = 0;
 $(document).ready(function () {
     table = BindcategoryTable();
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
+    });
+
+    $('#myTableItemTags').on("click", "a.edit", function (e) {
+        e.preventDefault();
+        $("#divsessionexpired").hide();
+
+        /* Get the row as a parent of the link that was clicked on */
+        var nRow = $(this).parents('tr')[0];
+        editRow(table, nRow);
+    });
+
+    $('#myTableItemTags').on("click", "a.delete", function (e) {
+        e.preventDefault();
+        $("#divsessionexpired").hide();
+        var nRow = $(this).parents('tr')[0];
+
+        DeleteItemTags(table, nRow);
     });
 });
 
@@ -82,15 +99,67 @@ var BindcategoryTable = function () {
 
 }
 
+
+function editRow(table, nRow) {
+    var aData = table.fnGetData(nRow);
+    var jqTds = $('>td', nRow);
+    id = $(aData[0]).text();
+    $('#txtname').val($(aData[2]).text());
+    $('#txtalias').val($(aData[1]).text());
+    $('#save').hide();
+    $('#cancelsave').show();
+}
+
 function FillAlias() {
     $('#txtalias').val($('#txtname').val().trim());
 }
 
-function SaveCategory() {
+function SaveCategory(obj) {
+    $("#divsessionexpired").hide();
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
-        var res = ExecuteSynchronously('Category.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+        var res = null;
+        if (obj == 0) {
+            res = ExecuteSynchronously('ItemTags.aspx', 'AddItemTag', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+        }
+        else {
+            res = ExecuteSynchronously('ItemTags.aspx', 'UpdateItemTag', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+        }
         if (res.d == 1) {
             table.fnDraw();
+            $('#txtalias').val('');
+            $('#txtname').val('');
+            id = 0;
         }
     }
+    else {
+        if ($('#txtname').val().trim() == '') {
+            $('#errormsg').text("Name is required");
+            $("#divsessionexpired").show();
+        }
+        else if ($('#txtname').val().trim() == '') {
+            $('#errormsg').text("Alias is required");
+            $("#divsessionexpired").show();
+        }
+    }
+}
+
+
+function DeleteItemTags(table, nRow) {
+    debugger;
+    var aData = table.fnGetData(nRow);
+    $('#ConfirmDeleteItemTags').modal('show');
+
+    $('#btnDeleteItemTags').on("click", function (e) {
+        try {
+            var res = ExecuteSynchronously('ItemTags.aspx', 'DeleteItemTag', { Id: $(aData[0]).text() });
+            if (res.d == 1) {
+                $('#ConfirmDeleteItemTags').modal('hide');
+                table.fnDraw();
+            }
+        }
+        catch (e) {
+            alert(e.message);
+        }
+    });
+
 }

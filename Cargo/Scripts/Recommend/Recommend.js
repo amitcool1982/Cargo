@@ -82,3 +82,40 @@ var BindRecommendTable = function () {
     });
 
 }
+
+
+$(document).on('click', '.detail', function () {
+    var id = $(this).attr('data-id');
+
+    var detail = ExecuteSynchronously('Recommended.aspx', 'GetRecommendedDetails', { Id: id });
+    if (detail.d != "") {
+        $('#myModalLabelDetail').html('Customer Detail');
+        $('#bodyModal').html(detail.d);
+        $('#modalDetail').modal({
+            keyboard: false
+        });
+    }
+    else {
+        message.Error(response.message);
+    }
+});
+
+
+function DeleteCustomer(table, nRow) {
+    var aData = table.fnGetData(nRow);
+    $('#ConfirmDeleteRecommended').modal('show');
+
+    $('#btnDeleteRecommended').on("click", function (e) {
+        try {
+            var res = ExecuteSynchronously('Recommended.aspx', 'DeleteRecommended', { Id: $(aData[0]).text() });
+            if (res.d == 1) {
+                $('#ConfirmDeleteRecommended').modal('hide');
+                table.fnDraw();
+            }
+        }
+        catch (e) {
+            alert(e.message);
+        }
+    });
+
+}

@@ -32,13 +32,14 @@
                 </div>
             </div>
 
-            
+
             <div class="row">
                 <div class="col-lg-6">
                     <div class="span6"></div>
                     <div class="span6">
                         <div id="table_filter" class="dataTables_filter">
-                            <label>Search: 
+                            <label>
+                                Search: 
                             <input id="txtSearch" type="text" /></label>
                         </div>
                     </div>
@@ -55,13 +56,54 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-lg-6">
 
+
+                    <div id="item-detail">
+                    </div>
+
+
+
+                    <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title" id="myModalLabelDetail"></h4>
+                                </div>
+                                <div class="modal-body" id="bodyModal">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+
+                    <!-- /#page-wrapper -->
+
+                </div>
+                <!-- /#wrapper -->
             </div>
 
-
             <!-- /#page-wrapper -->
+            <div class="modal fade" id="ConfirmDeleteRecommended" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Delete Confirm</h4>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure, you want to delete this Recommended Item?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                            <button type="submit" id="btnDeleteRecommended" class="btn btn-primary">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /#wrapper -->
 
-        </div>
-        <!-- /#wrapper -->
-    </div>
+            <!-- Modal -->
 </asp:Content>

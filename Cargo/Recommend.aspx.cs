@@ -125,7 +125,7 @@ namespace Cargo
                     sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 150px;overflow: hidden;'><nobr>" + dtRecommend.Rows[i]["Nama_Menu"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-search-plus fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtRecommend.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' class='edit' data-toggle='tooltip' title='detail item'><i class='fa fa-search-plus fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtRecommend.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' class='delete' data-toggle='tooltip' title='delete recommended'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 
@@ -162,5 +162,62 @@ namespace Cargo
             }
             return outputJson;
         }
+
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static long DeleteRecommended(string Id)
+        {
+            return DeleteRecommendedData(long.Parse(Id));
+        }
+
+        public static int DeleteRecommendedData(long id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.BigInt, 20, ParameterDirection.Input, id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteRecommendedItem", oParam);
+            return 1;
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static string GetRecommendedDetails(string Id)
+        {
+            return GetRecommendedDetailsData(long.Parse(Id));
+        }
+
+        public static string GetRecommendedDetailsData(long id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.BigInt, 20, ParameterDirection.Input, id);
+            DataTable dt = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetRecommendedItemDetails", oParam).Tables[0];
+
+            string display = "<table>";
+            if (dt.Rows.Count > 0)
+            {
+                display += "<tr><td><b>ID</b></td><td>: " + Convert.ToString(dt.Rows[0]["id_generator"]) + "</td></tr>";
+                display += "<tr><td><b>Fullname</b></td><td>: " + Convert.ToString(dt.Rows[0]["nama_lengkap"]) + "</td></tr>";
+                display += "<tr><td><b>Born</b></td><td>: " + Convert.ToString(dt.Rows[0]["tempat_lahir"]) + ", " + Convert.ToString(dt.Rows[0]["tanggal_lahir"]) + "</td></tr>";
+                display += "<tr><td><b>Gender</b></td><td>: " + Convert.ToString(dt.Rows[0]["jenis_kelamin"]) + "</td></tr>";
+                display += "<tr><td><b>Phone</b></td><td>: " + Convert.ToString(dt.Rows[0]["telepon"]) + "</td></tr>";
+                display += "<tr><td><b>Handphone</b></td><td>: " + Convert.ToString(dt.Rows[0]["handphone"]) + "</td></tr>";
+                display += "<tr><td><b>Address</b></td><td>: " + Convert.ToString(dt.Rows[0]["alamat"]) + "</td></tr>";
+                display += "<tr><td><b>Province</b></td><td>: " + Convert.ToString(dt.Rows[0]["provinsi"]).Replace("_", " ") + "</td></tr>";
+                display += "<tr><td><b>City</b></td><td>: " + Convert.ToString(dt.Rows[0]["kota"]).Replace("_", " ") + "</td></tr>";
+                display += "<tr><td><b>Zip Code</b></td><td>: " + Convert.ToString(dt.Rows[0]["kode_pos"]) + "</td></tr>";
+                display += "<tr><td><b>Email</b></td><td>: <a href='mailto:" + Convert.ToString(dt.Rows[0]["email"]) + "'>" + Convert.ToString(dt.Rows[0]["email"]) + "</a></td></tr>";
+                display += "<tr><td><b>join Date</b></td><td>: " + Convert.ToString(dt.Rows[0]["join_datetime"]) + "</td></tr>";
+                display += "<tr><td><b>Last Login</b></td><td>: " + Convert.ToString(dt.Rows[0]["last_login"]) + "</td></tr>";
+                display += "</table>";
+            }
+
+            return display;
+        }
+
+
     }
 }

@@ -69,13 +69,13 @@
 
                         <div class="form-group">
                             <label for="vendors">Vendors :</label>
-                            <select id="ddlVendor" name="vendors" class="form-control" required="">
+                            <select id="ddlVendor" name="ddlVendor" class="form-control" required="">
                                 <option selected="selected" value="">- Select Vendors -</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="category">Category Item :</label>
-                            <select id="ddlItemCategory" name="category" class="form-control" required="">
+                            <select id="ddlItemCategory" name="ddlItemCategory" class="form-control" required="">
                                 <option selected="selected" value="">- Category -</option>
                             </select>
                         </div>
@@ -116,7 +116,7 @@
                         <div class="form-group">
                             <div class="checkbox">
                                 <label>
-                                    <input name="recommended" value="1" type="checkbox">
+                                    <input id="recommended" name="recommended" value="1" type="checkbox">
                                     Make this as <strong>RECOMMENDED ITEM</strong>
                                 </label>
                             </div>
@@ -141,7 +141,7 @@
                             <img id="ItemImageUrl" src="images/no_picture_wide.png" class="img-thumbnail" style="width: 100%;">
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary" onclick="javascript:SaveItem()">Save</button>
                         <button type="reset" class="btn btn-warning">Reset</button>
                         <button type="button" class="items-show-form btn btn-danger" style="display: none;">Cancel</button>
                     </div>

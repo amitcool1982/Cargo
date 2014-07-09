@@ -135,7 +135,7 @@ namespace Cargo
                     sb.AppendFormat(@"""3"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtItems.Rows[i]["harga_menu"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""4"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='items-dialy-promo' data-toggle='tooltip' data-title='Dialy Promo " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-usd fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='' data-toggle='tooltip' data-title='Item was recommended' ><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='items-show-form update-form' data-toggle='tooltip' data-title='Update Data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-pencil-square-o fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='delete_item' data-toggle='tooltip' data-title='Delete data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""4"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='items-dialy-promo' data-toggle='tooltip' data-title='Dialy Promo " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-usd fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='' data-toggle='tooltip' data-title='Item was recommended' ><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='edit' data-toggle='tooltip' data-title='Update Data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-pencil-square-o fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='delete' data-toggle='tooltip' data-title='Delete data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 
@@ -191,7 +191,32 @@ namespace Cargo
         }
 
 
+        public static int AddUpdateItemData(ItemDetail objItemDetail)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[10];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.BigInt, 8, ParameterDirection.Input, objItemDetail.ItemID);
+            oParam[5] = DBHelper.GetParam("@Phone", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.Vendor);
+            oParam[4] = DBHelper.GetParam("@AliasCity", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.Categoty);
+            oParam[1] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.ItemName);
+            oParam[2] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.UrlAlias);
+            oParam[3] = DBHelper.GetParam("@AliasProvince", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.Description);
+            
+            
+            oParam[6] = DBHelper.GetParam("@Email", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.Price);
+            oParam[7] = DBHelper.GetParam("@Address", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.Tags);
+            oParam[8] = DBHelper.GetParam("@ImageUrl", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.IsRecommendItem);
+            oParam[9] = DBHelper.GetParam("@BannerUrl", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.ItemImageUrl);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateItemData", oParam);
+            return 1;
+        }
 
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int AddUpdateItem(ItemDetail objItemDetail)
+        {
+            return AddUpdateItemData(objItemDetail);
+        }
 
         public CommonObjects[] GetVendorsList()
         {
@@ -240,23 +265,25 @@ namespace Cargo
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static ItemDetail GetItemData(int ItemId)
+        public static ItemDetail GetItemData(string ItemId)
         {
+            string imagefolder = "/img/";
+
             ItemDetail objItemDetail = new ItemDetail();
             Items objItem = new Items();
             DataTable objmainDT = new DataTable();
             DataRow[] objMainRow = null;
-            if (ItemId != -1)
+            if (ItemId != "-1")
             {
                 objmainDT = (DataTable)HttpContext.Current.Session["ItemData"];
-                objMainRow = objmainDT.Select("id=" + ItemId);
+                objMainRow = objmainDT.Select("menu_id_generator='" + ItemId + "'");
             }
 
             DataTable dtVendors = new DataTable();
             dtVendors = SQL.BLL.GetVendorsList(1, 1000, "", "id", 1);
             DataRow newRowVendor = dtVendors.NewRow();
             newRowVendor["id"] = "-1";
-            newRowVendor["alias_vendors"] = "-Select Vendor-";
+            newRowVendor["nama_vendors"] = "-Select Vendor-";
             dtVendors.Rows.InsertAt(newRowVendor, 0);
             dtVendors.AcceptChanges();
             objItemDetail.Vendor = new CommonObjects[dtVendors.Rows.Count];
@@ -265,8 +292,8 @@ namespace Cargo
             {
                 objItemDetail.Vendor[intCount] = new CommonObjects();
                 objItemDetail.Vendor[intCount].Value = drw["id"].ToString();
-                objItemDetail.Vendor[intCount].Text = drw["alias_vendors"].ToString();
-                objItemDetail.Vendor[intCount].DefaultValue = ItemId != -1 ? objMainRow[0]["alias_vendors"].ToString() : objItemDetail.Vendor[0].Value;
+                objItemDetail.Vendor[intCount].Text = drw["nama_vendors"].ToString();
+                objItemDetail.Vendor[intCount].DefaultValue = ItemId != "-1" ? objMainRow[0]["nama_vendors"].ToString() : objItemDetail.Vendor[0].Value;
                 intCount++;
             }
 
@@ -284,31 +311,31 @@ namespace Cargo
                 objItemDetail.Categoty[intCount] = new CommonObjects();
                 objItemDetail.Categoty[intCount].Value = drw["id"].ToString();
                 objItemDetail.Categoty[intCount].Text = drw["Category"].ToString();
-                objItemDetail.Categoty[intCount].DefaultValue = ItemId != -1 ? objMainRow[0]["Category"].ToString() : objItemDetail.Categoty[0].Value;
+                objItemDetail.Categoty[intCount].DefaultValue = ItemId != "-1" ? objMainRow[0]["Category"].ToString() : objItemDetail.Categoty[0].Value;
                 intCount++;
             }
 
             int Price;
             bool IsRecommendItem;
 
-            objItemDetail.ItemName = ItemId != -1 ? objMainRow[0]["nama_menu"].ToString() : "";
-            objItemDetail.UrlAlias = ItemId != -1 ? "../" + objMainRow[0]["alias_menu"].ToString() : "";
-            objItemDetail.Description = ItemId != -1 ? objMainRow[0]["deskripsi_menu"].ToString() : "";
-            if (ItemId != -1)
+            objItemDetail.ItemName = ItemId != "-1" ? objMainRow[0]["nama_menu"].ToString() : "";
+            objItemDetail.UrlAlias = ItemId != "-1" ? objMainRow[0]["alias_menu"].ToString() : "";
+            objItemDetail.Description = ItemId != "-1" ? objMainRow[0]["deskripsi_menu"].ToString() : "";
+            if (ItemId != "-1")
             {
                 int.TryParse(Convert.ToString(objMainRow[0]["harga_menu"]), out Price);
                 objItemDetail.Price = Price;
             }
 
-            objItemDetail.Tags = ItemId != -1 ? objMainRow[0]["tlp_vendors"].ToString() : "";
+            objItemDetail.Tags = ItemId != "-1" ? objMainRow[0]["tags"].ToString() : "";
 
-            if (ItemId != -1)
+            if (ItemId != "-1")
             {
                 bool.TryParse(Convert.ToString(objMainRow[0]["is_recommended"]), out IsRecommendItem);
                 objItemDetail.IsRecommendItem = IsRecommendItem;
             }
 
-            objItemDetail.ItemImageUrl = ItemId != -1 ? "../" + objMainRow[0]["media_photo"].ToString() : "";
+            objItemDetail.ItemImageUrl = ItemId != "-1" ? imagefolder + objMainRow[0]["media_photo"].ToString() : "";
 
             return objItemDetail;
         }
