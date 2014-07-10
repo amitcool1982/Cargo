@@ -28,31 +28,65 @@ BEGIN
 	(
 	RowNum		int identity,
 	ID			int,
-	Alias_Menu	varchar(100),
-	Nama_Menu	varchar(100),
-	Category	varchar(100)
+	[menu_id_generator] [nvarchar](100) NULL,
+	[id_vendors] [nvarchar](255) NULL,
+	[alias_menu] [nvarchar](255) NULL,
+	[nama_menu] [nvarchar](255) NULL,
+	[deskripsi_menu] [nvarchar](max) NULL,
+	[media_photo] [nvarchar](255) NULL,
+	[harga_menu] [int] NULL,
+	[kategori_menu] [nvarchar](100) NULL,
+	[tags] [nvarchar](max) NULL,
+	[is_recommended] [int] NULL,
+	[last_update] [datetime] NULL,
+	nama_vendors [nvarchar](255) NULL,
+	Category [nvarchar](100) NULL
 	)
 	
 	 
-	
-	insert into #temp(ID, Alias_Menu, Nama_Menu)
-		Select [id], [alias_menu], [Nama_Menu] FROM [ledb_menu] with(nolock)		
+	 
+	insert into #temp(	[id],		menu_id_generator,		id_vendors,			alias_menu,			nama_menu,		deskripsi_menu,		media_photo,		harga_menu,		kategori_menu,		tags,		is_recommended,		last_update,	nama_vendors,			Category)
+		select			Item.[id], Item.menu_id_generator,	Item.id_vendors,	Item.alias_menu,	Item.nama_menu, Item.deskripsi_menu, Item.media_photo, Item.harga_menu, Item.kategori_menu, Item.tags, Item.is_recommended, Item.last_update, Vendors.nama_vendors, ItemCat.nama_kategori
+		from 
+		ledb_menu			Item	With(nolock)	Inner Join
+		ledb_vendors		Vendors	With(nolock)	On Item.id_vendors = Vendors.id_vendors_generator	Inner Join
+		ledb_kategorimenu	ItemCat With(nolock)	On Item.kategori_menu = ItemCat.alias
 		Where	is_recommended = 1
 					And
 				(
-				id			like ('%' + @piSearchFilter + '%') OR 
+				Item.id			like ('%' + @piSearchFilter + '%') OR 
 				alias_menu	like ('%' + @piSearchFilter + '%') OR 
 				Nama_Menu	like ('%' + @piSearchFilter + '%')
 				)
 		ORDER BY 
-						CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,
-						CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 0 THEN id END DESC,
+		CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN Item.id END ASC,
+		CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 0 THEN Item.id END DESC,
+		
+		CASE WHEN @piSortedBy = 'alias_menu' AND @piSortDirection = 1 THEN alias_menu END ASC,
+		CASE WHEN @piSortedBy = 'alias_menu' AND @piSortDirection = 0 THEN alias_menu END DESC,
+		
+		CASE WHEN @piSortedBy = 'Nama_Menu' AND @piSortDirection = 1 THEN Nama_Menu END ASC,
+		CASE WHEN @piSortedBy = 'Nama_Menu' AND @piSortDirection = 0 THEN Nama_Menu END DESC
+	 
+	
+	--insert into #temp(	[id],		menu_id_generator,		id_vendors,			alias_menu,			nama_menu,		deskripsi_menu,		media_photo,		harga_menu,		kategori_menu,		tags,		is_recommended,		last_update,	nama_vendors,			Category)
+	--	select			Item.[id], Item.menu_id_generator,	Item.id_vendors,	Item.alias_menu,	Item.nama_menu, Item.deskripsi_menu, Item.media_photo, Item.harga_menu, Item.kategori_menu, Item.tags, Item.is_recommended, Item.last_update, Vendors.nama_vendors, ItemCat.nama_kategori		
+	--	Where	is_recommended = 1
+	--				And
+	--			(
+	--			id			like ('%' + @piSearchFilter + '%') OR 
+	--			alias_menu	like ('%' + @piSearchFilter + '%') OR 
+	--			Nama_Menu	like ('%' + @piSearchFilter + '%')
+	--			)
+	--	ORDER BY 
+	--					CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,
+	--					CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 0 THEN id END DESC,
 						
-						CASE WHEN @piSortedBy = 'alias_menu' AND @piSortDirection = 1 THEN alias_menu END ASC,
-						CASE WHEN @piSortedBy = 'alias_menu' AND @piSortDirection = 0 THEN alias_menu END DESC,
+	--					CASE WHEN @piSortedBy = 'alias_menu' AND @piSortDirection = 1 THEN alias_menu END ASC,
+	--					CASE WHEN @piSortedBy = 'alias_menu' AND @piSortDirection = 0 THEN alias_menu END DESC,
 						
-						CASE WHEN @piSortedBy = 'Nama_Menu' AND @piSortDirection = 1 THEN Nama_Menu END ASC,
-						CASE WHEN @piSortedBy = 'Nama_Menu' AND @piSortDirection = 0 THEN Nama_Menu END DESC
+	--					CASE WHEN @piSortedBy = 'Nama_Menu' AND @piSortDirection = 1 THEN Nama_Menu END ASC,
+	--					CASE WHEN @piSortedBy = 'Nama_Menu' AND @piSortDirection = 0 THEN Nama_Menu END DESC
 						
 
 	Select @TotalCount=COUNT(*) from #temp				
