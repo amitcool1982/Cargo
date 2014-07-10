@@ -11,9 +11,9 @@ CREATE PROCEDURE [dbo].USP_DeleteItemRecommend
  )     
 AS   
 BEGIN
-	if exists(Select * from [ledb_menu] with(nolock) where menu_id_generator=@Id)
+	if exists(Select * from [ledb_menu] with(nolock) where id=@Id)
 	Begin
-		update [ledb_menu] Set is_recommended =0 where menu_id_generator=@Id	
+		update [ledb_menu] Set is_recommended =0 where id=@Id	
 	END
 	   
 END  

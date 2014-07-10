@@ -11,6 +11,6 @@ CREATE PROCEDURE [dbo].USP_GetItemRecommendDetails
 AS   
 BEGIN 	
 	
-		Select	* from [ledb_menu] C With(nolock)	Where	menu_id_generator	= @id 	
+		Select	* from [ledb_menu] C With(nolock)	Where	id	= @id 	
 	   
 END  
