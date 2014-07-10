@@ -105,6 +105,7 @@ namespace Cargo
 
 
             dtNews = objNews.GetNews(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
+            HttpContext.Current.Session["NewsData"] = dtNews;
             if (dtNews.Rows.Count > 0)
             {
                 for (int i = 0; i < dtNews.Rows.Count; i++)
@@ -167,6 +168,28 @@ namespace Cargo
         }
 
 
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static NewsDetail GetNewsData(int NewsId)
+        {
+            NewsDetail objNewsDetail = new NewsDetail();            
+            DataTable objmainDT = new DataTable();
+            DataRow[] objMainRow = null;
+            if (NewsId != -1)
+            {
+                objmainDT = (DataTable)HttpContext.Current.Session["NewsData"];
+                objMainRow = objmainDT.Select("id=" + NewsId);
+            }
+
+            objNewsDetail.EngTitle = NewsId != -1 ? objMainRow[0]["en_alias"].ToString() : "";
+            objNewsDetail.EngURLAlias = NewsId != -1 ? objMainRow[0]["en_judul"].ToString() : "";
+            objNewsDetail.EngContent = NewsId != -1 ? objMainRow[0]["en_isi"].ToString() : "";
+            objNewsDetail.IndTitle = NewsId != -1 ? objMainRow[0]["alias"].ToString() : "";
+            objNewsDetail.IndURLAlias = NewsId != -1 ? objMainRow[0]["judul"].ToString() : "";
+            objNewsDetail.IndContent = NewsId != -1 ? "../" + objMainRow[0]["isi"].ToString() : "";
+            objNewsDetail.ImageURL = NewsId != -1 ? "../" + objMainRow[0]["gambar"].ToString() : "";
+            return objNewsDetail;
+        }
 
 
         public static string AliasEncrypt(string alias)
@@ -236,55 +259,55 @@ namespace Cargo
         }
 
 
-        public static int AddNewsData(NewsDetail objItemDetail)
+        public static int AddNewsData(NewsDetail objNewsDetail)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
 
             SqlParameter[] oParam = new SqlParameter[13];
-            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.Id);
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objNewsDetail.Id);
 
-            oParam[1] = DBHelper.GetParam("@EngTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.EngTitle);
-            oParam[2] = DBHelper.GetParam("@EngTitleEncrypt", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndTitleEncrypt);
-            oParam[3] = DBHelper.GetParam("@EngURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.EngURLAlias);
-            oParam[4] = DBHelper.GetParam("@EngContent", SqlDbType.VarChar, 4000, ParameterDirection.Input, objItemDetail.EngContent);
+            oParam[1] = DBHelper.GetParam("@EngTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.EngTitle);
+            oParam[2] = DBHelper.GetParam("@EngTitleEncrypt", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndTitleEncrypt);
+            oParam[3] = DBHelper.GetParam("@EngURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.EngURLAlias);
+            oParam[4] = DBHelper.GetParam("@EngContent", SqlDbType.VarChar, 4000, ParameterDirection.Input, objNewsDetail.EngContent);
 
-            oParam[5] = DBHelper.GetParam("@IndTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndTitle);
-            oParam[6] = DBHelper.GetParam("@IndURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndURLAlias);
-            oParam[7] = DBHelper.GetParam("@IndContent", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndContent);
+            oParam[5] = DBHelper.GetParam("@IndTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndTitle);
+            oParam[6] = DBHelper.GetParam("@IndURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndURLAlias);
+            oParam[7] = DBHelper.GetParam("@IndContent", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndContent);
 
-            oParam[8] = DBHelper.GetParam("@Author", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.Author);
-            oParam[9] = DBHelper.GetParam("@IsSchedule", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.IsSchedule);
-            oParam[10] = DBHelper.GetParam("@PostDate", SqlDbType.DateTime, 100, ParameterDirection.Input, objItemDetail.PostDate);
-            oParam[11] = DBHelper.GetParam("@IsOnline", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.IsOnline);
-            oParam[12] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.Count);
+            oParam[8] = DBHelper.GetParam("@Author", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.Author);
+            oParam[9] = DBHelper.GetParam("@IsSchedule", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.IsSchedule);
+            oParam[10] = DBHelper.GetParam("@PostDate", SqlDbType.DateTime, 100, ParameterDirection.Input, objNewsDetail.PostDate);
+            oParam[11] = DBHelper.GetParam("@IsOnline", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.IsOnline);
+            oParam[12] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.Count);
 
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateNews", oParam);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateNewsData", oParam);
             return 1;
         }
 
 
-        public static int UpdateNewsData(NewsDetail objItemDetail)
+        public static int UpdateNewsData(NewsDetail objNewsDetail)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[13];
-            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.Id);
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objNewsDetail.Id);
 
-            oParam[1] = DBHelper.GetParam("@EngTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.EngTitle);
-            oParam[2] = DBHelper.GetParam("@EngTitleEncrypt", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndTitleEncrypt);
-            oParam[3] = DBHelper.GetParam("@EngURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.EngURLAlias);
-            oParam[4] = DBHelper.GetParam("@EngContent", SqlDbType.VarChar, 4000, ParameterDirection.Input, objItemDetail.EngContent);
+            oParam[1] = DBHelper.GetParam("@EngTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.EngTitle);
+            oParam[2] = DBHelper.GetParam("@EngTitleEncrypt", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndTitleEncrypt);
+            oParam[3] = DBHelper.GetParam("@EngURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.EngURLAlias);
+            oParam[4] = DBHelper.GetParam("@EngContent", SqlDbType.VarChar, 4000, ParameterDirection.Input, objNewsDetail.EngContent);
 
-            oParam[5] = DBHelper.GetParam("@IndTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndTitle);
-            oParam[6] = DBHelper.GetParam("@IndURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndURLAlias);
-            oParam[7] = DBHelper.GetParam("@IndContent", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndContent);
+            oParam[5] = DBHelper.GetParam("@IndTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndTitle);
+            oParam[6] = DBHelper.GetParam("@IndURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndURLAlias);
+            oParam[7] = DBHelper.GetParam("@IndContent", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndContent);
 
-            oParam[8] = DBHelper.GetParam("@Author", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.Author);
-            oParam[9] = DBHelper.GetParam("@IsSchedule", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.IsSchedule);
-            oParam[10] = DBHelper.GetParam("@PostDate", SqlDbType.DateTime, 100, ParameterDirection.Input, objItemDetail.PostDate);
-            oParam[11] = DBHelper.GetParam("@IsOnline", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.IsOnline);
-            oParam[12] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.Count);
+            oParam[8] = DBHelper.GetParam("@Author", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.Author);
+            oParam[9] = DBHelper.GetParam("@IsSchedule", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.IsSchedule);
+            oParam[10] = DBHelper.GetParam("@PostDate", SqlDbType.DateTime, 100, ParameterDirection.Input, objNewsDetail.PostDate);
+            oParam[11] = DBHelper.GetParam("@IsOnline", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.IsOnline);
+            oParam[12] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.Count);
 
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateNews", oParam);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateNewsData", oParam);
             return 1;
         }
 
@@ -293,30 +316,30 @@ namespace Cargo
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[1];
             oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteNews", oParam);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteNewsData", oParam);
             return 1;
         }
 
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int AddNews(NewsDetail objItemDetail)
+        public static int AddNews(NewsDetail objNewsDetail)
         {
-            objItemDetail.IndTitleEncrypt = AliasEncrypt(objItemDetail.IndTitle);
-            objItemDetail.PostDate = DateTime.Now;
-            objItemDetail.Author = Convert.ToString(HttpContext.Current.Session["LoginName"]);
-            return AddNewsData(objItemDetail);
+            objNewsDetail.IndTitleEncrypt = AliasEncrypt(objNewsDetail.IndTitle);
+            objNewsDetail.PostDate = DateTime.Now;
+            objNewsDetail.Author = Convert.ToString(HttpContext.Current.Session["LoginName"]);
+            return AddNewsData(objNewsDetail);
         }
 
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int UpdateNews(NewsDetail objItemDetail)
+        public static int UpdateNews(NewsDetail objNewsDetail)
         {
-            objItemDetail.IndTitleEncrypt = AliasEncrypt(objItemDetail.IndTitle);
-            objItemDetail.PostDate = DateTime.Now;
-            objItemDetail.Author = Convert.ToString(HttpContext.Current.Session["LoginName"]);
-            return UpdateNewsData(objItemDetail);
+            objNewsDetail.IndTitleEncrypt = AliasEncrypt(objNewsDetail.IndTitle);
+            objNewsDetail.PostDate = DateTime.Now;
+            objNewsDetail.Author = Convert.ToString(HttpContext.Current.Session["LoginName"]);
+            return UpdateNewsData(objNewsDetail);
         }
 
 

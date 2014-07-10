@@ -21,7 +21,10 @@ $(document).ready(function () {
 
         DeleteNews(table, nRow);
     });
+
+    BindPageData(-1);
 });
+
 
 var BindCustomerTable = function () {
 
@@ -98,49 +101,110 @@ var BindCustomerTable = function () {
 
 }
 
+function BindPageData(Id) {
+    id = 0;
+    var res = ExecuteSynchronously('News.aspx', 'GetNewsData', { NewsId: Id });
+
+    $('#title').val(res.d.IndTitle);
+    $('#alias').val(res.d.IndURLAlias);
+    $('#IndContent').val(res.d.IndContent);
+
+    $('#en_title').val(res.d.EngTitle);
+    $('#en_alias').val(res.d.EngURLAlias);
+    $('#EngContent').val(res.d.EngContent);
+}
 
 function editRow(table, nRow) {
     var aData = table.fnGetData(nRow);
     var jqTds = $('>td', nRow);
     id = $(aData[0]).text();
-    $('#txtname').val($(aData[2]).text());
-    $('#txtalias').val($(aData[1]).text());
+    $('#title').val($(aData[6]).text());
+    $('#alias').val($(aData[7]).text());
+    $('#IndContent').val($(aData[8]).text());
+
+    $('#en_title').val($(aData[3]).text());
+    $('#en_alias').val($(aData[4]).text());
+    $('#EngContent').val($(aData[5]).text());
+    
     $('#save').hide();
     $('#cancelsave').show();
 }
 
 function SaveNews(obj) {
     $("#divsessionexpired").hide();
-    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
-        var res = null;
+    var strMsg = DataIsValid();
+    if (strMsg == '') {
+        var News = new Object();
+        News.Id = id;
+        News.IndTitleEncrypt = '';
+        News.IndTitle = $('#title').val().trim();
+        News.IndURLAlias = $('#alias').val().trim();
+        News.IndContent = $('#IndContent').val().trim();
+
+        News.EngTitle = $('#en_title').val();
+        News.EngURLAlias = $('#en_alias').val().trim();
+        News.EngContent = $('#EngContent').val().trim();
+
+        News.PostDate = '';
+        News.ImageURL = '';
+        News.Author = '';
+
         if (obj == 0) {
-            res = ExecuteSynchronously('News.aspx', 'AddNews', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+            News.IsOnline = 0;
+            News.IsSchedule = 1;
         }
         else {
-            res = ExecuteSynchronously('News.aspx', 'UpdateNews', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+            News.IsOnline = 1;
+            News.IsSchedule = 0;
         }
+
+        News.IsSchedule = '';
+        News.Count = 0;
+
+        var res = ExecuteSynchronously('News.aspx', 'AddNews', { objNewsdetail: News });
         if (res.d == 1) {
             table.fnDraw();
-            $('#txtalias').val('');
-            $('#txtname').val('');
-            id = 0;
+            BindPageData(-1);
+            $('#errormsg').text("Data updated successfully");
+            $("#divsessionexpired").show();
+            $('#cancelsave').hide();
         }
     }
     else {
-        if ($('#txtname').val().trim() == '') {
-            $('#errormsg').text("Name is required");
-            $("#divsessionexpired").show();
-        }
-        else if ($('#txtname').val().trim() == '') {
-            $('#errormsg').text("Alias is required");
-            $("#divsessionexpired").show();
-        }
+        $('#errormsg').text(strMsg);
+        $("#divsessionexpired").show();
     }
 }
 
+function DataIsValid() {
+    if ($('#title').val() == '') {
+        return "title is required"
+    }
+    if ($('#alias').val() == '') {
+        return "alias is required"
+    }
+    if ($('#IndContent').val().trim() == '') {
+        return "content is required"
+    }
+    if ($('#en_title').val().trim() == '') {
+        return "english title is required"
+    }
+    if ($('#en_alias').val().trim() == '') {
+        return "english alias is required"
+    }
+    if ($('#EngContent').val().trim() == '') {
+        return "english content is required"
+    }
+    return '';
+}
 
-
-
+function editRow(Table, nRow) {
+    var aData = Table.fnGetData(nRow);
+    var jqTds = $('>td', nRow);
+    id = $(aData[0]).text();
+    BindPageData(Number(id));
+    $('#cancelsave').show();
+}
 
 function DeleteNews(table, nRow) {
     var aData = table.fnGetData(nRow);

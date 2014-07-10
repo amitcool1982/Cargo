@@ -78,6 +78,8 @@
                                 <div class="form-group">
                                     <label for="content">Content :</label>
                                     HTML Editor need to add here
+                                    <textarea id="IndContent" placeholder="Type content news here.." class="form-control">
+                                        </textarea>
                                 </div>
                             </div>
                         </div>
@@ -98,12 +100,14 @@
                                 <div class="form-group">
                                     <label for="en_content">Content :</label>
                                     HTML Editor need to add here
+                                    <textarea id="EngContent" placeholder="Type contenet news here.." class="form-control">
+                                        </textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="row-fluid">
                             <div id="queue"></div>
-                            <input id="File1" type="file" />
+                            <%--<input id="File1" type="file" />--%>
                             <%--<div style="height: 30px; width: 120px;" class="uploadify" id="file_upload">
                                 <object style="position: absolute; z-index: 1;" id="SWFUpload_0" type="application/x-shockwave-flash" data="images/uploadify.swf" class="swfupload" height="30" width="120">
                                     <param name="wmode" value="transparent">
@@ -128,8 +132,8 @@
                             </div>
                         </div>
                         <div class="row-fluid text-right">
-                            <input name="action" value="Publish" class="btn btn-success" type="submit" onclick="javascript: SaveNews(1)">
-                            <input name="action" value="Draft" class="btn btn-warning" type="submit" onclick="javascript: SaveNews(0)">
+                            <input name="action" value="Publish" class="btn btn-success" type="submit" onclick="javascript: SaveNews(1);">
+                            <input name="action" value="Draft" class="btn btn-warning" type="submit" onclick="javascript: SaveNews();">
                             <!-- <button type="button" class="schedule-show btn btn-info">Schedule</button> -->
                             <button type="button" class="news-show-form btn btn-danger" style="display: none;">Cancel</button>
                         </div>
