@@ -295,7 +295,7 @@ namespace Cargo
         public static int CityAddUpdate(int Id, string CityName,string CityAlias, string Province)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[3];
+            SqlParameter[] oParam = new SqlParameter[4];
             oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, Id);
             oParam[1] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, CityName);
             oParam[2] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, CityAlias);
@@ -322,7 +322,7 @@ namespace Cargo
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static CommonObjects[] GetProvince()
+        public static CommonObjects[] GetDropProvince()
         {
             DataTable dtProvince = GetProvinceDatatable();
             CommonObjects[] objProvince = new CommonObjects[dtProvince.Rows.Count + 1];

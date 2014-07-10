@@ -131,7 +131,7 @@
                             <label class="col-sm-3" style="margin-top:5px">Province:</label>
                             <select id="ddlprovince" class="selectpicker form-control col-sm-2" data-width="250px"></select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="margin-top:-5px">
                             <label class="col-sm-3" style="margin-top:5px">City Name:</label>
                             <input id="cityname" name="name" placeholder="Province Name" class="form-control col-sm-2" style="width:250px" type="text">
                         </div>
