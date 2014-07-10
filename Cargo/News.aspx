@@ -103,7 +103,8 @@
                         </div>
                         <div class="row-fluid">
                             <div id="queue"></div>
-                            <div style="height: 30px; width: 120px;" class="uploadify" id="file_upload">
+                            <input id="File1" type="file" />
+                            <%--<div style="height: 30px; width: 120px;" class="uploadify" id="file_upload">
                                 <object style="position: absolute; z-index: 1;" id="SWFUpload_0" type="application/x-shockwave-flash" data="images/uploadify.swf" class="swfupload" height="30" width="120">
                                     <param name="wmode" value="transparent">
                                     <param name="movie" value="/adminbox/uploadify/uploadify.swf?preventswfcaching=1404542896589">
@@ -113,7 +114,7 @@
                                     <param name="flashvars" value="movieName=SWFUpload_0&amp;uploadURL=%2Fpages%2Fnews%2Fupload_image&amp;useQueryString=false&amp;requeueOnError=false&amp;httpSuccess=&amp;assumeSuccessTimeout=30&amp;params=timestamp%3D1404542903%26amp%3Btoken%3D133d53061bc340e0a365f4315320f205&amp;filePostName=Filedata&amp;fileTypes=*.jpg&amp;fileTypesDescription=Image%20Files&amp;fileSizeLimit=0&amp;fileUploadLimit=1&amp;fileQueueLimit=999&amp;debugEnabled=false&amp;buttonImageURL=&amp;buttonWidth=120&amp;buttonHeight=30&amp;buttonText=&amp;buttonTextTopPadding=0&amp;buttonTextLeftPadding=0&amp;buttonTextStyle=color%3A%20%23000000%3B%20font-size%3A%2016pt%3B&amp;buttonAction=-110&amp;buttonDisabled=false&amp;buttonCursor=-2">
                                 </object>
                                 <div style="height: 30px; line-height: 30px; width: 120px;" class="uploadify-button btn btn-primary btn-block" id="file_upload-button"><span class="uploadify-button-text">Browse Picture</span></div>
-                            </div>
+                            </div>--%>
                             <div class="uploadify-queue" id="file_upload-queue"></div>
                         </div>
                         <div class="row-fluid">

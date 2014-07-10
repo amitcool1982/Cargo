@@ -33,8 +33,8 @@ namespace Cargo
         public int PageSize
         {
             get
-            {                
-                return 20;                
+            {
+                return 20;
             }
             set { Session["PageSize"] = Convert.ToString(value); }
         }
@@ -49,7 +49,7 @@ namespace Cargo
                 return obj;
         }
 
-       
+
         public DataTable GetFAQs(int PageIndex, int PageSize, string SearchFilter, string SortBy, int SortDirection)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
@@ -103,7 +103,7 @@ namespace Cargo
                 SortDirection = 0;
             }
 
-            
+
             dtFAQ = objFAQ.GetFAQs(PageIndex, PageSize, SearchFilter, SortBy, SortDirection);
             if (dtFAQ.Rows.Count > 0)
             {
@@ -165,5 +165,87 @@ namespace Cargo
             }
             return outputJson;
         }
+
+
+
+        public static int AddFAQData(FAQDetail objFAQDetail)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[9];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objFAQDetail.Id);
+
+            oParam[1] = DBHelper.GetParam("@EngQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.EngQuestion);
+            oParam[2] = DBHelper.GetParam("@EngAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.EngAnswer);
+
+            oParam[3] = DBHelper.GetParam("@IndQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.IndQuestion);
+            oParam[4] = DBHelper.GetParam("@IndAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.IndAnswer);
+
+            oParam[5] = DBHelper.GetParam("@Icon", SqlDbType.VarChar, 255, ParameterDirection.Input, objFAQDetail.Icon);
+            oParam[6] = DBHelper.GetParam("@urutan", SqlDbType.VarChar, 255, ParameterDirection.Input, objFAQDetail.urutan);
+            oParam[7] = DBHelper.GetParam("@IsPrimary", SqlDbType.Int, 10, ParameterDirection.Input, objFAQDetail.IsPrimary);
+
+            oParam[8] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objFAQDetail.Count);
+
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateFAQ", oParam);
+            return 1;
+        }
+
+
+        public static int UpdateFAQData(FAQDetail objFAQDetail)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[9];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objFAQDetail.Id);
+
+            oParam[1] = DBHelper.GetParam("@EngQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.EngQuestion);
+            oParam[2] = DBHelper.GetParam("@EngAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.EngAnswer);
+
+            oParam[3] = DBHelper.GetParam("@IndQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.IndQuestion);
+            oParam[4] = DBHelper.GetParam("@IndAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.IndAnswer);
+
+            oParam[5] = DBHelper.GetParam("@Icon", SqlDbType.VarChar, 255, ParameterDirection.Input, objFAQDetail.Icon);
+            oParam[6] = DBHelper.GetParam("@urutan", SqlDbType.VarChar, 255, ParameterDirection.Input, objFAQDetail.urutan);
+            oParam[7] = DBHelper.GetParam("@IsPrimary", SqlDbType.Int, 10, ParameterDirection.Input, objFAQDetail.IsPrimary);
+
+            oParam[8] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objFAQDetail.Count);
+
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateFAQ", oParam);
+            return 1;
+        }
+
+
+        public static int DeleteFAQData(int id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteFAQ", oParam);
+            return 1;
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int AddFAQ(FAQDetail objFAQDetail)
+        {
+            return AddFAQData(objFAQDetail);
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int UpdateFAQ(FAQDetail objFAQDetail)
+        {
+            return UpdateFAQData(objFAQDetail);
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int DeleteFAQ(string Id)
+        {
+            return DeleteFAQData(int.Parse(Id));
+        }
+
     }
 }

@@ -19,6 +19,7 @@ using System.Collections;
 using System.IO;
 using System.Web.Script;
 using Cargo.BLL;
+using System.Security.Cryptography;
 
 namespace Cargo
 {
@@ -33,13 +34,13 @@ namespace Cargo
         public int PageSize
         {
             get
-            {                
-                return 20;                
+            {
+                return 20;
             }
             set { Session["PageSize"] = Convert.ToString(value); }
         }
 
-         object GetSQLSafeValue(object obj)
+        object GetSQLSafeValue(object obj)
         {
             if (obj == null)
                 return DBNull.Value;
@@ -62,7 +63,7 @@ namespace Cargo
 
             return otable;
         }
-        
+
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
@@ -164,5 +165,169 @@ namespace Cargo
             }
             return outputJson;
         }
+
+
+
+
+        public static string AliasEncrypt(string alias)
+        {
+            string hash = "";
+            string source = "Hello World!";
+            using (MD5 md5Hash = MD5.Create())
+            {
+                hash = GetMd5Hash(md5Hash, source);
+
+                Console.WriteLine("The MD5 hash of " + source + " is: " + hash + ".");
+
+                Console.WriteLine("Verifying the hash...");
+
+                if (VerifyMd5Hash(md5Hash, source, hash))
+                {
+                    Console.WriteLine("The hashes are the same.");
+                }
+                else
+                {
+                    Console.WriteLine("The hashes are not same.");
+                }
+            }
+
+            return hash;
+        }
+
+        static string GetMd5Hash(MD5 md5Hash, string input)
+        {
+
+            // Convert the input string to a byte array and compute the hash. 
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            // Create a new Stringbuilder to collect the bytes 
+            // and create a string.
+            StringBuilder sBuilder = new StringBuilder();
+
+            // Loop through each byte of the hashed data  
+            // and format each one as a hexadecimal string. 
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            // Return the hexadecimal string. 
+            return sBuilder.ToString();
+        }
+
+
+        // Verify a hash against a string. 
+        static bool VerifyMd5Hash(MD5 md5Hash, string input, string hash)
+        {
+            // Hash the input. 
+            string hashOfInput = GetMd5Hash(md5Hash, input);
+
+            // Create a StringComparer an compare the hashes.
+            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+
+            if (0 == comparer.Compare(hashOfInput, hash))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        public static int AddNewsData(NewsDetail objItemDetail)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+
+            SqlParameter[] oParam = new SqlParameter[13];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.Id);
+
+            oParam[1] = DBHelper.GetParam("@EngTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.EngTitle);
+            oParam[2] = DBHelper.GetParam("@EngTitleEncrypt", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndTitleEncrypt);
+            oParam[3] = DBHelper.GetParam("@EngURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.EngURLAlias);
+            oParam[4] = DBHelper.GetParam("@EngContent", SqlDbType.VarChar, 4000, ParameterDirection.Input, objItemDetail.EngContent);
+
+            oParam[5] = DBHelper.GetParam("@IndTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndTitle);
+            oParam[6] = DBHelper.GetParam("@IndURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndURLAlias);
+            oParam[7] = DBHelper.GetParam("@IndContent", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndContent);
+
+            oParam[8] = DBHelper.GetParam("@Author", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.Author);
+            oParam[9] = DBHelper.GetParam("@IsSchedule", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.IsSchedule);
+            oParam[10] = DBHelper.GetParam("@PostDate", SqlDbType.DateTime, 100, ParameterDirection.Input, objItemDetail.PostDate);
+            oParam[11] = DBHelper.GetParam("@IsOnline", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.IsOnline);
+            oParam[12] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.Count);
+
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateNews", oParam);
+            return 1;
+        }
+
+
+        public static int UpdateNewsData(NewsDetail objItemDetail)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[13];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objItemDetail.Id);
+
+            oParam[1] = DBHelper.GetParam("@EngTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.EngTitle);
+            oParam[2] = DBHelper.GetParam("@EngTitleEncrypt", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndTitleEncrypt);
+            oParam[3] = DBHelper.GetParam("@EngURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.EngURLAlias);
+            oParam[4] = DBHelper.GetParam("@EngContent", SqlDbType.VarChar, 4000, ParameterDirection.Input, objItemDetail.EngContent);
+
+            oParam[5] = DBHelper.GetParam("@IndTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndTitle);
+            oParam[6] = DBHelper.GetParam("@IndURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndURLAlias);
+            oParam[7] = DBHelper.GetParam("@IndContent", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.IndContent);
+
+            oParam[8] = DBHelper.GetParam("@Author", SqlDbType.VarChar, 255, ParameterDirection.Input, objItemDetail.Author);
+            oParam[9] = DBHelper.GetParam("@IsSchedule", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.IsSchedule);
+            oParam[10] = DBHelper.GetParam("@PostDate", SqlDbType.DateTime, 100, ParameterDirection.Input, objItemDetail.PostDate);
+            oParam[11] = DBHelper.GetParam("@IsOnline", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.IsOnline);
+            oParam[12] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objItemDetail.Count);
+
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateNews", oParam);
+            return 1;
+        }
+
+        public static int DeleteNewsData(int id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteNews", oParam);
+            return 1;
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int AddNews(NewsDetail objItemDetail)
+        {
+            objItemDetail.IndTitleEncrypt = AliasEncrypt(objItemDetail.IndTitle);
+            objItemDetail.PostDate = DateTime.Now;
+            objItemDetail.Author = Convert.ToString(HttpContext.Current.Session["LoginName"]);
+            return AddNewsData(objItemDetail);
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int UpdateNews(NewsDetail objItemDetail)
+        {
+            objItemDetail.IndTitleEncrypt = AliasEncrypt(objItemDetail.IndTitle);
+            objItemDetail.PostDate = DateTime.Now;
+            objItemDetail.Author = Convert.ToString(HttpContext.Current.Session["LoginName"]);
+            return UpdateNewsData(objItemDetail);
+        }
+
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int DeleteNews(string Id)
+        {
+            return DeleteNewsData(int.Parse(Id));
+        }
+
+
+
     }
 }
