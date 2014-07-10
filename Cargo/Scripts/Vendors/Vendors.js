@@ -23,7 +23,7 @@ $(document).ready(function () {
 
 function BindPageData(Id) {
     id = 0;
-    var res = ExecuteSynchronously('../Vendors.aspx', 'GetVendorData', { VendorId: Id });
+    var res = ExecuteSynchronously('Vendors.aspx', 'GetVendorData', { VendorId: Id });
     PopulateControl('ddlProvince', res.d.Province);
     $('#ddlProvince').selectpicker('refresh');
 
@@ -68,7 +68,7 @@ var BindCustomerTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "../Vendors.aspx/GetVendors",
+        "sAjaxSource": "Vendors.aspx/GetVendors",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearch").val() });
@@ -118,7 +118,7 @@ var BindCustomerTable = function () {
 }
 
 function BindataonProvinceChange(obj) {
-    var res = ExecuteSynchronously('../Vendors.aspx', 'GetCity', { ProvinceId: obj.value });
+    var res = ExecuteSynchronously('Vendors.aspx', 'GetCity', { ProvinceId: obj.value });
 
     PopulateControl('ddlCity', res.d);
     $('#ddlCity').selectpicker('refresh');
@@ -139,7 +139,7 @@ function SaveVendor() {
         Vendor.Phone = $('#phone').val().trim();
         Vendor.ImageUrl = '';
         Vendor.BannerUrl = '';
-        var res = ExecuteSynchronously('../Vendors.aspx', 'SaveUpdateVendorData', { objVendordetail: Vendor });
+        var res = ExecuteSynchronously('Vendors.aspx', 'SaveUpdateVendorData', { objVendordetail: Vendor });
         if (res.d == 1) {
             table.fnDraw();
             BindPageData(-1);

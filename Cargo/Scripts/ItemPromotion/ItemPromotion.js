@@ -80,7 +80,7 @@ var BindItemPromotionTable = function () {
                      { "sWidth": "4em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },                     
-                     { "sWidth": "5em", "bSortable": false },
+                     { "sWidth": "7em", "bSortable": false },
                      { "bVisible": false },
                      { "bVisible": false }
         ],

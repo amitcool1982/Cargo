@@ -48,7 +48,7 @@ var BindcategoryTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "../FAQ.aspx/GetFAQs",
+        "sAjaxSource": "FAQ.aspx/GetFAQs",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearch").val() });
@@ -101,7 +101,7 @@ function editRow(table, nRow) {
     var aData = table.fnGetData(nRow);
     var jqTds = $('>td', nRow);
     id = $(aData[0]).text();
-    var res = ExecuteSynchronously('../FAQ.aspx', 'GetFaQDetail', { Id: Number(id) });
+    var res = ExecuteSynchronously('FAQ.aspx', 'GetFaQDetail', { Id: Number(id) });
     $('#question').val(res.d.IndQuestion);
     $('#answer').val(res.d.IndAnswer);
     $('#en-question').val(res.d.EngQuestion);
@@ -126,10 +126,10 @@ function SaveFAQ() {
     if ($('#question').val() != '' && $('#answer').val() != '' && $('#en-question').val() != '' && $('#en-answer').val() != '') {
         var res = null;
         if (id == 0) {
-            res = ExecuteSynchronously('../FAQ.aspx', 'AddFAQ', { Id: 0, Ques: $("#question").val(), Ans: $("#answer").val(), EnQues: $("#en-question").val(), EnAns: $("#en-answer").val() });
+            res = ExecuteSynchronously('FAQ.aspx', 'AddFAQ', { Id: 0, Ques: $("#question").val(), Ans: $("#answer").val(), EnQues: $("#en-question").val(), EnAns: $("#en-answer").val() });
         }
         else {
-            res = ExecuteSynchronously('../FAQ.aspx', 'UpdateFAQ', { Id: Number(id), Ques: $("#question").val(), Ans: $("#answer").val(), EnQues: $("#en-question").val(), EnAns: $("#en-answer").val() });
+            res = ExecuteSynchronously('FAQ.aspx', 'UpdateFAQ', { Id: Number(id), Ques: $("#question").val(), Ans: $("#answer").val(), EnQues: $("#en-question").val(), EnAns: $("#en-answer").val() });
         }
         if (res.d == 1) {
             table.fnDraw();
@@ -168,7 +168,8 @@ function DeleteFAQ(table, nRow) {
 
     $('#btnDeleteFAQ').on("click", function (e) {
         try {
-            var res = ExecuteSynchronously('../FAQ.aspx', 'DeleteFAQ', { Id: $(aData[0]).text() });
+            debugger;
+            var res = ExecuteSynchronously('FAQ.aspx', 'DeleteFAQ', { Id: $(aData[0]).text() });
             if (res.d == 1) {
                 $('#ConfirmDeleteFAQ').modal('hide');
                 table.fnDraw();
