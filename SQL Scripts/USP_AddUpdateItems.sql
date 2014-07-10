@@ -27,6 +27,7 @@ BEGIN
 		update ledb_menu
 		set id_vendors=@Vendors,kategori_menu=@ItemCategory,nama_menu=@Name,alias_menu=@Alias,
 		deskripsi_menu=@Desc,harga_menu=@Price,media_photo=@ImageUrl,tags=@Tags,is_recommended=@IsRecommended,last_update=GETDATE()	
+		where id = @Id
 	END
 	else
 	BEGIN 
