@@ -425,6 +425,7 @@
     <Compile Include="Entity\FAQDetails.cs" />
     <Compile Include="Entity\ItemDetails.cs" />
     <Compile Include="Entity\NewsDetails.cs" />
+    <Compile Include="Entity\POSDetails.cs" />
     <Compile Include="Entity\VendorDetails.cs" />
     <Compile Include="FAQ.aspx.cs">
       <DependentUpon>FAQ.aspx</DependentUpon>
