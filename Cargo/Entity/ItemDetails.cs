@@ -16,11 +16,25 @@ namespace Cargo
             set { _Vendor = value; }
         }
 
+        string _VendorAlias = null;
+        public string VendorAlias
+        {
+            get { return _VendorAlias; }
+            set { _VendorAlias = value; }
+        }
+
         CommonObjects[] _Categoty = null;
         public CommonObjects[] Categoty
         {
             get { return _Categoty; }
             set { _Categoty = value; }
+        }
+
+        string _CategotyAlias = null;
+        public string CategotyAlias
+        {
+            get { return _CategotyAlias; }
+            set { _CategotyAlias = value; }
         }
 
         string _ItemID = "-1";

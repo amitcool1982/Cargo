@@ -1,4 +1,5 @@
 ﻿var table = null;
+var id = 0;
 
 $(document).ready(function () {
     table = BindItemsTable();
@@ -14,11 +15,10 @@ $(document).ready(function () {
         var nRow = $(this).parents('tr')[0];
         editRow(table, nRow);
     });
-    BindPageData(-1);
+    BindPageData(0);
 });
 
 function BindPageData(Id) {
-    id = 0;
     var res = ExecuteSynchronously('Items.aspx', 'GetItemData', { ItemId: Id });
     PopulateControl('ddlVendor', res.d.Vendor);
     $('#ddlVendor').selectpicker('refresh');
@@ -67,7 +67,7 @@ var BindItemsTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "../Items.aspx/GetItems",
+        "sAjaxSource": "Items.aspx/GetItems",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearch").val() });
@@ -123,19 +123,19 @@ function SaveItem() {
     if (strMsg == '') {
         var Item = new Object();
         Item.ItemID = id;
-        Item.Vendor = $('#ddlVendor').val();
-        Item.Categoty = $('#ddlItemCategory').val();
+        Item.VendorAlias = $('#ddlVendor').val();
+        Item.CategotyAlias = $('#ddlItemCategory').val();
         Item.ItemName = $('#name').val().trim();
         Item.UrlAlias = $('#alias').val().trim();
         Item.Description = $('#description').val().trim();
-        Item.Price = $('#price').val().trim();
+        Item.Price = Number($('#price').val().trim());
         Item.Tags = $('#tags').val().trim();
-        Item.IsRecommendItem = $('#recommended').val().trim();
+        Item.IsRecommendItem = $('#recommended')[0].checked;
         Item.ItemImageUrl = '';
-        var res = ExecuteSynchronously('Item.aspx', 'AddItemss', { objVendordetail: Item });
+        var res = ExecuteSynchronously('Items.aspx', 'AddItemss', { objItemdetail: Item });
         if (res.d == 1) {
             table.fnDraw();
-            BindPageData(-1);
+            BindPageData(0);
             $('#errormsg').text("Data updated successfully");
             $("#divsessionexpired").show();
             $('#cancelsave').hide();
