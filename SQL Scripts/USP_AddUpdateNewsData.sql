@@ -30,7 +30,6 @@ CREATE PROCEDURE [dbo].USP_AddUpdateNewsData
 AS   
 BEGIN 	
 
-	SET QUOTED_IDENTIFIER OFF
 
 	if (@Id<>0)
 	Begin

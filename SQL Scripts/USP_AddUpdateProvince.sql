@@ -3,6 +3,8 @@
 IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[USP_AddUpdateProvince]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].USP_AddUpdateProvince
 GO
+SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+ GO
  
 CREATE PROCEDURE [dbo].USP_AddUpdateProvince   
  (	
@@ -12,8 +14,6 @@ CREATE PROCEDURE [dbo].USP_AddUpdateProvince
  )     
 AS   
 BEGIN 	
-
-	SET QUOTED_IDENTIFIER OFF
 
 	IF (@Id='-1')
 	Begin

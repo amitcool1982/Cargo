@@ -50,7 +50,7 @@ function editCityRow(Table, nRow) {
     var aData = Table.fnGetData(nRow);
     var jqTds = $('>td', nRow);
     CityId = $(aData[0]).text();
-    var res = ExecuteSynchronously('../ProvAndCity.aspx', 'GetDropProvince', {});
+    var res = ExecuteSynchronously('ProvAndCity.aspx', 'GetDropProvince', {});
     PopulateControl('ddlprovince', res.d);
     $('#ddlprovince').val(aData[4]);
     $('#ddlprovince').selectpicker('render');
@@ -83,7 +83,7 @@ var BindProvinceTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "../ProvAndCity.aspx/GetProvince",
+        "sAjaxSource": "ProvAndCity.aspx/GetProvince",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearchProvince").val() });
@@ -159,7 +159,7 @@ var BindCityTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "../ProvAndCity.aspx/GetCity",
+        "sAjaxSource": "ProvAndCity.aspx/GetCity",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearchCity").val() });
@@ -210,7 +210,7 @@ var BindCityTable = function () {
 
 function AddUpdateProvince() {
     if ($('#provincename').val().trim() != "") {
-        var res = ExecuteSynchronously('../ProvAndCity.aspx', 'AddUpdateProvince', { Id: Number(ProvinceId), Name: $('#provincename').val().trim() });
+        var res = ExecuteSynchronously('ProvAndCity.aspx', 'AddUpdateProvince', { Id: Number(ProvinceId), Name: $('#provincename').val().trim() });
         if (res.d == 1) {
             ProvinceId = -1;
             $('#create-new-province').modal('hide');
@@ -225,7 +225,7 @@ function HideModal() {
 }
 
 function LoadNewCityData() {
-    var res = ExecuteSynchronously('../ProvAndCity.aspx', 'GetDropProvince', {});
+    var res = ExecuteSynchronously('ProvAndCity.aspx', 'GetDropProvince', {});
     PopulateControl('ddlprovince', res.d);
     $('#ddlprovince').selectpicker('refresh');
     $('#create-city').modal('show');    
@@ -241,7 +241,7 @@ function HideCityModal() {
 
 function AddUpdateCity() {
     if ($('#cityname').val().trim() != "" && $('#ddlprovince').val()!="-1") {
-        var res = ExecuteSynchronously('../ProvAndCity.aspx', 'AddUpdateCity', { Id: Number(CityId), CityName: $('#cityname').val().trim(), Province: $('#ddlprovince').val() });
+        var res = ExecuteSynchronously('ProvAndCity.aspx', 'AddUpdateCity', { Id: Number(CityId), CityName: $('#cityname').val().trim(), Province: $('#ddlprovince').val() });
         if (res.d == 1) {
             CityId = -1;
             $('#create-city').modal('hide');

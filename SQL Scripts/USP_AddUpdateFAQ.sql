@@ -25,8 +25,6 @@ CREATE PROCEDURE [dbo].USP_AddUpdateFAQ
 AS   
 BEGIN 	
 
-	SET QUOTED_IDENTIFIER OFF
-
 	if (@Id<>0)
 	Begin
 		Update ledb_faq

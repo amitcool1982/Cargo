@@ -22,8 +22,6 @@ CREATE PROCEDURE [dbo].[USP_AddUpdateVendor]
 AS   
 BEGIN 	
 
-	SET QUOTED_IDENTIFIER OFF
-
 	if (@Id<>0)
 	Begin
 		update ledb_vendors

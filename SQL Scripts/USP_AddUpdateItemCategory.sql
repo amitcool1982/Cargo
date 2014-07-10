@@ -14,9 +14,6 @@ CREATE PROCEDURE [dbo].[USP_AddUpdateItemCategory]
  )     
 AS   
 BEGIN 	
-
-	SET QUOTED_IDENTIFIER OFF
-
 	if (@Id<>0)
 	Begin
 		update ledb_kategorimenu

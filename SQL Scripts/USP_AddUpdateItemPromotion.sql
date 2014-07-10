@@ -18,7 +18,6 @@ CREATE PROCEDURE [dbo].USP_AddUpdateItemPromotion
 AS   
 BEGIN 	
 
-	SET QUOTED_IDENTIFIER OFF
 
 	IF (@Id<>0)
 	Begin

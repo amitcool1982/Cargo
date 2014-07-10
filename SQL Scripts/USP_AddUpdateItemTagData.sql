@@ -15,7 +15,6 @@ CREATE PROCEDURE [dbo].USP_AddUpdateItemTagData
 AS   
 BEGIN 	
 
-	SET QUOTED_IDENTIFIER OFF
 
 	if (@Id<>0)
 	Begin
