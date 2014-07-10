@@ -58,7 +58,9 @@ function editRow(Table, nRow) {
     $('#discount').val($(aData[3]).text());
     $('#start').val($(aData[4]).text());
     $('#end').val($(aData[5]).text());
-    $('#type').selectpicker('val', $(aData[2]).text());
+    if ($(aData[2]).text() == "Only Discount")
+    {$('#type').selectpicker('val','od')};
+    
     $('#btnCancel').show();
 
 }

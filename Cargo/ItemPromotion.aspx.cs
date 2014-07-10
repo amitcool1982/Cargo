@@ -226,7 +226,7 @@ namespace Cargo
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[1];
             oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteItemCategory", oParam);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteItemPromotion", oParam);
             return 1;
         }
 
