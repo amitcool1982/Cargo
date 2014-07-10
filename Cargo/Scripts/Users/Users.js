@@ -112,10 +112,10 @@ function SaveUsers(obj) {
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
         var res = null;
         if (obj == 0) {
-            res = ExecuteSynchronously('Users.aspx', 'AddUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+            res = ExecuteSynchronously('Users.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
         }
         else {
-            res = ExecuteSynchronously('Users.aspx', 'UpdateUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+            res = ExecuteSynchronously('Users.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
         }
         if (res.d == 1) {
             table.fnDraw();
@@ -146,7 +146,7 @@ function DeleteUser(table, nRow) {
 
     $('#btnDeleteUser').on("click", function (e) {
         try {
-            var res = ExecuteSynchronously('Users.aspx', 'DeleteUser', { Id: $(aData[0]).text() });
+            var res = ExecuteSynchronously('Users.aspx', 'DeleteCategory', { id: $(aData[0]).text() });
             if (res.d == 1) {
                 $('#ConfirmDeleteUser').modal('hide');
                 table.fnDraw();
