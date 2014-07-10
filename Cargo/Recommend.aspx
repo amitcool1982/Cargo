@@ -59,24 +59,22 @@
                 <div class="col-lg-6">
 
 
-                    <div id="item-detail">
-                    </div>
+                    <%-- <div id="item-detail">
+                    </div>--%>
 
 
 
-                    <div class="modal fade" id="modalDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-sm">
-                            <div class="modal-content">
-                                <div class="modal-header">
+                    <div id="modalDetail" tabindex="-1" style="visibility: hidden">
 
-                                    <h4 class="modal-title" id="myModalLabelDetail"></h4>
-                                </div>
-                                <div class="modal-body" id="bodyModal">
-                                </div>
-                            </div>
+                        <div class="modal-header">
+
+                            <h4 class="modal-title" id="myModalLabelDetail"></h4>
                         </div>
+                        <div id="bodyModal">
+                        </div>
+
                     </div>
-                    
+
 
 
                     <!-- /#page-wrapper -->

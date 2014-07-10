@@ -167,9 +167,9 @@ namespace Cargo
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static long DeleteRecommended(string Id)
+        public static long DeleteRecommended(long Id)
         {
-            return DeleteRecommendedData(long.Parse(Id));
+            return DeleteRecommendedData(Id);
         }
 
         public static int DeleteRecommendedData(long id)
@@ -177,7 +177,7 @@ namespace Cargo
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[1];
             oParam[0] = DBHelper.GetParam("@Id", SqlDbType.BigInt, 20, ParameterDirection.Input, id);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteRecommendedItem", oParam);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteItemRecommend", oParam);
             return 1;
         }
 
@@ -194,30 +194,25 @@ namespace Cargo
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[1];
             oParam[0] = DBHelper.GetParam("@Id", SqlDbType.BigInt, 20, ParameterDirection.Input, id);
-            DataTable dt = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetRecommendedItemDetails", oParam).Tables[0];
+            DataTable dt = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetItemRecommendDetails", oParam).Tables[0];
 
             string display = "<table>";
             if (dt.Rows.Count > 0)
             {
-                display += "<tr><td><b>ID</b></td><td>: " + Convert.ToString(dt.Rows[0]["id_generator"]) + "</td></tr>";
-                display += "<tr><td><b>Fullname</b></td><td>: " + Convert.ToString(dt.Rows[0]["nama_lengkap"]) + "</td></tr>";
-                display += "<tr><td><b>Born</b></td><td>: " + Convert.ToString(dt.Rows[0]["tempat_lahir"]) + ", " + Convert.ToString(dt.Rows[0]["tanggal_lahir"]) + "</td></tr>";
-                display += "<tr><td><b>Gender</b></td><td>: " + Convert.ToString(dt.Rows[0]["jenis_kelamin"]) + "</td></tr>";
-                display += "<tr><td><b>Phone</b></td><td>: " + Convert.ToString(dt.Rows[0]["telepon"]) + "</td></tr>";
-                display += "<tr><td><b>Handphone</b></td><td>: " + Convert.ToString(dt.Rows[0]["handphone"]) + "</td></tr>";
-                display += "<tr><td><b>Address</b></td><td>: " + Convert.ToString(dt.Rows[0]["alamat"]) + "</td></tr>";
-                display += "<tr><td><b>Province</b></td><td>: " + Convert.ToString(dt.Rows[0]["provinsi"]).Replace("_", " ") + "</td></tr>";
-                display += "<tr><td><b>City</b></td><td>: " + Convert.ToString(dt.Rows[0]["kota"]).Replace("_", " ") + "</td></tr>";
-                display += "<tr><td><b>Zip Code</b></td><td>: " + Convert.ToString(dt.Rows[0]["kode_pos"]) + "</td></tr>";
-                display += "<tr><td><b>Email</b></td><td>: <a href='mailto:" + Convert.ToString(dt.Rows[0]["email"]) + "'>" + Convert.ToString(dt.Rows[0]["email"]) + "</a></td></tr>";
-                display += "<tr><td><b>join Date</b></td><td>: " + Convert.ToString(dt.Rows[0]["join_datetime"]) + "</td></tr>";
-                display += "<tr><td><b>Last Login</b></td><td>: " + Convert.ToString(dt.Rows[0]["last_login"]) + "</td></tr>";
-                display += "</table>";
+                //display += "<tr><td><b>ID</b></td><td>: " + Convert.ToString(dt.Rows[0]["menu_id_generator"]) + "</td></tr>";
+                display += "<tr><td><b>Vendor</b></td><td>: " + Convert.ToString(dt.Rows[0]["nama_vendors"]) + "</td></tr>";
+                display += "<tr><td><b>Category Items</b></td><td>: " + Convert.ToString(dt.Rows[0]["Category"]) + "</td></tr>";
+                display += "<tr><td><b>ID Item</b></td><td>: " + Convert.ToString(dt.Rows[0]["menu_id_generator"]) + "</td></tr>";
+                display += "<tr><td><b>Price</b></td><td>: " + Convert.ToString(dt.Rows[0]["harga_menu"]) + "</td></tr>";
+                display += "<tr><td><b>Tags</b></td><td>: " + Convert.ToString(dt.Rows[0]["tags"]) + "</td></tr>";
+                display += "<tr><td><b>Description</b></td><td>: " + Convert.ToString(dt.Rows[0]["deskripsi_menu"]) + "</td></tr>";              
+                
             }
+
+            display += "</table>";
 
             return display;
         }
-
 
     }
 }

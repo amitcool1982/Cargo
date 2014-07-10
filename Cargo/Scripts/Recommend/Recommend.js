@@ -6,6 +6,14 @@ $(document).ready(function () {
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
     });
+
+    $('#myTableRecommend').on("click", "a.delete", function (e) {
+        e.preventDefault();
+        $("#divsessionexpired").hide();
+        var nRow = $(this).parents('tr')[0];
+
+        DeleteRecommend(table, nRow);
+    });
 });
 
 var BindRecommendTable = function () {
@@ -84,16 +92,19 @@ var BindRecommendTable = function () {
 }
 
 
-$(document).on('click', '.detail', function () {
+$(document).on('click', '.edit', function () {
     var id = $(this).attr('data-id');
 
-    var detail = ExecuteSynchronously('Recommended.aspx', 'GetRecommendedDetails', { Id: id });
+    var detail = ExecuteSynchronously('Recommend.aspx', 'GetRecommendedDetails', { Id: id });
     if (detail.d != "") {
-        $('#myModalLabelDetail').html('Customer Detail');
+        $('#myModalLabelDetail').html('Detail Item');
         $('#bodyModal').html(detail.d);
-        $('#modalDetail').modal({
-            keyboard: false
-        });
+        //$('#modalDetail').modal({
+        //    keyboard: false
+        //});
+        //$('#bodyModal').vis
+        //visibility: hidden
+        $("#modalDetail").css('visibility', 'visible');
     }
     else {
         message.Error(response.message);
@@ -101,13 +112,13 @@ $(document).on('click', '.detail', function () {
 });
 
 
-function DeleteCustomer(table, nRow) {
+function DeleteRecommend(table, nRow) {
     var aData = table.fnGetData(nRow);
     $('#ConfirmDeleteRecommended').modal('show');
 
     $('#btnDeleteRecommended').on("click", function (e) {
         try {
-            var res = ExecuteSynchronously('Recommended.aspx', 'DeleteRecommended', { Id: $(aData[0]).text() });
+            var res = ExecuteSynchronously('Recommend.aspx', 'DeleteRecommended', { Id: $(aData[0]).text() });
             if (res.d == 1) {
                 $('#ConfirmDeleteRecommended').modal('hide');
                 table.fnDraw();
