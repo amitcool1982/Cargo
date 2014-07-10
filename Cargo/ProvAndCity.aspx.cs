@@ -132,7 +132,7 @@ namespace Cargo
                     sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 200px;overflow: hidden;'><nobr>" + dtProvAndCity.Rows[i]["nama_daerah"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
                     
-                    sb.AppendFormat(@"""2"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""2"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></div>");
                     sb.Append("},");
                 }
 
@@ -232,7 +232,11 @@ namespace Cargo
                     sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 120px;overflow: hidden;'><nobr>" + dtProvAndCity.Rows[i]["nama_kota"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)'><i class='fa fa-edit fa-border'></i></a></div>");
+
+                    sb.Append(",");
+
+                    sb.AppendFormat(@"""4"": ""{0}""", dtProvAndCity.Rows[i]["Provincealias"].ToString().Replace("\"", "\\" + "\""));
                     sb.Append("},");
                 }
 
@@ -270,5 +274,75 @@ namespace Cargo
             return outputJson;
         }
 
+        public static int ProvinceAddUpdate(int Id, string Name,string Alias)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[3];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, Id);
+            oParam[1] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
+            oParam[2] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateProvince", oParam);
+            return 1;
+        }
+        
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int AddUpdateProvince(int Id, string Name)
+        {
+            return ProvinceAddUpdate(Id, Name,Name.ToLower().Replace(" ","_"));
+        }
+
+        public static int CityAddUpdate(int Id, string CityName,string CityAlias, string Province)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[3];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, Id);
+            oParam[1] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, CityName);
+            oParam[2] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, CityAlias);
+            oParam[3] = DBHelper.GetParam("@Province", SqlDbType.VarChar, 100, ParameterDirection.Input, Province);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateCity", oParam);
+            return 1;
+        }
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int AddUpdateCity(int Id, string CityName,string Province)
+        {
+            return CityAddUpdate(Id, CityName, CityName.ToLower().Replace(" ", "_"), Province);
+        }
+        public static DataTable GetProvinceDatatable()
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[2];
+            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, 10000);
+            oParam[1] = DBHelper.GetParam("@piPageNumber", SqlDbType.Int, 4, ParameterDirection.Input, 1);
+            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetProvince", oParam).Tables[0];
+
+            return otable;
+        }
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static CommonObjects[] GetProvince()
+        {
+            DataTable dtProvince = GetProvinceDatatable();
+            CommonObjects[] objProvince = new CommonObjects[dtProvince.Rows.Count + 1];
+            DataRow newRowProvince = dtProvince.NewRow();
+            newRowProvince["ID"] = "-1";
+            newRowProvince["Alias"] = "-1";
+            newRowProvince["nama_daerah"] = "-Province-";
+            dtProvince.Rows.InsertAt(newRowProvince, 0);
+            dtProvince.AcceptChanges();
+            objProvince = new CommonObjects[dtProvince.Rows.Count];
+            int intCount = 0;
+            foreach (DataRow drw in dtProvince.Rows)
+            {
+                objProvince[intCount] = new CommonObjects();
+                objProvince[intCount].Value = drw["Alias"].ToString();
+                objProvince[intCount].Text = drw["nama_daerah"].ToString();
+                objProvince[intCount].DefaultValue = objProvince[0].Value;
+                intCount++;
+            }
+            return objProvince;
+        }
     }
 }

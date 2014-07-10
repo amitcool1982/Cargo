@@ -28,7 +28,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1>Point of Saless <small>Company Form</small></h1>
+                    <h1>Point of Sales <small>Company Form</small></h1>
                     <ol class="breadcrumb">
                         <li><a href="Dashboard.aspx"><i class="icon-dashboard"></i>Dashboard</a></li>
                         <li><a href="POS.aspx"><i class="icon-user"></i>Point of Sales</a></li>

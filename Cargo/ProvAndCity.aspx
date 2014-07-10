@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="Content/bootstrap.css">
     <link rel="stylesheet" href="Content/sb-admin.css">
     <link rel="stylesheet" href="Content/font-awesome.min.css">
-
-    <link href="../Content/select2.css" rel="stylesheet" />
+    
+    <link href="Content/bootstrap-select.css" rel="stylesheet" />
 
     <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
-    <script src="Scripts/select2.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>    
+    <script src="Scripts/bootstrap-select.js"></script>
+        <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
     <script type="text/javascript" src="Scripts/ProvAndCity/ProvAndCity.js"></script>
@@ -49,7 +49,7 @@
                         </div>
 
                     </div>
-                    <h3>Province <a href="#create-new-province" class="province-show-form" data-toggle="tooltip" title="Create new province">(+)</a></h3>
+                    <h3>Province <a href="#create-new-province" data-toggle="modal" class="province-show-form" title="Create new province">(+)</a></h3>
                     <label style="margin-left: 420px">Search:</label>
                     <input id="txtSearchProvince" type="text" />
                     <table id="myTableProvince" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
@@ -84,7 +84,7 @@
                         </div>
 
                     </div>
-                    <h3>City <a href="#create-city" class="city-show-form" data-toggle="tooltip" title="Create new city">(+)</a></h3>
+                    <h3>City <a href="javascript:void(0)" onclick="javascript:LoadNewCityData()" class="city-show-form" data-toggle="tooltip" title="Create new city">(+)</a></h3>
                     <label style="margin-left: 420px">Search:</label>
                     <input id="txtSearchCity" type="text" />
                     <table id="myTableCity" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
@@ -94,6 +94,7 @@
                                 <th>Province</th>
                                 <th>Kota</th>
                                 <th><i class="fa fa-user"></i></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -106,7 +107,42 @@
             <div id="errordiv"></div>
         </div>
         <!-- /#page-wrapper -->
-
+        <div class="modal fade" id="create-new-province" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <div class="modal-body">  
+                        <div class="form-group">
+                            <label class="col-sm-3" style="margin-top:5px">Province Name:</label>
+                            <input id="provincename" name="name" placeholder="Province Name" class="form-control col-sm-2" style="width:250px" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" onclick="javascript:HideModal()">Close</button>
+                        <button type="submit" class="btn btn-primary" onclick="javascript:AddUpdateProvince();">Submit</button>
+                    </div>
+            </div> <!-- /.modal-content -->
+        </div> <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
+        <div class="modal fade" id="create-city" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                    <div class="modal-body">  
+                        <div class="form-group">
+                            <label class="col-sm-3" style="margin-top:5px">Province:</label>
+                            <select id="ddlprovince" class="selectpicker form-control col-sm-2" data-width="250px"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3" style="margin-top:5px">City Name:</label>
+                            <input id="cityname" name="name" placeholder="Province Name" class="form-control col-sm-2" style="width:250px" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-link" onclick="javascript:HideCityModal()">Close</button>
+                        <button type="submit" class="btn btn-primary" onclick="javascript:AddUpdateCity();">Submit</button>
+                    </div>
+            </div> <!-- /.modal-content -->
+        </div> <!-- /.modal-dialog -->
+    </div> <!-- /.modal -->
     </div>
     <!-- /#wrapper -->
 </asp:Content>

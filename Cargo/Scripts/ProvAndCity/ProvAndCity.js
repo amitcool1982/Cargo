@@ -1,10 +1,17 @@
 ﻿var tableProv = null;
 var tableCity = null;
+var ProvinceId = -1;
+var CityId = -1;
 var id = 0;
 
 $(document).ready(function () {
     tableProv = BindProvinceTable();
     tableCity = BindCityTable();
+
+    $('.selectpicker').selectpicker({
+        style: 'form-control formcustom',
+        size: 4
+    });
 
     $("#txtSearchProvince").keyup(function (event) {
         tableProv.fnDraw();
@@ -13,7 +20,41 @@ $(document).ready(function () {
     $("#txtSearchCity").keyup(function (event) {
         tableCity.fnDraw();
     });
+
+    $('#myTableProvince').on("click", "a.edit", function (e) {
+        e.preventDefault();
+
+        /* Get the row as a parent of the link that was clicked on */
+        var nRow = $(this).parents('tr')[0];
+        editRow(table, nRow);
+    });
+
+    $('#myTableCity').on("click", "a.edit", function (e) {
+        e.preventDefault();
+
+        /* Get the row as a parent of the link that was clicked on */
+        var nRow = $(this).parents('tr')[0];
+        editCityRow(table, nRow);
+    });
 });
+
+function editRow(Table, nRow) {
+    var aData = Table.fnGetData(nRow);
+    var jqTds = $('>td', nRow);
+    ProvinceId = $(aData[0]).text();
+    $('#provincename').val($(aData[1]).text());
+    $('#create-new-province').modal('show');
+
+}
+function editCityRow(Table, nRow) {
+    var aData = Table.fnGetData(nRow);
+    var jqTds = $('>td', nRow);
+    CityId = $(aData[0]).text();
+    $('#ddlprovince').val(aData[4]);
+    $('#ddlprovince').selectpicker('render');
+    $('#cityname').val($(aData[2]).text());
+    $('#create-city').modal('show');
+}
 
 var BindProvinceTable = function () {
 
@@ -101,7 +142,8 @@ var BindCityTable = function () {
                      { "sWidth": "2em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "5em", "bSortable": false }
+                     { "sWidth": "5em", "bSortable": false },
+                     { "bVisible": false }
         ],
         "bProcessing": true,
         "bServerSide": true,
@@ -162,4 +204,46 @@ var BindCityTable = function () {
 
     });
 
+}
+
+function AddUpdateProvince() {
+    if ($('#provincename').val().trim() != "") {
+        var res = ExecuteSynchronously('../ProvAndCity.aspx', 'AddUpdateProvince', { Id: Number(ProvinceId), Name: $('#provincename').val().trim() });
+        if (res.d == 1) {
+            ProvinceId = -1;
+            $('#create-new-province').modal('hide');
+            tableProv.fnDraw();
+        }
+    }
+}
+
+function HideModal() {
+    ProvinceId = -1;
+    $('#create-new-province').modal('hide');
+}
+
+function LoadNewCityData() {
+    var res = ExecuteSynchronously('../ProvAndCity.aspx', 'GetProvince', {});
+    PopulateControl('ddlprovince', res.d);
+    $('#ddlprovince').selectpicker('refresh');
+    $('#create-city').modal('show');    
+}
+
+function HideCityModal() {
+    $('#ddlprovince').val("-1");
+    $('#ddlprovince').selectpicker('render');
+    $('#cityname').val('');
+    $('#create-city').modal('hide');
+    CityId = -1;
+}
+
+function SaveCity() {
+    if ($('#cityname').val().trim() != "" && $('#ddlprovince').val()!="-1") {
+        var res = ExecuteSynchronously('../ProvAndCity.aspx', 'AddUpdateCity', { Id: Number(CityId), CityName: $('#cityname').val().trim(), Province: $('#ddlprovince').val() });
+        if (res.d == 1) {
+            CityId = -1;
+            $('#create-city').modal('hide');
+            tableCity.fnDraw();
+        }
+    }
 }

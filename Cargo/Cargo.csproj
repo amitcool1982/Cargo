@@ -419,6 +419,7 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Entity\ItemDetails.cs" />
+    <Compile Include="Entity\POSDetails.cs" />
     <Compile Include="Entity\VendorDetails.cs" />
     <Compile Include="FAQ.aspx.cs">
       <DependentUpon>FAQ.aspx</DependentUpon>

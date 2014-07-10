@@ -29,11 +29,12 @@ BEGIN
 	RowNum			int identity,
 	ID				int,
 	nama_daerah		nvarchar(200),
+	Provincealias   varchar(100),
 	nama_kota		nvarchar(510)	
 	)
 	
-	insert into #temp(ID,nama_daerah, nama_kota)
-	select			City.id,nama_daerah, nama_kota  from 
+	insert into #temp(ID,nama_daerah,Provincealias, nama_kota)
+	select			City.id,nama_daerah,Prov.alias, nama_kota  from 
 	ledb_kota	City	with(nolock)	Inner Join
 	ledb_daerah	Prov	with(nolock)	On	City.alias_daerah	=	prov.alias 
 	where	City.id				like ('%' + @piSearchFilter + '%') OR 
