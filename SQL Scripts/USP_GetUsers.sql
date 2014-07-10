@@ -27,12 +27,13 @@ BEGIN
 	create table #temp(
 	RowNum			int identity,
 	ID				int,
+	username        varchar(100),
 	nama_lengkap	varchar(100),
 	last_login		DateTime	
 	)
 	
-	insert into #temp(ID,nama_lengkap, last_login)
-	select id,nama_lengkap, last_login  from ledb_admin with(nolock)	
+	insert into #temp(ID,nama_lengkap,username, last_login)
+	select id,nama_lengkap,username, last_login  from ledb_admin with(nolock)	
 	where nama_lengkap like ('%' + @piSearchFilter + '%') OR username like ('%' + @piSearchFilter + '%')
 	ORDER BY 
 					CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,

@@ -34,7 +34,8 @@ var BindUsersTable = function () {
                      { "sWidth": "5em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "5em", "bSortable": false }
+                     { "sWidth": "5em", "bSortable": false },
+                     { "bVisible": false }
         ],
         "bProcessing": true,
         "bServerSide": true,
@@ -101,21 +102,21 @@ function editRow(table, nRow) {
     var aData = table.fnGetData(nRow);
     var jqTds = $('>td', nRow);
     id = $(aData[0]).text();
-    $('#txtname').val($(aData[2]).text());
-    $('#txtalias').val($(aData[1]).text());
+    $('#txtname').val($(aData[1]).text());
+    $('#txtalias').val(aData[4]);
     $('#save').hide();
     $('#cancelsave').show();
 }
 
-function SaveUsers(obj) {
+function SaveUsers() {
     $("#divsessionexpired").hide();
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
         var res = null;
-        if (obj == 0) {
+        if (id == 0) {
             res = ExecuteSynchronously('Users.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
         }
         else {
-            res = ExecuteSynchronously('Users.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+            res = ExecuteSynchronously('Users.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: Number(id) });
         }
         if (res.d == 1) {
             table.fnDraw();
@@ -126,11 +127,11 @@ function SaveUsers(obj) {
     }
     else {
         if ($('#txtname').val().trim() == '') {
-            $('#errormsg').text("Name is required");
+            $('#errormsg').text("FullName is required");
             $("#divsessionexpired").show();
         }
         else if ($('#txtname').val().trim() == '') {
-            $('#errormsg').text("Alias is required");
+            $('#errormsg').text("UserName is required");
             $("#divsessionexpired").show();
         }
     }

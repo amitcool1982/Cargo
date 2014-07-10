@@ -50,7 +50,7 @@ var BindcategoryTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "../ItemTags.aspx/GetItemTags",
+        "sAjaxSource": "ItemTags.aspx/GetItemTags",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearch").val() });
@@ -119,10 +119,10 @@ function SaveItemTag(obj) {
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
         var res = null;
         if (obj == 0) {
-            res = ExecuteSynchronously('../ItemTags.aspx', 'AddItemTag', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+            res = ExecuteSynchronously('ItemTags.aspx', 'AddItemTag', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
         }
         else {
-            res = ExecuteSynchronously('../ItemTags.aspx', 'UpdateItemTag', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+            res = ExecuteSynchronously('ItemTags.aspx', 'UpdateItemTag', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
         }
         if (res.d == 1) {
             table.fnDraw();
@@ -150,7 +150,7 @@ function DeleteItemTags(table, nRow) {
 
     $('#btnDeleteItemTags').on("click", function (e) {
         try {
-            var res = ExecuteSynchronously('../ItemTags.aspx', 'DeleteItemTag', { Id: $(aData[0]).text() });
+            var res = ExecuteSynchronously('ItemTags.aspx', 'DeleteItemTag', { Id: $(aData[0]).text() });
             if (res.d == 1) {
                 $('#ConfirmDeleteItemTags').modal('hide');
                 table.fnDraw();

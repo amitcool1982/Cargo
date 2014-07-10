@@ -12,6 +12,10 @@ function rtrim(str, chars) {
     return str.replace(new RegExp("[" + chars + "]+$", "g"), "");
 }
 
+function FillAlias() {
+    $('#txtalias').val($('#txtname').val().trim());
+}
+
 function trim(stringToTrim) {
     return stringToTrim.replace(/^\s+|\s+$/g, "");
 }

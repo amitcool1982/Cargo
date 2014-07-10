@@ -46,6 +46,7 @@
                                 <th>Name</th>
                                 <th>Last Access</th>
                                 <th><i class="fa fa-user"></i></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -56,11 +57,11 @@
                     <h2 style="display: inline">Form&nbsp;User</h2>
                     <div class="form-group">
                         <label>Full Name</label><br />
-                        <input type="text" class="form-control formcustom" id="txtname" required="" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal" placeholder="Type fullname here.." />
+                        <input type="text" class="form-control formcustom" id="txtname" style="width: 250px; line-height: normal" placeholder="Type fullname here.." />
                     </div>
                     <div class="form-group">
                         <label>UserName</label><br />
-                        <input type="text" class="form-control formcustom" id="txtalias" required="" style="width: 250px; line-height: normal" placeholder="Username must be unique" />
+                        <input type="text" class="form-control formcustom" id="txtalias" style="width: 250px; line-height: normal" placeholder="Username must be unique" />
                     </div>
 
 
@@ -73,16 +74,18 @@
                         </div>
                     </div>
                     <hr>
+                    <div>
                     <h4>Reset Password</h4>
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" class="form-control" placeholder="Minimum 6 character" />
                     <label for="confirm">Confirm Password</label>
-                    <input type="password" name="confirm" id="confirm" class="form-control" placeholder="" />
+                    <input type="password" name="confirm" id="confirm" class="form-control" placeholder="Minimum 6 character" />
 
-                    <br>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <br></div>
+                    <button type="submit" class="btn btn-primary" onclick="javascript:SaveUsers()">Save</button>
                     <!-- <button type="reset" class="btn btn-warning">Reset</button> -->
                     <button type="button" class="user-show-form btn btn-danger" style="display: none;">Cancel</button>
+                        
                 </div>
             </div>
         </div>
