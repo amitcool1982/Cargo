@@ -8,7 +8,7 @@ CREATE PROCEDURE [dbo].USP_GetNews
  (
 	@piPageSize			INT = 20,
 	@piPageNumber		INT = 1,
-	@piSortedBy			varchar(50)='menu_id_generator',
+	@piSortedBy			varchar(50)='id',
 	@piSearchFilter		varchar(100)='',
 	@piSortDirection	int=1
  )     
@@ -26,14 +26,30 @@ BEGIN
 	
 	create table #temp
 	(
-	RowNum				int identity,
-	id					bigint,
-	en_judul			nvarchar(510),
-	count				int
+	RowNum					int identity,
+	id						int,
+	alias_encrypt			NVarChar(255),
+
+	en_alias				NVarChar(255),
+	en_judul				NVarChar(255),
+	en_isi					NVarChar(4000),
+
+	alias					NVarChar(255),
+	judul					NVarChar(255),
+	isi						NVarChar(4000),
+
+	author					NVarChar(255),
+	is_schedule				Int,	
+	post_date				DateTime,
+	gambar					Varchar(255),
+	is_online				Int,
+	count					Int
 	)
 	
-	insert into #temp(id, en_judul, count )
-		select id, en_judul, count 
+
+	
+	insert into #temp(id, alias, alias_encrypt, judul, isi, en_alias, en_judul, en_isi, post_date, gambar, author, is_online, is_schedule, count )
+		select id, alias, alias_encrypt, judul, isi, en_alias, en_judul, en_isi, post_date, gambar, author, is_online, is_schedule, count
 		from 
 		ledb_berita		With(nolock)
 		where	id				like ('%' + @piSearchFilter + '%') OR 
