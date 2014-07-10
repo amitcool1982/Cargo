@@ -3,11 +3,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link rel="stylesheet" href="Content/bootstrap.css">
+    <link href="Content/site.css" rel="stylesheet" />
     <link rel="stylesheet" href="Content/sb-admin.css">
     <link rel="stylesheet" href="Content/font-awesome.min.css">
-    
+    <link href="Content/jasny-bootstrap.min.css" rel="stylesheet" />
     <script type="text/javascript" src="Scripts/jquery.dataTables.js"></script>
     <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
+    <script src="Scripts/jasny-bootstrap.min.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
@@ -40,7 +42,7 @@
 
             <div class="row-fluid">
                 <div id="queue"></div>
-                <div style="height: 30px; width: 120px;" class="uploadify" id="file_upload">
+                <%--<div style="height: 30px; width: 120px;" class="uploadify" id="file_upload">
                     <object style="position: absolute; z-index: 1;" id="SWFUpload_0" type="application/x-shockwave-flash" data="images/uploadify.swf" class="swfupload" height="30" width="120">
                         <param name="wmode" value="transparent">
                         <param name="movie" value="/adminbox/uploadify/uploadify.swf?preventswfcaching=1404542931820">
@@ -50,15 +52,21 @@
                         <param name="flashvars" value="movieName=SWFUpload_0&amp;uploadURL=%2Fconfig%2Ftemplates%2Fupload_banner&amp;useQueryString=false&amp;requeueOnError=false&amp;httpSuccess=&amp;assumeSuccessTimeout=30&amp;params=timestamp%3D1404542940%26amp%3Btoken%3D67e955c873aaee13c6aea83629bdcaf9&amp;filePostName=Filedata&amp;fileTypes=*.jpg&amp;fileTypesDescription=Image%20Files&amp;fileSizeLimit=0&amp;fileUploadLimit=0&amp;fileQueueLimit=999&amp;debugEnabled=false&amp;buttonImageURL=&amp;buttonWidth=120&amp;buttonHeight=30&amp;buttonText=&amp;buttonTextTopPadding=0&amp;buttonTextLeftPadding=0&amp;buttonTextStyle=color%3A%20%23000000%3B%20font-size%3A%2016pt%3B&amp;buttonAction=-110&amp;buttonDisabled=false&amp;buttonCursor=-2">
                     </object>
                     <div style="height: 30px; line-height: 30px; width: 120px;" class="uploadify-button btn btn-primary btn-block" id="file_upload-button"><span class="uploadify-button-text">SELECT FILES</span></div>
-                </div>
-                <div class="uploadify-queue" id="file_upload-queue"></div>
+                </div>--%>
+                <%--<input id="File1" type="file" onchange="javascript:UpdateImage(this)" /> Select Files--%>
+                <%--<div class="uploadify-queue" id="file_upload-queue"></div>--%>
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+    <span class="btn btn-primary btn-file"><span class="fileinput-new">Select image</span><span class="fileinput-exists">Change</span><input type="file" name="..." onchange="UpdateImage(this)"></span>
+    <a href="#" class="btn btn-primary fileinput-exists" data-dismiss="fileinput">Remove</a>
+  </div>
+</div>
 
             </div>
 
             <div class="row">
                 <div class="col-lg-3">
                     <div class="row-fluid">
-                        <img src="images/no_picture.jpg" id="image-preview" class="img-responsive img-thumbnail" width="100%">
+                        <img src="../images/no_picture.jpg" id="image-preview" class="img-responsive img-thumbnail" width="100%">
                     </div>
                     <div class="row-fluid">
                         <form id="create-banner" action="http://admin.cargo.totalit.co.id/config/templates/create_banner" method="POST">

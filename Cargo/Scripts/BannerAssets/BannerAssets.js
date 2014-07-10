@@ -151,3 +151,7 @@ function DeleteItemCategory() {
     }
 
 }
+
+function UpdateImage(obj) {
+    $('#image-preview').attr('src', obj.value);
+}
