@@ -16,11 +16,11 @@ CREATE PROCEDURE [dbo].USP_AddUpdateFAQ
 @IndQuestion	VarChar(4000),
 @IndAnswer		VarChar(4000),
 
-@Icon			VarChar(100),
-@urutan			VarChar(100),
-@IsPrimary		Int,
+@Icon			VarChar(100)='',
+@urutan			VarChar(100)=1,
+@IsPrimary		Int=1,
 
-@Count			Int
+@Count			Int=0
  )     
 AS   
 BEGIN 	

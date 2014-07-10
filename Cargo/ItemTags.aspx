@@ -59,19 +59,21 @@
                     <h2>Form Tags</h2>
                     <div class="form-group">
                         <label>Name</label><br />
-                        <input type="text" class="form-control formcustom" id="txtname" required="" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal" placeholder="Type tags name here.." />
+                        <input type="text" class="form-control formcustom" id="txtname" onkeyup="javascript:FillAlias()" style="width: 250px; line-height: normal" placeholder="Type tags name here.." />
                     </div>
                     <div class="form-group">
                         <label>URL Alias</label><br />
-                        <input type="text" class="form-control formcustom" id="txtalias" required="" style="width: 250px; line-height: normal" placeholder="URL alias will auto complete.." />
+                        <input type="text" class="form-control formcustom" id="txtalias" style="width: 250px; line-height: normal" placeholder="URL alias will auto complete.." />
                     </div>
                     <button class="btn btn-info" onclick="javascript:SaveItemTag()">Save</button>
-
+                    <br />
+            <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px; display: none;">
+                <strong id="errormsg"></strong>
+            </div>
                 </div>
             </div>
 
-            <br />
-            <div id="errordiv"></div>
+            
         </div>
         <!-- /#page-wrapper -->
 
