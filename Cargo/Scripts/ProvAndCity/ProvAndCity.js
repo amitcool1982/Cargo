@@ -26,7 +26,7 @@ $(document).ready(function () {
 
         /* Get the row as a parent of the link that was clicked on */
         var nRow = $(this).parents('tr')[0];
-        editRow(table, nRow);
+        editRow(tableProv, nRow);
     });
 
     $('#myTableCity').on("click", "a.edit", function (e) {
@@ -34,7 +34,7 @@ $(document).ready(function () {
 
         /* Get the row as a parent of the link that was clicked on */
         var nRow = $(this).parents('tr')[0];
-        editCityRow(table, nRow);
+        editCityRow(tableCity, nRow);
     });
 });
 
