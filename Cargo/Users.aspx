@@ -37,7 +37,7 @@
 
             <div class="row">
                 <div class="col-lg-8">
-                    <label style="margin-left: 660px">Search:</label>
+                    <label style="margin-left: 470px">Search:</label>
                     <input id="txtSearch" type="text" />
                     <table id="myTableUsers" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
