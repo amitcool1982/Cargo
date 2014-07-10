@@ -3,7 +3,8 @@
 IF EXISTS(SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[dbo].[USP_AddUpdateItemPromotion]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].USP_AddUpdateItemPromotion
 GO
- 
+ SET ANSI_NULLS, QUOTED_IDENTIFIER ON;
+ GO
 CREATE PROCEDURE [dbo].USP_AddUpdateItemPromotion   
  (	
 	@ItemId				nvarchar(200),
