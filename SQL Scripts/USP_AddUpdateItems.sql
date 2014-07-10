@@ -41,7 +41,7 @@ BEGIN
       ,[tags]
       ,[is_recommended]
       ,[last_update])
-		values(CONVERT(BIGINT,CONVERT(BINARY(8), NEWID())),@Vendors,@Alias,@Name,@Desc,@ImageUrl,@Price,@ItemCategory,@Tags,@IsRecommended,GETDATE())	 
+		values((1000000000 + (CONVERT(INT, CRYPT_GEN_RANDOM(5)) % 1000000000)),@Vendors,@Alias,@Name,@Desc,@ImageUrl,@Price,@ItemCategory,@Tags,@IsRecommended,GETDATE())	 
 	END
 	   
 END  

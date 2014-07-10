@@ -40,7 +40,7 @@ BEGIN
       ,[logo_vendors]
       ,[banner_vendors]
       ,[last_updated])
-		values(CONVERT(BIGINT,CONVERT(BINARY(8), NEWID())),@AliasProvince,@AliasCity,@Name,@Alias,@Address,@Phone,@Email,@ImageUrl,@BannerUrl,GETDATE())	 
+		values((1000000000 + (CONVERT(INT, CRYPT_GEN_RANDOM(5)) % 1000000000)),@AliasProvince,@AliasCity,@Name,@Alias,@Address,@Phone,@Email,@ImageUrl,@BannerUrl,GETDATE())	 
 	END
 	   
 END  
