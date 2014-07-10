@@ -26,7 +26,8 @@ BEGIN
 	Begin
 		update ledb_vendors
 		set alias_vendors=@Alias,nama_vendors=@Name,alias_daerah=@AliasProvince,alias_kota=@AliasCity,
-		tlp_vendors=@Phone,email_vendors=@Email,logo_vendors=@ImageUrl,banner_vendors=@BannerUrl,alamat_vendors=@Address,last_updated=GETDATE()	
+		tlp_vendors=@Phone,email_vendors=@Email,logo_vendors=@ImageUrl,banner_vendors=@BannerUrl,alamat_vendors=@Address,last_updated=GETDATE()
+		where id=@Id	
 	END
 	else
 	BEGIN 
