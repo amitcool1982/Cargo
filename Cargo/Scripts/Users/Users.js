@@ -35,7 +35,7 @@ var BindUsersTable = function () {
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "5em", "bSortable": false },
-                     { "bVisible": false }
+                     { "sWidth": "1em", "bSortable": false }
         ],
         "bProcessing": true,
         "bServerSide": true,
@@ -103,7 +103,7 @@ function editRow(table, nRow) {
     var jqTds = $('>td', nRow);
     id = $(aData[0]).text();
     $('#txtname').val($(aData[1]).text());
-    $('#txtalias').val(aData[4]);
+    $('#txtalias').val($(aData[4]).text());
     $('#save').hide();
     $('#cancelsave').show();
 }

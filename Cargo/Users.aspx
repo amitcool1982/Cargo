@@ -53,7 +53,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-lg-2" style="display:none">
+                <div class="col-lg-2">
                     <h2 style="display: inline">Form&nbsp;User</h2>
                     <div class="form-group">
                         <label>Full Name</label><br />
