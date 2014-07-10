@@ -168,7 +168,6 @@ function DeleteFAQ(table, nRow) {
 
     $('#btnDeleteFAQ').on("click", function (e) {
         try {
-            debugger;
             var res = ExecuteSynchronously('FAQ.aspx', 'DeleteFAQ', { Id: $(aData[0]).text() });
             if (res.d == 1) {
                 $('#ConfirmDeleteFAQ').modal('hide');

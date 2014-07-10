@@ -34,7 +34,7 @@ var BindUsersTable = function () {
                      { "sWidth": "5em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "2em", "bSortable": false }
+                     { "sWidth": "5em", "bSortable": false }
         ],
         "bProcessing": true,
         "bServerSide": true,
@@ -141,7 +141,6 @@ function SaveUsers(obj) {
 
 
 function DeleteUser(table, nRow) {
-    debugger;
     var aData = table.fnGetData(nRow);
     $('#ConfirmDeleteUser').modal('show');
 

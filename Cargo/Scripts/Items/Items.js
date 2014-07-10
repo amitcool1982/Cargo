@@ -120,7 +120,6 @@ var BindItemsTable = function () {
 function SaveItem() {
     $("#divsessionexpired").hide();
     var strMsg = DataIsValid();
-    debugger;
     if (strMsg == '') {
         var Item = new Object();
         Item.ItemID = id;
