@@ -50,7 +50,7 @@
 
                     </div>
                     <h3>Province <a href="#create-new-province" data-toggle="modal" class="province-show-form" title="Create new province">(+)</a></h3>
-                    <label style="margin-left: 420px">Search:</label>
+                    <label style="margin-left: 300px">Search:</label>
                     <input id="txtSearchProvince" type="text" />
                     <table id="myTableProvince" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
@@ -85,7 +85,7 @@
 
                     </div>
                     <h3>City <a href="javascript:void(0)" onclick="javascript:LoadNewCityData()" class="city-show-form" data-toggle="tooltip" title="Create new city">(+)</a></h3>
-                    <label style="margin-left: 420px">Search:</label>
+                    <label style="margin-left: 300px">Search:</label>
                     <input id="txtSearchCity" type="text" />
                     <table id="myTableCity" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>

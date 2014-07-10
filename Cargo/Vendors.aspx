@@ -12,7 +12,7 @@
     <script type="text/javascript" src="Scripts/DT_bootstrap.js"></script>
     <script src="Scripts/bootstrap-select.js"></script>
     <script src="Scripts/select2.js"></script>
-
+    <script src="Scripts/jquery.mask.js"></script>
     <script type="text/javascript">
         var PageSize = "<%=PageSize%>";
     </script>
@@ -131,7 +131,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email :</label>
-                                    <input id="email" name="email" placeholder="Type valid email here.." class="form-control" type="text">
+                                    <input id="email" name="email" placeholder="Type valid email here.." class="form-control" type="email">
                                 </div>
                             </div>
                         </div>

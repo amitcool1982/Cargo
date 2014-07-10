@@ -6,6 +6,7 @@ $(document).ready(function () {
         style: 'form-control formcustom',
         size: 4
     });
+    $('#phone').mask('000000000000000');
     table = BindCustomerTable();
     $("#txtSearch").keyup(function (event) {
         table.fnDraw();
