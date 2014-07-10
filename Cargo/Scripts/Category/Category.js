@@ -118,10 +118,10 @@ function SaveCategory(obj) {
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
         var res = null;
         if (obj == 0) {
-            res = ExecuteSynchronously('Category.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+            res = ExecuteSynchronously('../Category.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
         }
         else {
-            res = ExecuteSynchronously('Category.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+            res = ExecuteSynchronously('../Category.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
         }
         if (res.d == 1) {
             table.fnDraw();
@@ -150,7 +150,7 @@ function DeleteCategory(table, nRow) {
 
     $('#btnDeleteCategory').on("click", function (e) {
         try {
-            var res = ExecuteSynchronously('Category.aspx', 'DeleteCategory', { Id: $(aData[0]).text() });
+            var res = ExecuteSynchronously('../Category.aspx', 'DeleteCategory', { Id: $(aData[0]).text() });
             if (res.d == 1) {
                 $('#ConfirmDeleteCategory').modal('hide');
                 table.fnDraw();

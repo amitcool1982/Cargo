@@ -25,6 +25,7 @@ namespace Cargo
     public partial class ProvAndCity : System.Web.UI.Page
     {
         static int sEcho = 1;
+        static int sCityEcho = 1;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -244,7 +245,7 @@ namespace Cargo
                 sb.Clear();
                 sb.Append("{");
                 sb.Append(@"""sEcho"": ");
-                sb.AppendFormat(@"""{0}""", sEcho++);
+                sb.AppendFormat(@"""{0}""", sCityEcho++);
                 sb.Append(",");
                 sb.Append(@"""iTotalRecords"": ");
                 sb.Append(totalRecords);
@@ -261,7 +262,7 @@ namespace Cargo
             {
                 sb.Append("{");
                 sb.Append(@"""sEcho"": ");
-                sb.AppendFormat(@"""{0}""", sEcho++);
+                sb.AppendFormat(@"""{0}""", sCityEcho++);
                 sb.Append(",");
                 sb.Append(@"""iTotalRecords"": 0");
                 sb.Append(",");
