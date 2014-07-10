@@ -48,7 +48,7 @@ var BindcategoryTable = function () {
         "bFilter": false,
         "bSort": true,
         "sPaginationType": "bs_normal",
-        "sAjaxSource": "FAQ.aspx/GetFAQs",
+        "sAjaxSource": "../FAQ.aspx/GetFAQs",
 
         "fnServerData": function (sSource, aoData, fnCallback) {
             aoData.push({ "name": "SearchFilter", "value": $("#txtSearch").val() });
@@ -101,40 +101,60 @@ function editRow(table, nRow) {
     var aData = table.fnGetData(nRow);
     var jqTds = $('>td', nRow);
     id = $(aData[0]).text();
-    $('#txtname').val($(aData[2]).text());
-    $('#txtalias').val($(aData[1]).text());
-    $('#save').hide();
-    $('#cancelsave').show();
+    var res = ExecuteSynchronously('../FAQ.aspx', 'GetFaQDetail', { Id: Number(id) });
+    $('#question').val(res.d.IndQuestion);
+    $('#answer').val(res.d.IndAnswer);
+    $('#en-question').val(res.d.EngQuestion);
+    $('#en-answer').val(res.d.EngAnswer);
+    $('#cancel').show();
 }
 
 function FillAlias() {
     $('#txtalias').val($('#txtname').val().trim());
 }
+function CancelSaveFAQ() {
+    id = 0;
+    $('#question').val('');
+    $('#answer').val('');
+    $('#en-question').val('');
+    $('#en-answer').val('');
+    $('#cancel').hide();
+}
 
-function SaveFAQ(obj) {
+function SaveFAQ() {
     $("#divsessionexpired").hide();
-    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
+    if ($('#question').val() != '' && $('#answer').val() != '' && $('#en-question').val() != '' && $('#en-answer').val() != '') {
         var res = null;
-        if (obj == 0) {
-            res = ExecuteSynchronously('FAQ.aspx', 'AddFAQ', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+        if (id == 0) {
+            res = ExecuteSynchronously('../FAQ.aspx', 'AddFAQ', { Id: 0, Ques: $("#question").val(), Ans: $("#answer").val(), EnQues: $("#en-question").val(), EnAns: $("#en-answer").val() });
         }
         else {
-            res = ExecuteSynchronously('FAQ.aspx', 'UpdateFAQ', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: id });
+            res = ExecuteSynchronously('../FAQ.aspx', 'UpdateFAQ', { Id: Number(id), Ques: $("#question").val(), Ans: $("#answer").val(), EnQues: $("#en-question").val(), EnAns: $("#en-answer").val() });
         }
         if (res.d == 1) {
             table.fnDraw();
-            $('#txtalias').val('');
-            $('#txtname').val('');
+            $('#question').val('');
+            $('#answer').val('');
+            $('#en-question').val('');
+            $('#en-answer').val('');
             id = 0;
         }
     }
     else {
-        if ($('#txtname').val().trim() == '') {
-            $('#errormsg').text("Name is required");
+        if ($('#question').val() == '') {
+            $('#errormsg').text("Question is required");
             $("#divsessionexpired").show();
         }
-        else if ($('#txtname').val().trim() == '') {
-            $('#errormsg').text("Alias is required");
+        else if ($('#answer').val() == '') {
+            $('#errormsg').text("Answer is required");
+            $("#divsessionexpired").show();
+        }
+        else if ($('#en-question').val() == '') {
+            $('#errormsg').text("English Question is required");
+            $("#divsessionexpired").show();
+        }
+        else if ($('#en-answer').val() == '') {
+            $('#errormsg').text("English Answer is required");
             $("#divsessionexpired").show();
         }
     }
@@ -148,7 +168,7 @@ function DeleteFAQ(table, nRow) {
 
     $('#btnDeleteFAQ').on("click", function (e) {
         try {
-            var res = ExecuteSynchronously('FAQ.aspx', 'DeleteFAQ', { Id: $(aData[0]).text() });
+            var res = ExecuteSynchronously('../FAQ.aspx', 'DeleteFAQ', { Id: $(aData[0]).text() });
             if (res.d == 1) {
                 $('#ConfirmDeleteFAQ').modal('hide');
                 table.fnDraw();

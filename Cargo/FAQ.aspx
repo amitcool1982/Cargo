@@ -103,7 +103,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="question">Question :</label>
-                                <input id="question" required="" name="question" placeholder="Type question here.." class="form-control" type="text">
+                                <input id="question" name="question" placeholder="Type question here.." class="form-control" type="text">
                                 <p class="help-block">Exp : How do I could check my order status?</p>
                             </div>
                             <div class="form-group">
@@ -128,7 +128,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="en_question">Question :</label>
-                                <input id="en_question" required="" name="en_question" placeholder="Type question here.." class="form-control" type="text">
+                                <input id="en-question" name="en-question" placeholder="Type question here.." class="form-control" type="text">
                                 <p class="help-block">Exp : How do I could check my order status?</p>
                             </div>
                             <div class="form-group">
@@ -193,8 +193,10 @@
                     <br>
                     <button type="submit" class="btn btn-primary" onclick="javascript:SaveFAQ()">Save</button>
                     <!-- <button type="reset" class="btn btn-warning">Reset</button> -->
-                    <button type="button" class="faq-show-form btn btn-danger" style="display: none;">Cancel</button>
-
+                    <button type="button" id="cancel" class="faq-show-form btn btn-danger" style="display: none;"  onclick="javascript:CancelSaveFAQ()">Cancel</button>
+                    <br /><div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px; display: none;">
+                <strong id="errormsg"></strong>
+            </div>
                 </div>
             </div>
 

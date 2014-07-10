@@ -28,11 +28,15 @@ BEGIN
 	RowNum			int identity,
 	ID				int,
 	tanya			nvarchar(4000),
-	count			int	
+	jawab           nvarchar(4000),
+	count			int	,
+	entanya			nvarchar(4000),
+	enjawab           nvarchar(4000)
+	
 	)
 	
-	Insert into #temp(ID,	tanya, count)
-		Select id, tanya, count  from ledb_faq with(nolock)	
+	Insert into #temp(ID,	tanya,jawab, count,entanya,enjawab)
+		Select id, tanya,jawab, count,en_tanya,en_jawab  from ledb_faq with(nolock)	
 		Where	id			like ('%' + @piSearchFilter + '%') OR 
 				tanya		like ('%' + @piSearchFilter + '%') OR 
 				count		like ('%' + @piSearchFilter + '%')

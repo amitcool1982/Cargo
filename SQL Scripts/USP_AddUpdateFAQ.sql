@@ -44,8 +44,8 @@ BEGIN
 	END
 	Else
 	BEGIN 
-		Insert into ledb_faq(id,	tanya,			jawab,		en_tanya,		en_jawab,	icon,	urutan,		is_primary, count)
-					values	(@id,	@IndQuestion,	@IndAnswer,	@EngQuestion,	@EngAnswer,	@Icon,	@urutan,	@IsPrimary, @Count)	 
+		Insert into ledb_faq(	tanya,			jawab,		en_tanya,		en_jawab,	icon,	urutan,		is_primary, count)
+					values	(	@IndQuestion,	@IndAnswer,	@EngQuestion,	@EngAnswer,	@Icon,	@urutan,	@IsPrimary, @Count)	 
 	END
 	   
 END  

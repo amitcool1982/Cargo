@@ -168,46 +168,34 @@ namespace Cargo
 
 
 
-        public static int AddFAQData(FAQDetail objFAQDetail)
+        public static int AddFAQData(int Id, string Ques, string Ans, string EnQues, string EnAns)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[9];
-            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objFAQDetail.Id);
+            SqlParameter[] oParam = new SqlParameter[5];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, Id);
 
-            oParam[1] = DBHelper.GetParam("@EngQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.EngQuestion);
-            oParam[2] = DBHelper.GetParam("@EngAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.EngAnswer);
+            oParam[1] = DBHelper.GetParam("@EngQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, EnQues);
+            oParam[2] = DBHelper.GetParam("@EngAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, EnAns);
 
-            oParam[3] = DBHelper.GetParam("@IndQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.IndQuestion);
-            oParam[4] = DBHelper.GetParam("@IndAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.IndAnswer);
-
-            oParam[5] = DBHelper.GetParam("@Icon", SqlDbType.VarChar, 255, ParameterDirection.Input, objFAQDetail.Icon);
-            oParam[6] = DBHelper.GetParam("@urutan", SqlDbType.VarChar, 255, ParameterDirection.Input, objFAQDetail.urutan);
-            oParam[7] = DBHelper.GetParam("@IsPrimary", SqlDbType.Int, 10, ParameterDirection.Input, objFAQDetail.IsPrimary);
-
-            oParam[8] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objFAQDetail.Count);
+            oParam[3] = DBHelper.GetParam("@IndQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, Ques);
+            oParam[4] = DBHelper.GetParam("@IndAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, Ans);
 
             SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateFAQ", oParam);
             return 1;
         }
 
 
-        public static int UpdateFAQData(FAQDetail objFAQDetail)
+        public static int UpdateFAQData(int Id, string Ques, string Ans, string EnQues, string EnAns)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[9];
-            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objFAQDetail.Id);
+            SqlParameter[] oParam = new SqlParameter[5];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, Id);
 
-            oParam[1] = DBHelper.GetParam("@EngQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.EngQuestion);
-            oParam[2] = DBHelper.GetParam("@EngAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.EngAnswer);
+            oParam[1] = DBHelper.GetParam("@EngQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, EnQues);
+            oParam[2] = DBHelper.GetParam("@EngAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, EnAns);
 
-            oParam[3] = DBHelper.GetParam("@IndQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.IndQuestion);
-            oParam[4] = DBHelper.GetParam("@IndAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, objFAQDetail.IndAnswer);
-
-            oParam[5] = DBHelper.GetParam("@Icon", SqlDbType.VarChar, 255, ParameterDirection.Input, objFAQDetail.Icon);
-            oParam[6] = DBHelper.GetParam("@urutan", SqlDbType.VarChar, 255, ParameterDirection.Input, objFAQDetail.urutan);
-            oParam[7] = DBHelper.GetParam("@IsPrimary", SqlDbType.Int, 10, ParameterDirection.Input, objFAQDetail.IsPrimary);
-
-            oParam[8] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objFAQDetail.Count);
+            oParam[3] = DBHelper.GetParam("@IndQuestion", SqlDbType.VarChar, 4000, ParameterDirection.Input, Ques);
+            oParam[4] = DBHelper.GetParam("@IndAnswer", SqlDbType.VarChar, 4000, ParameterDirection.Input, Ans);
 
             SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateFAQ", oParam);
             return 1;
@@ -223,20 +211,38 @@ namespace Cargo
             return 1;
         }
 
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static FAQDetail GetFaQDetail(int Id)
+        {
+            FAQ objFAQ = new FAQ();
+            DataTable dt=objFAQ.GetFAQs(1,10000,"","id",1);
+            string filterExp;
+            string sortExp = "id asc";
+            DataRow[] drarray;
+            filterExp = " id = '" + Id.ToString() + "'";
+            drarray = dt.Select(filterExp, sortExp, DataViewRowState.CurrentRows);
+            FAQDetail objFaqdetail = new FAQDetail();
+            objFaqdetail.IndQuestion = drarray[0]["tanya"].ToString();
+            objFaqdetail.IndAnswer = drarray[0]["jawab"].ToString();
+            objFaqdetail.EngQuestion = drarray[0]["entanya"].ToString();
+            objFaqdetail.EngAnswer = drarray[0]["enjawab"].ToString();
+            return objFaqdetail;
+        }
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int AddFAQ(FAQDetail objFAQDetail)
+        public static int AddFAQ(int Id,string Ques,string Ans,string EnQues,string EnAns)
         {
-            return AddFAQData(objFAQDetail);
+            return AddFAQData(Id,Ques,Ans,EnQues,EnAns);
         }
 
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int UpdateFAQ(FAQDetail objFAQDetail)
+        public static int UpdateFAQ(int Id, string Ques, string Ans, string EnQues, string EnAns)
         {
-            return UpdateFAQData(objFAQDetail);
+            return UpdateFAQData(Id, Ques, Ans, EnQues, EnAns);
         }
 
 
