@@ -138,7 +138,7 @@ function SaveItem() {
     var strMsg = DataIsValid();
     if (strMsg == '') {
         var Item = new Object();
-        Item.ItemID = id;
+        Item.ItemID = Number(id);
         Item.VendorAlias = $('#ddlVendor').val();
         Item.CategotyAlias = $('#ddlItemCategory').val();
         Item.ItemName = $('#name').val().trim();
@@ -151,6 +151,7 @@ function SaveItem() {
         var res = ExecuteSynchronously('Items.aspx', 'AddItemss', { objItemdetail: Item });
         if (res.d == 1) {
             table.fnDraw();
+            id = 0;
             BindPageData(0);
             $('#errormsg').text("Data updated successfully");
             $("#divsessionexpired").show();
