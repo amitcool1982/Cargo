@@ -19,14 +19,23 @@ BEGIN
 		
 	if (@Id<>0)
 	Begin
-		if(@Password='') select @Password=password from ledb_admin with(nolock) where id=@Id
+		if(@Password='') 
+			Select @Password	=	password from ledb_admin with(nolock) where id=@Id
+		
 		update ledb_admin
-		set username=@Alias,nama_lengkap=@Name,password=@password where id=@id	
+		set 
+		username		=	@Alias,
+		nama_lengkap	=	@Name,
+		password		=	@password,
+		is_super		=	@IsSuper
+		 where id=@id	
 	END
 	else
 	BEGIN 
-		Insert into ledb_admin(username,nama_lengkap,is_super,password)
-		values(@Alias,@Name,@IsSuper,@Password)	 
+	
+		Insert into ledb_admin(username,	nama_lengkap,	is_super,	password)
+						values(@Alias,		@Name,			@IsSuper,	@Password)	 
+			
 	END
 	   
 END  

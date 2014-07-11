@@ -29,11 +29,12 @@ BEGIN
 	ID				int,
 	username        varchar(100),
 	nama_lengkap	varchar(100),
-	last_login		DateTime	
+	last_login		DateTime,
+	is_super		int
 	)
 	
-	insert into #temp(ID,nama_lengkap,username, last_login)
-	select id,nama_lengkap,username, last_login  from ledb_admin with(nolock)	
+	insert into #temp(ID,nama_lengkap,username, last_login, is_super)
+	select id,nama_lengkap,username, last_login, is_super  from ledb_admin with(nolock)	
 	where nama_lengkap like ('%' + @piSearchFilter + '%') OR username like ('%' + @piSearchFilter + '%')
 	ORDER BY 
 					CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,
