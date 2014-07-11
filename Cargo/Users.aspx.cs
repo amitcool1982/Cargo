@@ -181,7 +181,7 @@ namespace Cargo
             oParam[2] = DBHelper.GetParam("@IsSuperAdmin", SqlDbType.Int, 10, ParameterDirection.Input, IsSuperAdmin);
             oParam[3] = DBHelper.GetParam("@Password", SqlDbType.NVarChar, 255, ParameterDirection.Input, Password);
             oParam[4] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, 0);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateUsersData", oParam);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateUser", oParam);
             return 1;
         }
 
