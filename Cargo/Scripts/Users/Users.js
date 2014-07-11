@@ -123,13 +123,13 @@ function SaveUsers() {
     //$('input[name=IsSuper]').is(':checked') 
     //$('input[name=IsSuper]').attr('checked') 
     $("#divsessionexpired").hide();
-    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '' && ($.trim($("#Password").val()).length > 6  || $.trim($("#Password").val()).length > 6)) {
+    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '' && ($('#password').val().trim() == $('#confirm').val().trim())) {
         var res = null;
         if (id == 0) {
-            res = ExecuteSynchronously('Users.aspx', 'AddUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), IsSuper: $("#IsSuper").val(), Alias: $("#Password").val() });
+            res = ExecuteSynchronously('Users.aspx', 'AddUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), IsSuper: $("#IsSuper").val(), Alias: $("#password").val() });
         }
         else {
-            res = ExecuteSynchronously('Users.aspx', 'UpdateUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), IsSuper: $("#IsSuper").val(), Alias: $("#Password").val(), Id: Number(id) });
+            res = ExecuteSynchronously('Users.aspx', 'UpdateUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), IsSuper: $("#IsSuper").val(), Alias: $("#password").val(), Id: Number(id) });
         }
         if (res.d == 1) {
             table.fnDraw();
