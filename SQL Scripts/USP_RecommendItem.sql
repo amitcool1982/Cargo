@@ -10,7 +10,7 @@ CREATE PROCEDURE [dbo].[USP_RecommendItem]
  )     
 AS   
 BEGIN 	
-	if exists(Select 1 from ledb_promo_menu with(nolock) where id=@Id)
+	if exists(Select 1 from ledb_menu with(nolock) where id=@Id)
 	Begin
 		update ledb_menu
 		set is_recommended=1 where id=@id
