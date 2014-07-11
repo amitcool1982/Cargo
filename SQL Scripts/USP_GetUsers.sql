@@ -34,7 +34,7 @@ BEGIN
 	)
 	
 	insert into #temp(ID,nama_lengkap,username, last_login, is_super)
-	select id,nama_lengkap,username, last_login, is_super  from ledb_admin with(nolock)	
+	select id,nama_lengkap,username, last_login, Case When is_super = 1 then 1 Else 0 End from ledb_admin with(nolock)	
 	where nama_lengkap like ('%' + @piSearchFilter + '%') OR username like ('%' + @piSearchFilter + '%')
 	ORDER BY 
 					CASE WHEN @piSortedBy = 'id' AND @piSortDirection = 1 THEN id END ASC,
