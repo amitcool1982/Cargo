@@ -78,6 +78,9 @@
     <Content Include="Content\select2.css" />
     <Content Include="Content\signin.css" />
     <Content Include="Content\site.css" />
+    <Content Include="Content\summernote-bs2.css" />
+    <Content Include="Content\summernote-bs3.css" />
+    <Content Include="Content\summernote.css" />
     <Content Include="Customer.aspx" />
     <Content Include="Dashboard.aspx" />
     <Content Include="editor\dist\bootstrap3-wysihtml5.all.min.js" />
@@ -344,6 +347,8 @@
     <Content Include="editor\src\templates\lists.hbs" />
     <Content Include="Scripts\jasny-bootstrap.js" />
     <Content Include="Scripts\jasny-bootstrap.min.js" />
+    <Content Include="Scripts\summernote.js" />
+    <Content Include="Scripts\summernote.min.js" />
     <Content Include="WebForm1.aspx" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\ItemPromotion\ItemPromotion.js" />
