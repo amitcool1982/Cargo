@@ -81,7 +81,7 @@
                         </div>
                         <div class="form-group">
                             <label for="name">Items Name :</label>
-                            <input id="name" required="" name="name" placeholder="Type item name here.." class="form-control" type="text">
+                            <input id="name" required="" name="name" onkeyup="javascript:FillAlias(this)" placeholder="Type item name here.." class="form-control" type="text">
                         </div>
                         <div class="form-group">
                             <label for="alias">URL Alias :</label>
@@ -96,12 +96,7 @@
                             <input id="price" required="" name="price" placeholder="Price (Rp)" class="form-control" type="text">
                         </div>
                         <div class="form-group form-inline" id="tag_list">
-                            <label for="tags">Tags :</label>
-                            <input id="tags" name="tags[]" value="fast-food" type="checkbox">Fast Food                                               
-                                <input id="tags" name="tags[]" value="gorengan" type="checkbox">Gorengan                                               
-                                <input id="tags" name="tags[]" value="makanan-pedas" type="checkbox">Makanan Pedas                                               
-                                <input id="tags" name="tags[]" value="makanan-berat" type="checkbox">Makanan Berat                                               
-                                <input id="tags" name="tags[]" value="minuman-spesial" type="checkbox">Minuman Spesial                                           
+                            <label for="tags">Tags :</label>                                         
                         </div>
                         <div class="row">
                             <div class="col-lg-9 col-md-9 col-xs-7">
@@ -109,7 +104,7 @@
                                 <p class="help-block">Exp : Khas Jawa, Mie, Kering, Goreng-gorengan, Asin.</p>
                             </div>
                             <div class="col-lg-3 col-md-3 col-xs-5">
-                                <button type="button" id="add_tags" class="btn btn-success btn-sm">Add</button>
+                                <button type="button" id="add_tags" class="btn btn-success btn-sm" onclick="javascript:AddTags()">Add</button>
                             </div>
 
                         </div>

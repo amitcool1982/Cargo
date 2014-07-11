@@ -195,7 +195,31 @@ namespace Cargo
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
         public static int AddItemss(ItemDetail objItemdetail)
         {
+            if (objItemdetail.Tags != "")
+            {
+                int Result=0;
+                var temp=objItemdetail.Tags.Split(',');
+                for (int i = 0; i < temp.Length; i++)
+                {
+                    if (temp[i].IndexOf("✓") != -1)
+                    {
+                        Result = AddItemTagData(temp[i].Replace("✓", ""), temp[i].Replace("✓", "").Replace(" ", "_").ToLower());
+                        objItemdetail.Tags = objItemdetail.Tags.Replace(temp[i], temp[i].Replace("✓", "").Replace(" ", "_").ToLower());
+                    }
+                }
+            }
             return AddItems(objItemdetail);
+        }
+
+        public static int AddItemTagData(string Name, string Alias)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[3];
+            oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
+            oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
+            oParam[2] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, 0);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateItemTagData", oParam);
+            return 1;
         }
 
         public CommonObjects[] GetVendorsList()
@@ -242,10 +266,20 @@ namespace Cargo
             return objVendor;
         }
 
+        public DataTable GetTags()
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[2];
+            oParam[0] = DBHelper.GetParam("@piPageSize", SqlDbType.Int, 4, ParameterDirection.Input, 1000);
+            oParam[1] = DBHelper.GetParam("@piPageNumber", SqlDbType.Int, 4, ParameterDirection.Input, GetSQLSafeValue(1));
+            DataTable otable = SqlHelper.ExecuteDataset(strConnectionStrings, CommandType.StoredProcedure, "USP_GetItemTags", oParam).Tables[0];
+            return otable;
+        }
+
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static ItemDetail GetItemData(string ItemId)
+        public static ItemDetail GetItemData(int ItemId)
         {
             string imagefolder = "/img/";
 
@@ -253,7 +287,7 @@ namespace Cargo
             Items objItem = new Items();
             DataTable objmainDT = new DataTable();
             DataRow[] objMainRow = null;
-            if (ItemId != "0")
+            if (ItemId != 0)
             {
                 objmainDT = (DataTable)HttpContext.Current.Session["ItemData"];
                 objMainRow = objmainDT.Select("menu_id_generator='" + ItemId + "'");
@@ -273,7 +307,7 @@ namespace Cargo
                 objItemDetail.Vendor[intCount] = new CommonObjects();
                 objItemDetail.Vendor[intCount].Value = drw["alias_vendors"].ToString();
                 objItemDetail.Vendor[intCount].Text = drw["nama_vendors"].ToString();
-                objItemDetail.Vendor[intCount].DefaultValue = ItemId != "0" ? objMainRow[0]["nama_vendors"].ToString() : objItemDetail.Vendor[0].Value;
+                objItemDetail.Vendor[intCount].DefaultValue = ItemId != 0 ? objMainRow[0]["nama_vendors"].ToString() : objItemDetail.Vendor[0].Value;
                 intCount++;
             }
 
@@ -291,31 +325,61 @@ namespace Cargo
                 objItemDetail.Categoty[intCount] = new CommonObjects();
                 objItemDetail.Categoty[intCount].Value = drw["Alias"].ToString();
                 objItemDetail.Categoty[intCount].Text = drw["Category"].ToString();
-                objItemDetail.Categoty[intCount].DefaultValue = ItemId != "0" ? objMainRow[0]["Category"].ToString() : objItemDetail.Categoty[0].Value;
+                objItemDetail.Categoty[intCount].DefaultValue = ItemId != 0 ? objMainRow[0]["Category"].ToString() : objItemDetail.Categoty[0].Value;
                 intCount++;
             }
 
             int Price;
             bool IsRecommendItem;
 
-            objItemDetail.ItemName = ItemId != "0" ? objMainRow[0]["nama_menu"].ToString() : "";
-            objItemDetail.UrlAlias = ItemId != "0" ? objMainRow[0]["alias_menu"].ToString() : "";
-            objItemDetail.Description = ItemId != "0" ? objMainRow[0]["deskripsi_menu"].ToString() : "";
-            if (ItemId != "0")
+            objItemDetail.ItemName = ItemId != 0 ? objMainRow[0]["nama_menu"].ToString() : "";
+            objItemDetail.UrlAlias = ItemId != 0 ? objMainRow[0]["alias_menu"].ToString() : "";
+            objItemDetail.Description = ItemId != 0 ? objMainRow[0]["deskripsi_menu"].ToString() : "";
+            if (ItemId != 0)
             {
                 int.TryParse(Convert.ToString(objMainRow[0]["harga_menu"]), out Price);
                 objItemDetail.Price = Price;
             }
 
-            objItemDetail.Tags = ItemId != "0" ? objMainRow[0]["tags"].ToString() : "";
+            objItemDetail.Tags = ItemId != 0 ? objMainRow[0]["tags"].ToString() : "";
 
-            if (ItemId != "0")
+            if (ItemId != 0)
             {
                 bool.TryParse(Convert.ToString(objMainRow[0]["is_recommended"]), out IsRecommendItem);
                 objItemDetail.IsRecommendItem = IsRecommendItem;
             }
 
-            objItemDetail.ItemImageUrl = ItemId != "0" ? imagefolder + objMainRow[0]["media_photo"].ToString() : "";
+            objItemDetail.ItemImageUrl = ItemId != 0 ? imagefolder + objMainRow[0]["media_photo"].ToString() : "";
+
+            DataTable dt = objItem.GetTags();
+            string tags = "";
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (tags == "")
+                {
+                    if (ItemId != 0 && objMainRow[0]["tags"].ToString().IndexOf(dr["alias"].ToString()) != -1)
+                    {
+                        tags = dr["alias"].ToString() + "✓" + "^" + dr["nama_tag"].ToString();
+                    }
+                    else
+                    {
+                        tags = dr["alias"].ToString() + "^" + dr["nama_tag"].ToString();
+                    }
+                    
+                }
+                else
+                {
+                    if (ItemId != 0 && objMainRow[0]["tags"].ToString().IndexOf(dr["alias"].ToString()) != -1)
+                    {
+                        tags += "," + dr["alias"].ToString() + "✓" + "^" + dr["nama_tag"].ToString();
+                    }
+                    else
+                    {
+                        tags += "," + dr["alias"].ToString() + "^" + dr["nama_tag"].ToString();
+                    }
+                }
+            }
+            objItemDetail.Tags = tags;
 
             return objItemDetail;
         }

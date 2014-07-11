@@ -41,7 +41,7 @@ var BindcategoryTable = function () {
         "bProcessing": true,
         "bServerSide": true,
         "bStateSave": false,
-        "bPaginate": false,
+        "bPaginate": true,
         "bLengthChange": false,//To Hide the Length menu in the Datatables
         "iDisplayLength": Number(PageSize),
         "bAutoWidth": false,

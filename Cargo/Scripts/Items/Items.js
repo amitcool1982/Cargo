@@ -1,5 +1,6 @@
 ﻿var table = null;
 var id = 0;
+var Selectedtags = '';
 
 $(document).ready(function () {
     table = BindItemsTable();
@@ -36,6 +37,21 @@ function BindPageData(Id) {
     $('#recommended').val(res.d.recommended);
     if (res.d.ItemImageUrl != '') {
         $('#ItemImageUrl').attr('src', res.d.ItemImageUrl);
+    }
+    if (res.d.Tags != "") {
+        var temp = res.d.Tags.split(',');
+        var temp2 = null;
+        for (var i = 0; i < temp.length; i++) {
+            temp2 = temp[i].split('^');
+            if (temp2[0].indexOf("✓") != -1) {
+                Selectedtags += "," + temp2[0].replace("✓", "");
+                $('#tag_list').append("<input class='tags' checked='checked' value='" + temp2[0].replace("✓","") + "' type='checkbox' onchange='javascript:UpdateSelectedTags(this)'> " + temp2[1] + " ");
+            }
+            else {
+                $('#tag_list').append("<input class='tags' value='" + temp2[0] + "' type='checkbox' onchange='javascript:UpdateSelectedTags(this)'> " + temp2[1] + " ");
+            }
+        }
+        
     }
 
 }
@@ -129,7 +145,7 @@ function SaveItem() {
         Item.UrlAlias = $('#alias').val().trim();
         Item.Description = $('#description').val().trim();
         Item.Price = Number($('#price').val().trim());
-        Item.Tags = $('#tags').val().trim();
+        Item.Tags = Selectedtags.replace(",","");
         Item.IsRecommendItem = $('#recommended')[0].checked;
         Item.ItemImageUrl = '';
         var res = ExecuteSynchronously('Items.aspx', 'AddItemss', { objItemdetail: Item });
@@ -178,6 +194,27 @@ function editRow(Table, nRow) {
 }
 
 
-function FillAlias() {
-    $('#txtalias').val($('#txtname').val().trim());
+function FillAlias(obj) {
+    $('#alias').val(obj.value.trim());
 }
+
+function AddTags() {
+    if ($('#tags_input').val().trim() != "") {
+        var temp = $('#tags_input').val().trim().split(',');
+        for (var i = 0; i < temp.length; i++) {
+            $('#tag_list').append("<input class='tags' value='" + temp[i] + "✓" + "' type='checkbox' onchange='javascript:UpdateSelectedTags(this)'> " + temp[i] + " ");
+        }
+
+    }
+    $('#tags_input').val('');
+}
+
+function UpdateSelectedTags(obj) {
+    if (Selectedtags.indexOf(obj.value) == -1) {
+        Selectedtags += "," + obj.value;
+    }
+    else {
+        Selectedtags = Selectedtags.replace("," + obj.value, "");
+    }
+}
+
