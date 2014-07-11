@@ -146,13 +146,13 @@ namespace Cargo
 
                     sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; width: 130px;overflow: hidden;'><nobr>" + dtItemPromotion.Rows[i]["akhir_promo"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
-                    if (dtItemPromotion.Rows[i]["akhir_promo"].ToString() == "1")
+                    if (dtItemPromotion.Rows[i]["IsRecommended"].ToString() == "1")
                     {
                         sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' title='Item was recommended'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     }
                     else
                     {
-                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' title='Item was not recommended'><i class='fa fa-thumbs-down fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' title='Recommend " + dtItemPromotion.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-thumbs-up fa-border'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     }
                     sb.Append(",");
 
