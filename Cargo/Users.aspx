@@ -47,6 +47,7 @@
                                 <th>Last Access</th>
                                 <th><i class="fa fa-user"></i></th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -68,7 +69,7 @@
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="super" value="1">
+                                <input id="IsSuper" type="checkbox" name="IsSuper" value="1">
                                 Set as Super Admin
                             </label>
                         </div>

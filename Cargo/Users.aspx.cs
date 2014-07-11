@@ -130,7 +130,10 @@ namespace Cargo
                     sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' data-id='" + dtUsers.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' data-toggle='tooltip' title='update data users'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)' data-id='" + dtUsers.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' data-toggle='tooltip' title='delete data user'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""4"": ""{0}""", "<div style='text-overflow: ellipsis; display:none;'><nobr>" + dtUsers.Rows[i]["username"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");              
+                    sb.AppendFormat(@"""4"": ""{0}""", "<div style='text-overflow: ellipsis; display:none;'><nobr>" + dtUsers.Rows[i]["username"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.Append(",");
+
+                    sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; display:none;'><nobr>" + dtUsers.Rows[i]["is_Super"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");              
                     
                     sb.Append("},");
                 }
@@ -169,55 +172,63 @@ namespace Cargo
             return outputJson;
         }
 
-        public static int AddUsers(string Name, string Alias)
+        public static int AddUsersData(string Name, string Alias, bool IsSuperAdmin, string Password)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[3];
-            oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
-            oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
-            oParam[2] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, 0);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateItemCategory", oParam);
+            SqlParameter[] oParam = new SqlParameter[5];
+            oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 255, ParameterDirection.Input, Name);
+            oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 255, ParameterDirection.Input, Alias);
+            oParam[2] = DBHelper.GetParam("@IsSuperAdmin", SqlDbType.Int, 10, ParameterDirection.Input, IsSuperAdmin);
+            oParam[3] = DBHelper.GetParam("@Password", SqlDbType.NVarChar, 255, ParameterDirection.Input, Password);
+            oParam[4] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, 0);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateUsersData", oParam);
             return 1;
         }
 
-        public static int UpdateUsers(string Name, string Alias, int id)
+        public static int UpdateUsersData(string Name, string Alias, bool IsSuperAdmin, string Password, int Id)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[3];
-            oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 100, ParameterDirection.Input, Name);
-            oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 100, ParameterDirection.Input, Alias);
-            oParam[2] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateItemCategory", oParam);
+            SqlParameter[] oParam = new SqlParameter[5];
+            oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 255, ParameterDirection.Input, Name);
+            oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 255, ParameterDirection.Input, Alias);
+            oParam[2] = DBHelper.GetParam("@IsSuperAdmin", SqlDbType.Int, 10, ParameterDirection.Input, IsSuperAdmin);
+            oParam[3] = DBHelper.GetParam("@Password", SqlDbType.NVarChar, 255, ParameterDirection.Input, Password);
+            oParam[4] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, Id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateUser", oParam);
             return 1;
         }
 
-        public static int DeleteUsers(int id)
+        public static int DeleteUsersData(int id)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
             SqlParameter[] oParam = new SqlParameter[1];
             oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, id);
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteItemCategory", oParam);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_DeleteUser", oParam);
             return 1;
         }
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int AddCategory(string Name, string Alias)
+        public static int AddUsers(string Name, string Alias, bool IsSuper, string Password)
         {
-            return AddUsers(Name, Alias);
+            string EncrypedPassword = SQL.BLL.EncryptData(Password); 
+            
+            return AddUsersData(Name, Alias, IsSuper, EncrypedPassword);
         }
 
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int UpdateCategory(string Name, string Alias,string Id)
+        public static int UpdateUsers(string Name, string Alias, bool IsSuper, string Password,  int Id)
         {
-            return UpdateUsers(Name, Alias, int.Parse(Id));
+            string EncrypedPassword = SQL.BLL.EncryptData(Password);
+
+            return UpdateUsersData(Name, Alias, IsSuper, EncrypedPassword, Id);
         }
         [WebMethod(EnableSession = true)]
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
-        public static int DeleteCategory(string id)
+        public static int DeleteUsers(string id)
         {
-            return DeleteUsers(int.Parse(id));
+            return DeleteUsersData(int.Parse(id));
         }
     
     }

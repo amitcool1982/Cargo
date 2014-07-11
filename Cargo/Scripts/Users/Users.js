@@ -1,4 +1,4 @@
-﻿var table=null;
+﻿var table = null;
 var id = 0;
 $(document).ready(function () {
     table = BindUsersTable();
@@ -35,6 +35,7 @@ var BindUsersTable = function () {
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "5em", "bSortable": false },
+                     { "sWidth": "1em", "bSortable": false },
                      { "sWidth": "1em", "bSortable": false }
         ],
         "bProcessing": true,
@@ -104,19 +105,33 @@ function editRow(table, nRow) {
     id = $(aData[0]).text();
     $('#txtname').val($(aData[1]).text());
     $('#txtalias').val($(aData[4]).text());
+    
+    if ($(aData[5]).text() == 1)
+    { $('input[name=IsSuper]').attr('checked', true); }
+    else {
+        $('input[name=IsSuper]').attr('checked', false);
+    }
+
+
+
     $('#save').hide();
     $('#cancelsave').show();
 }
 
 function SaveUsers() {
+    
+    //$('input[name=IsSuper]').is(':checked') 
+    //$('input[name=IsSuper]').attr('checked') 
+
+
     $("#divsessionexpired").hide();
-    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '') {
+    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '' && ($.trim($("#Password").val()).length > 6  || $.trim($("#Password").val()).length > 6)) {
         var res = null;
         if (id == 0) {
-            res = ExecuteSynchronously('Users.aspx', 'AddCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim() });
+            res = ExecuteSynchronously('Users.aspx', 'AddUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), IsSuper: $("#IsSuper").val(), Alias: $("#Password").val() });
         }
         else {
-            res = ExecuteSynchronously('Users.aspx', 'UpdateCategory', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), Id: Number(id) });
+            res = ExecuteSynchronously('Users.aspx', 'UpdateUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), IsSuper: $("#IsSuper").val(), Alias: $("#Password").val(), Id: Number(id) });
         }
         if (res.d == 1) {
             table.fnDraw();
@@ -134,6 +149,10 @@ function SaveUsers() {
             $('#errormsg').text("UserName is required");
             $("#divsessionexpired").show();
         }
+        else if ($('#Password').val() != '' && $.trim($("#Password").val()).length < 6) {
+            $('#errormsg').text("Password must be more than 6 characters");
+            $("#divsessionexpired").show();
+        }
     }
 }
 
@@ -147,7 +166,7 @@ function DeleteUser(table, nRow) {
 
     $('#btnDeleteUser').on("click", function (e) {
         try {
-            var res = ExecuteSynchronously('Users.aspx', 'DeleteCategory', { id: $(aData[0]).text() });
+            var res = ExecuteSynchronously('Users.aspx', 'DeleteUsers', { id: $(aData[0]).text() });
             if (res.d == 1) {
                 $('#ConfirmDeleteUser').modal('hide');
                 table.fnDraw();
