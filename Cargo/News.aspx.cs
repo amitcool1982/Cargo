@@ -195,41 +195,17 @@ namespace Cargo
 
 
 
-        public static int AddNewsData(NewsDetail objNewsDetail)
-        {
-            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-
-            SqlParameter[] oParam = new SqlParameter[13];
-            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objNewsDetail.Id);
-
-            oParam[1] = DBHelper.GetParam("@EngTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.EngTitle);
-            oParam[2] = DBHelper.GetParam("@EngTitleEncrypt", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndTitleEncrypt);
-            oParam[3] = DBHelper.GetParam("@EngURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.EngURLAlias);
-            oParam[4] = DBHelper.GetParam("@EngContent", SqlDbType.VarChar, 4000, ParameterDirection.Input, objNewsDetail.EngContent);
-
-            oParam[5] = DBHelper.GetParam("@IndTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndTitle);
-            oParam[6] = DBHelper.GetParam("@IndURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndURLAlias);
-            oParam[7] = DBHelper.GetParam("@IndContent", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndContent);
-
-            oParam[8] = DBHelper.GetParam("@Author", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.Author);
-            oParam[9] = DBHelper.GetParam("@IsSchedule", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.IsSchedule);
-            oParam[10] = DBHelper.GetParam("@PostDate", SqlDbType.DateTime, 100, ParameterDirection.Input, objNewsDetail.PostDate);
-            oParam[11] = DBHelper.GetParam("@IsOnline", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.IsOnline);
-            oParam[12] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.Count);
-
-            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateNewsData", oParam);
-            return 1;
-        }
+     
 
 
         public static int UpdateNewsData(NewsDetail objNewsDetail)
         {
             string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
-            SqlParameter[] oParam = new SqlParameter[13];
-            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.VarChar, 100, ParameterDirection.Input, objNewsDetail.Id);
+            SqlParameter[] oParam = new SqlParameter[14];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, objNewsDetail.Id);
 
-            oParam[1] = DBHelper.GetParam("@EngTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.EngTitle);
-            oParam[2] = DBHelper.GetParam("@EngTitleEncrypt", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndTitleEncrypt);
+            oParam[1] = DBHelper.GetParam("@IndTitleEncrypt", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.IndTitleEncrypt);
+            oParam[2] = DBHelper.GetParam("@EngTitle", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.EngTitle);
             oParam[3] = DBHelper.GetParam("@EngURLAlias", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.EngURLAlias);
             oParam[4] = DBHelper.GetParam("@EngContent", SqlDbType.VarChar, 4000, ParameterDirection.Input, objNewsDetail.EngContent);
 
@@ -240,9 +216,9 @@ namespace Cargo
             oParam[8] = DBHelper.GetParam("@Author", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.Author);
             oParam[9] = DBHelper.GetParam("@IsSchedule", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.IsSchedule);
             oParam[10] = DBHelper.GetParam("@PostDate", SqlDbType.DateTime, 100, ParameterDirection.Input, objNewsDetail.PostDate);
-            oParam[11] = DBHelper.GetParam("@IsOnline", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.IsOnline);
-            oParam[12] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.Count);
-
+            oParam[11] = DBHelper.GetParam("@ImageUrl", SqlDbType.VarChar, 255, ParameterDirection.Input, objNewsDetail.ImageURL);
+            oParam[12] = DBHelper.GetParam("@IsOnline", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.IsOnline);
+            oParam[13] = DBHelper.GetParam("@Count", SqlDbType.Int, 10, ParameterDirection.Input, objNewsDetail.Count);
             SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateNewsData", oParam);
             return 1;
         }
@@ -264,7 +240,7 @@ namespace Cargo
             objNewsDetail.IndTitleEncrypt = SQL.BLL.EncryptData(objNewsDetail.IndTitle);
             objNewsDetail.PostDate = DateTime.Now;
             objNewsDetail.Author = Convert.ToString(HttpContext.Current.Session["LoginName"]);
-            return AddNewsData(objNewsDetail);
+            return UpdateNewsData(objNewsDetail);
         }
 
 

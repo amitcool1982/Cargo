@@ -148,7 +148,10 @@
                             <!-- <button type="button" class="schedule-show btn btn-info">Schedule</button> -->
                             <button type="button" id="cancel" class="news-show-form btn btn-danger" style="display: none;">Cancel</button>
                         </div>
-
+                        <br />
+                        <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px; display: none;">
+                <strong id="errormsg"></strong>
+            </div>
                     </div>
 
                     <br />

@@ -26,23 +26,9 @@ namespace Cargo.SQL
         public static string EncryptData(string alias)
         {
             string hash = "";
-            string source = "Hello World!";
             using (MD5 md5Hash = MD5.Create())
             {
-                hash = GetMd5Hash(md5Hash, source);
-
-                Console.WriteLine("The MD5 hash of " + source + " is: " + hash + ".");
-
-                Console.WriteLine("Verifying the hash...");
-
-                if (VerifyMd5Hash(md5Hash, source, hash))
-                {
-                    Console.WriteLine("The hashes are the same.");
-                }
-                else
-                {
-                    Console.WriteLine("The hashes are not same.");
-                }
+                hash = GetMd5Hash(md5Hash, alias);
             }
 
             return hash;

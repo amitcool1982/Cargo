@@ -117,7 +117,6 @@ function BindPageData(Id) {
 
 
 function editRow(Table, nRow) {
-    debugger;
     var aData = Table.fnGetData(nRow);
     var jqTds = $('>td', nRow);
     id = $(aData[0]).text();
@@ -126,7 +125,6 @@ function editRow(Table, nRow) {
 }
 
 function SaveNews(obj) {
-    debugger;
     $("#divsessionexpired").hide();
     var strMsg = DataIsValid();
     if (strMsg == '') {
@@ -165,7 +163,7 @@ function SaveNews(obj) {
             id = -1;
             $('#errormsg').text("Data updated successfully");
             $("#divsessionexpired").show();
-            $('#cancelsave').hide();
+            $('#cancel').hide();
         }
     }
     else {
