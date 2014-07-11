@@ -86,8 +86,12 @@
                     <button type="submit" class="btn btn-primary" onclick="javascript:SaveUsers()">Save</button>
                     <!-- <button type="reset" class="btn btn-warning">Reset</button> -->
                     <button type="button" class="user-show-form btn btn-danger" style="display: none;">Cancel</button>
-                        
+                     <br />
+                        <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px; display: none;">
+                <strong id="errormsg"></strong>
+            </div>   
                 </div>
+                
             </div>
         </div>
     </div>

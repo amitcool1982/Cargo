@@ -122,8 +122,6 @@ function SaveUsers() {
     
     //$('input[name=IsSuper]').is(':checked') 
     //$('input[name=IsSuper]').attr('checked') 
-
-
     $("#divsessionexpired").hide();
     if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '' && ($.trim($("#Password").val()).length > 6  || $.trim($("#Password").val()).length > 6)) {
         var res = null;
@@ -149,8 +147,12 @@ function SaveUsers() {
             $('#errormsg').text("UserName is required");
             $("#divsessionexpired").show();
         }
-        else if ($('#Password').val() != '' && $.trim($("#Password").val()).length < 6) {
+        else if ($('#password').val() != '' && $.trim($("#password").val()).length < 6) {
             $('#errormsg').text("Password must be more than 6 characters");
+            $("#divsessionexpired").show();
+        }
+        else if ($('#password').val() != $('#confirm').val()) {
+            $('#errormsg').text("Please enter the same password");
             $("#divsessionexpired").show();
         }
     }
