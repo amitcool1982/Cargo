@@ -135,7 +135,7 @@ namespace Cargo
                     sb.AppendFormat(@"""3"": ""{0}""", "<div style='text-overflow: ellipsis; width: 80px;overflow: hidden;'><nobr>" + dtItems.Rows[i]["harga_menu"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""4"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='items-dialy-promo' data-toggle='tooltip' data-title='Dialy Promo " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-usd fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='' data-toggle='tooltip' data-title='Item was recommended' ><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='edit' data-toggle='tooltip' data-title='Update Data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-pencil-square-o fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='delete' data-toggle='tooltip' data-title='Delete data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""4"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='items-dialy-promo' data-toggle='tooltip' data-title='Dialy Promo " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-usd fa-border'></i></a><a href='javascript:void(0)' onclick='javascript:RecommendItem(" + dtItems.Rows[i]["id"].ToString() + ")' class='' data-toggle='tooltip' data-title='Item was recommended' ><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='edit' data-toggle='tooltip' data-title='Update Data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-pencil-square-o fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtItems.Rows[i]["menu_id_generator"].ToString().Replace("\"", "\\" + "\"") + "' class='delete' data-toggle='tooltip' data-title='Delete data " + dtItems.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 
@@ -382,6 +382,22 @@ namespace Cargo
             objItemDetail.Tags = tags;
 
             return objItemDetail;
+        }
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int RecommendItem(int Id)
+        {
+            return MakeItemRecommended(Id);
+        }
+
+        public static int MakeItemRecommended(int Id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, Id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_RecommendItem", oParam);
+            return 1;
         }
     }
 }

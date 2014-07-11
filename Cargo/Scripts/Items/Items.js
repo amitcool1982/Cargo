@@ -219,3 +219,10 @@ function UpdateSelectedTags(obj) {
     }
 }
 
+
+function RecommendItem(obj) {
+    var res = ExecuteSynchronously('Items.aspx', 'RecommendItem', { Id: obj });
+    if (res.d == 1) {
+        table.fnDraw();
+    }
+}
