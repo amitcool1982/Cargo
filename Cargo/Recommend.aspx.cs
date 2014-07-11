@@ -199,7 +199,8 @@ namespace Cargo
             string display = "<table>";
             if (dt.Rows.Count > 0)
             {
-                //display += "<tr><td><b>ID</b></td><td>: " + Convert.ToString(dt.Rows[0]["menu_id_generator"]) + "</td></tr>";
+                display += "<tr><td colspan='2'> </td></tr>";               
+                display += "<tr><td colspan='2'><img style='width:360px; height:360 px;' src='" + Convert.ToString(dt.Rows[0]["Media_Photo"]) + "' /></td></tr>";
                 display += "<tr><td><b>Vendor</b></td><td>: " + Convert.ToString(dt.Rows[0]["nama_vendors"]) + "</td></tr>";
                 display += "<tr><td><b>Category Items</b></td><td>: " + Convert.ToString(dt.Rows[0]["Category"]) + "</td></tr>";
                 display += "<tr><td><b>ID Item</b></td><td>: " + Convert.ToString(dt.Rows[0]["menu_id_generator"]) + "</td></tr>";
