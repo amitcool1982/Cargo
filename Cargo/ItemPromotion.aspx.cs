@@ -148,11 +148,11 @@ namespace Cargo
                     sb.Append(",");
                     if (dtItemPromotion.Rows[i]["IsRecommended"].ToString() == "1")
                     {
-                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' onclick='javascript:RecommendItem(" + dtItemPromotion.Rows[i]["id"].ToString() + ")' title='Item was recommended'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' title='Item was recommended'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     }
                     else
                     {
-                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' title='Recommend " + dtItemPromotion.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-thumbs-up fa-border'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a href='javascript:void(0)' onclick='javascript:RecommendItem(" + dtItemPromotion.Rows[i]["id"].ToString() + ")' title='Recommend " + dtItemPromotion.Rows[i]["nama_menu"].ToString().Replace("\"", "\\" + "\"") + "'><i class='fa fa-thumbs-up fa-border'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     }
                     sb.Append(",");
 
