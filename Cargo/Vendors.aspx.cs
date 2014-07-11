@@ -222,7 +222,7 @@ namespace Cargo
             Vendors objVendors = new Vendors();
             DataTable objmainDT = new DataTable();
             DataRow[] objMainRow = null;
-            if (VendorId != -1)
+            if (VendorId != 0)
             {
                 objmainDT = (DataTable)HttpContext.Current.Session["VendorData"];
                 objMainRow = objmainDT.Select("id=" + VendorId);
@@ -242,7 +242,7 @@ namespace Cargo
                 objVendorDetail.Province[intCount] = new CommonObjects();
                 objVendorDetail.Province[intCount].Value = drw["Alias"].ToString();
                 objVendorDetail.Province[intCount].Text = drw["nama_daerah"].ToString();
-                objVendorDetail.Province[intCount].DefaultValue = VendorId != -1 ? objMainRow[0]["alias_daerah"].ToString() : objVendorDetail.Province[0].Value;
+                objVendorDetail.Province[intCount].DefaultValue = VendorId != 0 ? objMainRow[0]["alias_daerah"].ToString() : objVendorDetail.Province[0].Value;
                 intCount++;
             }
 
@@ -260,17 +260,17 @@ namespace Cargo
                 objVendorDetail.City[intCount] = new CommonObjects();
                 objVendorDetail.City[intCount].Value = drw["alias"].ToString();
                 objVendorDetail.City[intCount].Text = drw["nama_kota"].ToString();
-                objVendorDetail.City[intCount].DefaultValue = VendorId != -1 ? objMainRow[0]["alias_kota"].ToString() : objVendorDetail.City[0].Value;
+                objVendorDetail.City[intCount].DefaultValue = VendorId != 0 ? objMainRow[0]["alias_kota"].ToString() : objVendorDetail.City[0].Value;
                 intCount++;
             }
 
-            objVendorDetail.VendorsName = VendorId != -1 ? objMainRow[0]["nama_vendors"].ToString() : "";
-            objVendorDetail.VendorsAlias = VendorId != -1 ? objMainRow[0]["alias_vendors"].ToString() : "";
-            objVendorDetail.VendorsAddress = VendorId != -1 ? objMainRow[0]["alias_vendors"].ToString() : "";
-            objVendorDetail.Phone = VendorId != -1 ? objMainRow[0]["tlp_vendors"].ToString() : "";
-            objVendorDetail.Email = VendorId != -1 ? objMainRow[0]["email_vendors"].ToString() : "";
-            objVendorDetail.ImageUrl = VendorId != -1 ? "../"+objMainRow[0]["logo_vendors"].ToString() : "";
-            objVendorDetail.BannerUrl = VendorId != -1 ? "../"+objMainRow[0]["banner_vendors"].ToString() : "";
+            objVendorDetail.VendorsName = VendorId != 0 ? objMainRow[0]["nama_vendors"].ToString() : "";
+            objVendorDetail.VendorsAlias = VendorId != 0 ? objMainRow[0]["alias_vendors"].ToString() : "";
+            objVendorDetail.VendorsAddress = VendorId != 0 ? objMainRow[0]["alias_vendors"].ToString() : "";
+            objVendorDetail.Phone = VendorId != 0 ? objMainRow[0]["tlp_vendors"].ToString() : "";
+            objVendorDetail.Email = VendorId != 0 ? objMainRow[0]["email_vendors"].ToString() : "";
+            objVendorDetail.ImageUrl = VendorId != 0 ? "../"+objMainRow[0]["logo_vendors"].ToString() : "";
+            objVendorDetail.BannerUrl = VendorId != 0 ? "../"+objMainRow[0]["banner_vendors"].ToString() : "";
             return objVendorDetail;
         }
     }

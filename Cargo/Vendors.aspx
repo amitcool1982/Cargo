@@ -99,18 +99,18 @@
                         <div class="form-inline form-group">
                             <div class="form-group">
                                 <label for="province">Province :</label>
-                                <select id="ddlProvince" name="ddlProvince" class="selectpicker" data-width="150px" onchange="javascript:BindataonProvinceChange(this)">
+                                <select id="ddlProvince" name="ddlProvince" data-width="150px" class="form-control" onchange="javascript:BindataonProvinceChange(this)">
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="city">City :</label>
-                                <select id="ddlCity" name="ddlCity" class="selectpicker" data-width="150px">
+                                <select id="ddlCity" name="ddlCity"  class="form-control" data-width="150px">
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="name">Vendors Name :</label>
-                            <input id="name" name="name" placeholder="Type vendor name here.." class="form-control" type="text">
+                            <input id="name" name="name" onkeyup="javascript:FillAlias(this)" placeholder="Type vendor name here.." class="form-control" type="text">
                         </div>
                         <div class="form-group">
                             <label for="url">URL Alias :</label>

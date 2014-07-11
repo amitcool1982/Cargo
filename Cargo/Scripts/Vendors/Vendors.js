@@ -2,10 +2,6 @@
 var table = null;
 
 $(document).ready(function () {
-    $('.selectpicker').selectpicker({
-        style: 'form-control formcustom',
-        size: 4
-    });
     $('#phone').mask('000000000000000');
     table = BindCustomerTable();
     $("#txtSearch").keyup(function (event) {
@@ -19,11 +15,10 @@ $(document).ready(function () {
         var nRow = $(this).parents('tr')[0];
         editRow(table, nRow);
     });
-    BindPageData(-1);
+    BindPageData(0);
 });
 
 function BindPageData(Id) {
-    id = 0;
     var res = ExecuteSynchronously('Vendors.aspx', 'GetVendorData', { VendorId: Id });
     PopulateControl('ddlProvince', res.d.Province);
     $('#ddlProvince').selectpicker('refresh');
@@ -125,6 +120,11 @@ function BindataonProvinceChange(obj) {
     $('#ddlCity').selectpicker('refresh');
 }
 
+
+function FillAlias(obj) {
+    $('#url').val(obj.value.trim());
+}
+
 function SaveVendor() {
     $("#divsessionexpired").hide();
     var strMsg = DataIsValid();
@@ -143,7 +143,7 @@ function SaveVendor() {
         var res = ExecuteSynchronously('Vendors.aspx', 'SaveUpdateVendorData', { objVendordetail: Vendor });
         if (res.d == 1) {
             table.fnDraw();
-            BindPageData(-1);
+            BindPageData(0);
             $('#errormsg').text("Data updated successfully");
             $("#divsessionexpired").show();
             $('#cancelsave').hide();
