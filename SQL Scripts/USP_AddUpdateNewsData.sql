@@ -31,7 +31,7 @@ AS
 BEGIN 	
 
 
-	if (@Id<>0)
+	if (@Id<>-1)
 	Begin
 		Update ledb_berita
 		Set 

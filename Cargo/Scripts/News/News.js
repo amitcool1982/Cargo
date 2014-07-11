@@ -1,5 +1,5 @@
 ﻿var table = null;
-var id = 0;
+var id = -1;
 $(document).ready(function () {
     table = BindCustomerTable();
     $("#txtSearch").keyup(function (event) {
@@ -101,7 +101,6 @@ var BindCustomerTable = function () {
 }
 
 function BindPageData(Id) {
-    id = 0;
     var res = ExecuteSynchronously('News.aspx', 'GetNewsData', { NewsId: Id });
 
     $('#title').val(res.d.IndTitle);
@@ -116,30 +115,23 @@ function BindPageData(Id) {
     $('.summernote').eq(1).code(res.d.EngContent);
 }
 
-function editRow(table, nRow) {
-    var aData = table.fnGetData(nRow);
+
+function editRow(Table, nRow) {
+    debugger;
+    var aData = Table.fnGetData(nRow);
     var jqTds = $('>td', nRow);
     id = $(aData[0]).text();
-    $('#title').val($(aData[6]).text());
-    $('#alias').val($(aData[7]).text());
-    //$('#IndContent').val($(aData[8]).text());
-    $('.summernote').eq(0).code($(aData[8]).text());
-
-    $('#en_title').val($(aData[3]).text());
-    $('#en_alias').val($(aData[4]).text());
-    //$('#EngContent').val($(aData[5]).text());
-    $('.summernote').eq(1).code($(aData[8]).text());
-
-    $('#save').hide();
-    $('#cancelsave').show();
+    BindPageData(Number(id));
+    $('#cancel').show();
 }
 
 function SaveNews(obj) {
+    debugger;
     $("#divsessionexpired").hide();
     var strMsg = DataIsValid();
     if (strMsg == '') {
         var News = new Object();
-        News.Id = id;
+        News.Id = Number(id);
         News.IndTitleEncrypt = '';
         News.IndTitle = $('#title').val().trim();
         News.IndURLAlias = $('#alias').val().trim();
@@ -164,14 +156,13 @@ function SaveNews(obj) {
             News.IsOnline = 1;
             News.IsSchedule = 0;
         }
-
-        News.IsSchedule = '';
         News.Count = 0;
 
-        var res = ExecuteSynchronously('News.aspx', 'AddNews', { objNewsdetail: News });
+        var res = ExecuteSynchronously('News.aspx', 'AddNews', { objNewsDetail: News });
         if (res.d == 1) {
             table.fnDraw();
             BindPageData(-1);
+            id = -1;
             $('#errormsg').text("Data updated successfully");
             $("#divsessionexpired").show();
             $('#cancelsave').hide();
@@ -190,9 +181,7 @@ function DataIsValid() {
     if ($('#alias').val() == '') {
         return "alias is required"
     }
-
-    $("#foo").append("<div id='Contenct Check'>hello world</div>")
-
+    
     if ($('.summernote').eq(0).code() == '' || $('.summernote').eq(0).code() == '<br>') {
         return "content is required"
     }
@@ -208,13 +197,6 @@ function DataIsValid() {
     return '';
 }
 
-function editRow(Table, nRow) {
-    var aData = Table.fnGetData(nRow);
-    var jqTds = $('>td', nRow);
-    id = $(aData[0]).text();
-    BindPageData(Number(id));
-    $('#cancelsave').show();
-}
 
 function DeleteNews(table, nRow) {
     var aData = table.fnGetData(nRow);
@@ -234,3 +216,4 @@ function DeleteNews(table, nRow) {
     });
 
 }
+

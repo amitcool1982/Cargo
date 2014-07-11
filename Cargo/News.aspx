@@ -146,7 +146,7 @@
                             <input name="action" value="Publish" class="btn btn-success" type="submit" onclick="javascript: SaveNews(1);">
                             <input name="action" value="Draft" class="btn btn-warning" type="submit" onclick="javascript: SaveNews();">
                             <!-- <button type="button" class="schedule-show btn btn-info">Schedule</button> -->
-                            <button type="button" class="news-show-form btn btn-danger" style="display: none;">Cancel</button>
+                            <button type="button" id="cancel" class="news-show-form btn btn-danger" style="display: none;">Cancel</button>
                         </div>
 
                     </div>
