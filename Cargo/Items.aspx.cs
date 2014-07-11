@@ -296,7 +296,7 @@ namespace Cargo
             DataTable dtVendors = new DataTable();
             dtVendors = SQL.BLL.GetVendorsList(1, 1000, "", "id", 1);
             DataRow newRowVendor = dtVendors.NewRow();
-            newRowVendor["alias_vendors"] = "-1";
+            newRowVendor["id_vendors_generator"] = "-1";
             newRowVendor["nama_vendors"] = "-Select Vendor-";
             dtVendors.Rows.InsertAt(newRowVendor, 0);
             dtVendors.AcceptChanges();
@@ -305,9 +305,9 @@ namespace Cargo
             foreach (DataRow drw in dtVendors.Rows)
             {
                 objItemDetail.Vendor[intCount] = new CommonObjects();
-                objItemDetail.Vendor[intCount].Value = drw["alias_vendors"].ToString();
+                objItemDetail.Vendor[intCount].Value = drw["id_vendors_generator"].ToString();
                 objItemDetail.Vendor[intCount].Text = drw["nama_vendors"].ToString();
-                objItemDetail.Vendor[intCount].DefaultValue = ItemId != 0 ? objMainRow[0]["nama_vendors"].ToString() : objItemDetail.Vendor[0].Value;
+                objItemDetail.Vendor[intCount].DefaultValue = ItemId != 0 ? objMainRow[0]["alias_vendors"].ToString() : objItemDetail.Vendor[0].Value;
                 intCount++;
             }
 
