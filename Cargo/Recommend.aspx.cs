@@ -119,13 +119,13 @@ namespace Cargo
                     sb.AppendFormat(@"""0"": ""{0}""", "<div style='text-overflow: ellipsis; width: 60px;overflow: hidden;'><nobr>" + dtRecommend.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 320px;overflow: hidden;'><nobr>" + dtRecommend.Rows[i]["Alias_Menu"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
+                    sb.AppendFormat(@"""1"": ""{0}""", "<div style='text-overflow: ellipsis; width: 200px;overflow: hidden;'><nobr>" + dtRecommend.Rows[i]["Alias_Menu"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
                     sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 150px;overflow: hidden;'><nobr>" + dtRecommend.Rows[i]["Nama_Menu"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a href='javascript:void(0)' data-id='" + dtRecommend.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' class='edit' data-toggle='tooltip' title='detail item'><i class='fa fa-search-plus fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtRecommend.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' class='delete' data-toggle='tooltip' title='delete recommended'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    sb.AppendFormat(@"""3"": ""{0}""", "<div style='width: 100px'><a href='javascript:void(0)' data-id='" + dtRecommend.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' class='edit' data-toggle='tooltip' title='detail item'><i class='fa fa-search-plus fa-border'></i></a><a href='javascript:void(0)' data-id='" + dtRecommend.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' class='delete' data-toggle='tooltip' title='delete recommended'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     sb.Append("},");
                 }
 
