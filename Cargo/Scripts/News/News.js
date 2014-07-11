@@ -27,8 +27,7 @@ $(document).ready(function () {
 
 
 var BindCustomerTable = function () {
-
-
+    
     return $('#myTableNews').dataTable({
         "oLanguage": {
             "sZeroRecords": "No records to display"//,
@@ -107,11 +106,14 @@ function BindPageData(Id) {
 
     $('#title').val(res.d.IndTitle);
     $('#alias').val(res.d.IndURLAlias);
-    $('#IndContent').val(res.d.IndContent);
+    //$('#IndContent').val(res.d.IndContent);
+
+    $('.summernote').eq(0).code(res.d.IndContent);
 
     $('#en_title').val(res.d.EngTitle);
     $('#en_alias').val(res.d.EngURLAlias);
-    $('#EngContent').val(res.d.EngContent);
+    //$('#EngContent').val(res.d.EngContent);
+    $('.summernote').eq(1).code(res.d.EngContent);
 }
 
 function editRow(table, nRow) {
@@ -120,12 +122,14 @@ function editRow(table, nRow) {
     id = $(aData[0]).text();
     $('#title').val($(aData[6]).text());
     $('#alias').val($(aData[7]).text());
-    $('#IndContent').val($(aData[8]).text());
+    //$('#IndContent').val($(aData[8]).text());
+    $('.summernote').eq(0).code($(aData[8]).text());
 
     $('#en_title').val($(aData[3]).text());
     $('#en_alias').val($(aData[4]).text());
-    $('#EngContent').val($(aData[5]).text());
-    
+    //$('#EngContent').val($(aData[5]).text());
+    $('.summernote').eq(1).code($(aData[8]).text());
+
     $('#save').hide();
     $('#cancelsave').show();
 }
@@ -139,11 +143,14 @@ function SaveNews(obj) {
         News.IndTitleEncrypt = '';
         News.IndTitle = $('#title').val().trim();
         News.IndURLAlias = $('#alias').val().trim();
-        News.IndContent = $('#IndContent').val().trim();
+        //News.IndContent = $('#IndContent').val().trim();
+
+        News.IndContent = $('.summernote').eq(0).code();
 
         News.EngTitle = $('#en_title').val();
         News.EngURLAlias = $('#en_alias').val().trim();
-        News.EngContent = $('#EngContent').val().trim();
+        //News.EngContent = $('#EngContent').val().trim();
+        News.EngContent = $('.summernote').eq(1).code();
 
         News.PostDate = '';
         News.ImageURL = '';
@@ -183,7 +190,10 @@ function DataIsValid() {
     if ($('#alias').val() == '') {
         return "alias is required"
     }
-    if ($('#IndContent').val().trim() == '') {
+
+    $("#foo").append("<div id='Contenct Check'>hello world</div>")
+
+    if ($('.summernote').eq(0).code() == '' || $('.summernote').eq(0).code() == '<br>') {
         return "content is required"
     }
     if ($('#en_title').val().trim() == '') {
@@ -192,7 +202,7 @@ function DataIsValid() {
     if ($('#en_alias').val().trim() == '') {
         return "english alias is required"
     }
-    if ($('#EngContent').val().trim() == '') {
+    if ($('.summernote').eq(1).code() == '' || $('.summernote').eq(1).code() == '<br>') {
         return "english content is required"
     }
     return '';

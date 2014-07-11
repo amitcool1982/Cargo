@@ -14,7 +14,18 @@
     </script>
     <script type="text/javascript" src="Scripts/News/News.js"></script>
 
+    <!-- include summernote css/js-->
+    <link rel="stylesheet" href="Content/summernote.css" />
+    <script src="Scripts/summernote.min.js"></script>
 
+    <script type="text/javascript">
+        
+        
+        $(document).ready(function () {
+            $('.summernote').summernote();
+        });
+       
+    </script>
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -77,9 +88,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="content">Content :</label>
-                                    HTML Editor need to add here
-                                    <textarea id="IndContent" placeholder="Type content news here.." class="form-control">
-                                        </textarea>
+                                    <div class="summernote"></div>
+                                    <%--<textarea id="IndContent" placeholder="Type content news here.." class="form-control">
+                                        </textarea>--%>
                                 </div>
                             </div>
                         </div>
@@ -99,9 +110,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="en_content">Content :</label>
-                                    HTML Editor need to add here
-                                    <textarea id="EngContent" placeholder="Type contenet news here.." class="form-control">
-                                        </textarea>
+                                    <div class="summernote"></div>
+                                    <%--<textarea id="EngContent" placeholder="Type contenet news here.." class="form-control">
+                                        </textarea>--%>
                                 </div>
                             </div>
                         </div>

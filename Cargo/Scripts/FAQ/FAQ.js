@@ -103,9 +103,11 @@ function editRow(table, nRow) {
     id = $(aData[0]).text();
     var res = ExecuteSynchronously('FAQ.aspx', 'GetFaQDetail', { Id: Number(id) });
     $('#question').val(res.d.IndQuestion);
-    $('#answer').val(res.d.IndAnswer);
-    $('#en-question').val(res.d.EngQuestion);
-    $('#en-answer').val(res.d.EngAnswer);
+  
+    $('.summernote').eq(0).code(res.d.IndAnswer);
+
+    $('#en-question').val(res.d.EngQuestion);    
+    $('.summernote').eq(1).code(res.d.EngAnswer);
     $('#cancel').show();
 }
 
@@ -114,29 +116,30 @@ function FillAlias() {
 }
 function CancelSaveFAQ() {
     id = 0;
-    $('#question').val('');
-    $('#answer').val('');
+    $('#question').val('');    
+    $('.summernote').eq(0).code('');
+
     $('#en-question').val('');
-    $('#en-answer').val('');
+    $('.summernote').eq(1).code('');
     $('#cancel').hide();
 }
 
 function SaveFAQ() {
     $("#divsessionexpired").hide();
-    if ($('#question').val() != '' && $('#answer').val() != '' && $('#en-question').val() != '' && $('#en-answer').val() != '') {
+    if ($('#question').val() != '' && $('.summernote').eq(0).code() != '' && $('.summernote').eq(0).code() != '<br>' && $('#en-question').val() != '' && $('.summernote').eq(1).code() != '' && $('.summernote').eq(1).code() != '<br>') {
         var res = null;
         if (id == 0) {
-            res = ExecuteSynchronously('FAQ.aspx', 'AddFAQ', { Id: 0, Ques: $("#question").val(), Ans: $("#answer").val(), EnQues: $("#en-question").val(), EnAns: $("#en-answer").val() });
+            res = ExecuteSynchronously('FAQ.aspx', 'AddFAQ', { Id: 0, Ques: $("#question").val(), Ans: $('.summernote').eq(0).code(), EnQues: $("#en-question").val(), EnAns: $('.summernote').eq(1).code() });
         }
         else {
-            res = ExecuteSynchronously('FAQ.aspx', 'UpdateFAQ', { Id: Number(id), Ques: $("#question").val(), Ans: $("#answer").val(), EnQues: $("#en-question").val(), EnAns: $("#en-answer").val() });
+            res = ExecuteSynchronously('FAQ.aspx', 'UpdateFAQ', { Id: Number(id), Ques: $("#question").val(), Ans: $('.summernote').eq(0).code(), EnQues: $("#en-question").val(), EnAns: $('.summernote').eq(1).code() });
         }
         if (res.d == 1) {
             table.fnDraw();
             $('#question').val('');
-            $('#answer').val('');
+            $('.summernote').eq(0).code('');
             $('#en-question').val('');
-            $('#en-answer').val('');
+            $('.summernote').eq(1).code('');
             id = 0;
         }
     }
@@ -145,7 +148,7 @@ function SaveFAQ() {
             $('#errormsg').text("Question is required");
             $("#divsessionexpired").show();
         }
-        else if ($('#answer').val() == '') {
+        else if ($('.summernote').eq(0).code() == '' || $('.summernote').eq(0).code() == '<br>') {
             $('#errormsg').text("Answer is required");
             $("#divsessionexpired").show();
         }
@@ -153,7 +156,7 @@ function SaveFAQ() {
             $('#errormsg').text("English Question is required");
             $("#divsessionexpired").show();
         }
-        else if ($('#en-answer').val() == '') {
+        else if ($('.summernote').eq(1).code() == '' || $('.summernote').eq(1).code() == '<br>') {
             $('#errormsg').text("English Answer is required");
             $("#divsessionexpired").show();
         }

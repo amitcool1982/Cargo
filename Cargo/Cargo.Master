@@ -16,7 +16,7 @@
     <link href="Content/bootstrap.css" rel="stylesheet" />
     <style type="text/css">
         img.show_load {
-            background: url('../../openbox/images/loader.gif') 50% 50% no-repeat;
+            background: url('images/select2-spinner.gif') 50% 50% no-repeat;
         }
     </style>
     <!-- Add custom CSS here -->
