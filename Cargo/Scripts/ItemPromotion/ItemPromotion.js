@@ -199,3 +199,10 @@ function SaveCategory(obj) {
         }
     }
 }
+
+function RecommendItem(obj) {
+    var res = ExecuteSynchronously('ItemPromotion.aspx', 'RecommendItem', { Id: obj });
+    if (res.d == 1) {
+        table.fnDraw();
+    }
+}

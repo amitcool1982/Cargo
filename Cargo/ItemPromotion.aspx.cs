@@ -148,7 +148,7 @@ namespace Cargo
                     sb.Append(",");
                     if (dtItemPromotion.Rows[i]["IsRecommended"].ToString() == "1")
                     {
-                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' title='Item was recommended'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                        sb.AppendFormat(@"""6"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' onclick='javascript:RecommendItem(" + dtItemPromotion.Rows[i]["id"].ToString() + ")' title='Item was recommended'><i class='fa fa-thumbs-up fa-border fa-black'></i></a><a class='edit' href='javascript:void(0)'><i class='fa fa-pencil-square-o fa-border'></i></a><a class='delete' href='javascript:void(0)'><i class='fa fa-trash-o fa-border'></i></a></div>");
                     }
                     else
                     {
@@ -220,6 +220,23 @@ namespace Cargo
         {
             return AddUpdateItemPromotion(itemiD, promoType, description, discount, startPromoAt, endPromoAt, Id);
         }
+
+        [WebMethod(EnableSession = true)]
+        [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
+        public static int RecommendItem(int Id)
+        {
+            return MakeItemRecommended(Id);
+        }
+
+        public static int MakeItemRecommended(int Id)
+        {
+            string strConnectionStrings = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString1"].ConnectionString;
+            SqlParameter[] oParam = new SqlParameter[1];
+            oParam[0] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, Id);
+            SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_RecommendItem", oParam);
+            return 1;
+        }
+
 
         public static int DeletePromotion(int id)
         {
