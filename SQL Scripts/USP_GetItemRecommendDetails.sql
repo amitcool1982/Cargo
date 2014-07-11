@@ -15,7 +15,7 @@ BEGIN
 		
 		--Item.media_photo, -- right now image not uploaded in database
 		
-		'/Images/no_picture_wide.png' As media_photo,
+		'Images/no_picture_wide.png' As media_photo,
 		
 		Item.harga_menu, Item.kategori_menu, Item.tags, Item.is_recommended, Item.last_update, Vendors.nama_vendors, ItemCat.nama_kategori As Category
 		from 
