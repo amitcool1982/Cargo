@@ -127,12 +127,18 @@ namespace Cargo
                     sb.AppendFormat(@"""2"": ""{0}""", "<div style='text-overflow: ellipsis; width: 140px;overflow: hidden;'><nobr>" + dtUsers.Rows[i]["last_login"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
 
-                    sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' data-id='" + dtUsers.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' data-toggle='tooltip' title='update data users'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)' data-id='" + dtUsers.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' data-toggle='tooltip' title='delete data user'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    if (HttpContext.Current.Session["Id"].ToString() != dtUsers.Rows[i]["Id"].ToString())
+                    {
+                        sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' data-id='" + dtUsers.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' data-toggle='tooltip' title='update data users'><i class='fa fa-edit fa-border'></i></a><a class='delete' href='javascript:void(0)' data-id='" + dtUsers.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' data-toggle='tooltip' title='delete data user'><i class='fa fa-trash-o fa-border'></i></a></div>");
+                    }
+                    else
+                    {
+                        sb.AppendFormat(@"""3"": ""{0}""", "<div><a class='edit' href='javascript:void(0)' data-id='" + dtUsers.Rows[i]["id"].ToString().Replace("\"", "\\" + "\"") + "' data-toggle='tooltip' title='update data users'><i class='fa fa-edit fa-border'></i></a></div>");
+                    }
                     sb.Append(",");
 
                     sb.AppendFormat(@"""4"": ""{0}""", "<div style='text-overflow: ellipsis; display:none;'><nobr>" + dtUsers.Rows[i]["username"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");
                     sb.Append(",");
-
                     sb.AppendFormat(@"""5"": ""{0}""", "<div style='text-overflow: ellipsis; display:none;'><nobr>" + dtUsers.Rows[i]["is_Super"].ToString().Replace("\"", "\\" + "\"") + "</nobr></div>");              
                     
                     sb.Append("},");
@@ -231,7 +237,7 @@ namespace Cargo
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
         public static int DeleteUsers(string id)
         {
-            return DeleteUsersData(int.Parse(id));
+            return DeleteUsersData(int.Parse(id));            
         }
     
     }

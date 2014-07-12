@@ -57,6 +57,7 @@ namespace Cargo
                 objLogin.SetupUserSession(dt.Rows[0]);
                 HttpContext.Current.Session["LoginName"] = dt.Rows[0]["Name"].ToString();
                 HttpContext.Current.Session["IsSuper"] = dt.Rows[0]["IsSuper"].ToString();
+                HttpContext.Current.Session["Id"] = dt.Rows[0]["id"].ToString();
                 return 1;
 
             }

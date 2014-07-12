@@ -37,7 +37,7 @@
 
             <div class="row">
                 <div class="col-lg-8">
-                    <label style="margin-left: 470px">Search:</label>
+                    <label style="margin-left: 410px">Search:</label>
                     <input id="txtSearch" type="text" />
                     <table id="myTableUsers" aria-describedby="table_info" style="margin-left: 0px; width: 100%;" class="table table-hover table-striped tablesorter dataTable">
                         <thead>
@@ -87,7 +87,7 @@
                     <!-- <button type="reset" class="btn btn-warning">Reset</button> -->
                     <button type="button" class="user-show-form btn btn-danger" style="display: none;">Cancel</button>
                      <br />
-                        <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px; display: none;">
+                        <div id="divsessionexpired" class="alert alert-warning" style="margin-top: 10px;width:250px; display: none;">
                 <strong id="errormsg"></strong>
             </div>   
                 </div>
