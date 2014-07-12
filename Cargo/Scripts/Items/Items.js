@@ -69,7 +69,7 @@ var BindItemsTable = function () {
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
                      { "sWidth": "8em", "bSortable": true },
-                     { "sWidth": "6em", "bSortable": false }
+                     { "sWidth": "8em", "bSortable": false }
         ],
         "bProcessing": true,
         "bServerSide": true,
