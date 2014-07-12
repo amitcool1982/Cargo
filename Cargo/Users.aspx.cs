@@ -178,7 +178,7 @@ namespace Cargo
             SqlParameter[] oParam = new SqlParameter[5];
             oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 255, ParameterDirection.Input, Name);
             oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 255, ParameterDirection.Input, Alias);
-            oParam[2] = DBHelper.GetParam("@IsSuperAdmin", SqlDbType.Int, 10, ParameterDirection.Input, IsSuperAdmin);
+            oParam[2] = DBHelper.GetParam("@IsSuper", SqlDbType.Int, 10, ParameterDirection.Input, IsSuperAdmin);
             oParam[3] = DBHelper.GetParam("@Password", SqlDbType.NVarChar, 255, ParameterDirection.Input, Password);
             oParam[4] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, 0);
             SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateUser", oParam);
@@ -191,7 +191,7 @@ namespace Cargo
             SqlParameter[] oParam = new SqlParameter[5];
             oParam[0] = DBHelper.GetParam("@Name", SqlDbType.VarChar, 255, ParameterDirection.Input, Name);
             oParam[1] = DBHelper.GetParam("@Alias", SqlDbType.VarChar, 255, ParameterDirection.Input, Alias);
-            oParam[2] = DBHelper.GetParam("@IsSuperAdmin", SqlDbType.Int, 10, ParameterDirection.Input, IsSuperAdmin);
+            oParam[2] = DBHelper.GetParam("@IsSuper", SqlDbType.Int, 10, ParameterDirection.Input, IsSuperAdmin);
             oParam[3] = DBHelper.GetParam("@Password", SqlDbType.NVarChar, 255, ParameterDirection.Input, Password);
             oParam[4] = DBHelper.GetParam("@Id", SqlDbType.Int, 4, ParameterDirection.Input, Id);
             SqlHelper.ExecuteNonQuery(strConnectionStrings, CommandType.StoredProcedure, "USP_AddUpdateUser", oParam);
@@ -220,8 +220,11 @@ namespace Cargo
         [System.Web.Script.Services.ScriptMethod(ResponseFormat = System.Web.Script.Services.ResponseFormat.Json, UseHttpGet = false)]
         public static int UpdateUsers(string Name, string Alias, bool IsSuper, string Password,  int Id)
         {
-            string EncrypedPassword = SQL.BLL.EncryptData(Password);
-
+            string EncrypedPassword = "";
+            if (Password != "")
+            {
+               EncrypedPassword = SQL.BLL.EncryptData(Password);
+            }
             return UpdateUsersData(Name, Alias, IsSuper, EncrypedPassword, Id);
         }
         [WebMethod(EnableSession = true)]

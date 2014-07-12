@@ -123,7 +123,7 @@ function SaveUsers() {
     //$('input[name=IsSuper]').is(':checked') 
     //$('input[name=IsSuper]').attr('checked') 
     $("#divsessionexpired").hide();
-    if ($('#txtalias').val().trim() != '' && $('#txtname').val().trim() != '' && ($('#password').val().trim() == $('#confirm').val().trim())) {
+    if (DataIsValid()) {
         var res = null;
         if (id == 0) {
             res = ExecuteSynchronously('Users.aspx', 'AddUsers', { Name: $("#txtname").val().trim(), Alias: $("#txtalias").val().trim(), IsSuper: $("#IsSuper")[0].checked, Password: $("#password").val() });
@@ -139,23 +139,38 @@ function SaveUsers() {
         }
     }
     else {
-        if ($('#txtname').val().trim() == '') {
-            $('#errormsg').text("FullName is required");
-            $("#divsessionexpired").show();
-        }
-        else if ($('#txtname').val().trim() == '') {
-            $('#errormsg').text("UserName is required");
-            $("#divsessionexpired").show();
-        }
-        else if ($('#password').val() != '' && $.trim($("#password").val()).length < 6) {
-            $('#errormsg').text("Password must be more than 6 characters");
-            $("#divsessionexpired").show();
-        }
-        else if ($('#password').val() != $('#confirm').val()) {
-            $('#errormsg').text("Please enter the same password");
-            $("#divsessionexpired").show();
-        }
+        $("#divsessionexpired").show();
     }
+}
+
+
+function DataIsValid() {
+    if ($('#txtname').val().trim() == '') {
+        $('#errormsg').text("FullName is required");
+        $("#divsessionexpired").show();
+        return false;
+    }
+    else if ($('#txtname').val().trim() == '') {
+        $('#errormsg').text("UserName is required");
+        $("#divsessionexpired").show();
+        return false;
+    }
+    else if ($('#password').val().trim() != '' && $.trim($("#password").val().trim()).length < 6) {
+        $('#errormsg').text("Password must be more than 6 characters");
+        $("#divsessionexpired").show();
+        return false;
+    }
+    else if ($('#password').val().trim() != $('#confirm').val().trim()) {
+        $('#errormsg').text("Please enter the same password");
+        $("#divsessionexpired").show();
+        return false;
+    }
+    if (id == 0 && $('#password').val().trim() == '') {
+        $('#errormsg').text("Please enter the password for new user");
+        $("#divsessionexpired").show();
+        return false;
+    }
+    return true;
 }
 
 

@@ -20,7 +20,9 @@ BEGIN
 	if (@Id<>0)
 	Begin
 		if(@Password='') 
+		BEGIN
 			Select @Password	=	password from ledb_admin with(nolock) where id=@Id
+		END
 		
 		update ledb_admin
 		set 

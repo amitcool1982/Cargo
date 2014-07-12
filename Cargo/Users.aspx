@@ -78,9 +78,9 @@
                     <div>
                     <h4>Reset Password</h4>
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Minimum 6 character" />
+                    <input type="password" name="password" id="password" style="width: 250px; line-height: normal" class="form-control" placeholder="Minimum 6 character" />
                     <label for="confirm">Confirm Password</label>
-                    <input type="password" name="confirm" id="confirm" class="form-control" placeholder="Minimum 6 character" />
+                    <input type="password" name="confirm" id="confirm" style="width: 250px; line-height: normal" class="form-control" placeholder="Minimum 6 character" />
 
                     <br></div>
                     <button type="submit" class="btn btn-primary" onclick="javascript:SaveUsers()">Save</button>
